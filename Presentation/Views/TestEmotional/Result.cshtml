@@ -1,0 +1,76 @@
+﻿@using System.Linq
+@model Logic.Models.EmotionResult
+
+@{
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+    ViewBag.Title = "Resultado emocional";
+}
+
+<section class="max-w-3xl mx-auto mt-12 px-4">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl p-8">
+
+        <!-- TÍTULO -->
+        <div class="text-center mb-6">
+            <div class="text-5xl mb-2">🧠</div>
+            <h2 class="text-2xl font-bold">
+                Resultado de tu evaluación emocional
+            </h2>
+            <p class="text-muted mt-2">
+                Este resultado es orientativo y no reemplaza la evaluación de un profesional
+            </p>
+        </div>
+
+        <!-- EMOCIÓN PRINCIPAL -->
+        <div class="bg-secondary/10 rounded-2xl p-6 text-center mb-6">
+            <p class="text-sm text-gray-600 mb-1">
+                Emoción predominante en este momento
+            </p>
+            <p class="text-3xl font-extrabold text-secondary">
+                @(Model?.emocion_principal ?? "No determinada")
+            </p>
+
+            @if (!string.IsNullOrEmpty(Model?.emocion_secundaria))
+            {
+                <p class="text-sm text-gray-500 mt-2">
+                    Emoción secundaria: @Model.emocion_secundaria
+                </p>
+            }
+        </div>
+
+        <!-- DISTRIBUCIÓN DE SCORES -->
+        <div class="mb-6">
+            <h4 class="font-semibold text-lg mb-3">
+                Distribución emocional
+            </h4>
+
+            @if (Model?.scores != null && Model.scores.Any())
+            {
+                <div class="space-y-2">
+                    @foreach (var item in Model.scores.OrderByDescending(x => x.Value))
+                    {
+                        <div class="flex justify-between text-sm">
+                            <span>@item.Key</span>
+                            <span>@item.Value %</span>
+                        </div>
+                    }
+                </div>
+            }
+
+            else
+            {
+                <p class="text-muted">
+                    No hay datos disponibles.
+                </p>
+            }
+        </div>
+
+        <!-- ACCIÓN -->
+        <div class="text-center mt-8">
+            <a href="@Url.Action("Survey", "TestEmotional")"
+               class="inline-block bg-primary text-white px-8 py-3 rounded-2xl font-semibold">
+                🔄 Volver a realizar el test
+            </a>
+        </div>
+
+    </div>
+</section>

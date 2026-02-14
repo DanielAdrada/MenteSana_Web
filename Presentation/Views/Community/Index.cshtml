@@ -1,0 +1,113 @@
+﻿@{
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+    ViewBag.Title = "Comunidad";
+}
+
+<!-- HERO -->
+<section class="bg-gradient-to-br from-primary to-secondary text-white">
+    <div class="max-w-5xl mx-auto px-6 py-14">
+
+        <span class="inline-block bg-white/20 px-4 py-1 rounded-full text-sm mb-3">
+            💬 Espacio seguro
+        </span>
+
+        <h2 class="text-[clamp(28px,5vw,42px)] font-bold leading-tight">
+            Comunidad Mente Sana
+        </h2>
+
+        <p class="text-white/90 mt-3 max-w-xl">
+            Comparte experiencias, pensamientos y apoyo con otros estudiantes.
+            Aquí nadie juzga 💙
+        </p>
+
+    </div>
+</section>
+
+<!-- CONTENIDO -->
+<section class="max-w-5xl mx-auto px-6 my-8 space-y-10">
+
+    <!-- FORMULARIO -->
+    <div class="bg-gradient-to-br from-blue-50 to-white
+               dark:from-slate-800 dark:to-slate-800
+               border border-blue-200/60 dark:border-slate-600
+               rounded-2xl p-6 mb-12
+               transition hover:shadow-lg">
+
+        <p class="text-sm text-muted dark:text-gray-300 mb-4">
+            💡 Tu mensaje puede ayudar a alguien más. Escribe con respeto y empatía.
+        </p>
+
+        <form method="post" action="@Url.Action("Create", "Community")">
+            <textarea name="contenido"
+                      class="w-full p-4 rounded-xl resize-none
+                             bg-white dark:bg-slate-700
+                             border border-gray-200 dark:border-slate-600
+                             focus:outline-none focus:ring-2 focus:ring-primary"
+                      placeholder="¿Qué te gustaría compartir hoy?"
+                      rows="4"
+                      required></textarea>
+
+            <div class="flex justify-end mt-4">
+                <button type="submit"
+                        class="px-6 py-3 bg-primary text-white font-semibold rounded-xl
+                               hover:bg-primary-600 hover:-translate-y-0.5
+                               transition-all">
+                    Publicar 💙
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- COMENTARIOS -->
+    <div class="space-y-6">
+
+        @foreach (var item in Model)
+        {
+            <article class="group bg-gradient-to-br from-white to-gray-50
+                       dark:from-slate-800 dark:to-slate-700
+                       border border-gray-200 dark:border-slate-600
+                       rounded-2xl p-5
+                       shadow-sm hover:shadow-xl
+                       transition-all duration-500 hover:-translate-y-1">
+
+                <div class="flex items-center gap-4 mb-3">
+
+                    <!-- Avatar -->
+                    <div class="w-11 h-11 rounded-full overflow-hidden shadow flex items-center justify-center
+            bg-gradient-to-br from-primary to-secondary text-white font-bold text-lg">
+
+                        @if (!string.IsNullOrEmpty(item.FotoPerfil))
+                        {
+                            <img src="@Url.Content(item.FotoPerfil)?v=@DateTime.Now.Ticks"
+                                 alt="Foto perfil"
+                                 class="w-full h-full object-cover" />
+                        }
+                        else
+                        {
+                            @($"{item.Nombre[0]}{item.Apellido[0]}".ToUpper())
+                        }
+                    </div>
+
+                    <div class="flex-1">
+                        <p class="font-semibold text-deep dark:text-white">
+                            @(string.IsNullOrEmpty(item.Nombre)
+                                ? item.Usuario
+                                : $"{item.Nombre} {item.Apellido}")
+                        </p>
+
+                        <p class="text-xs text-muted dark:text-gray-300">
+                            @item.Fecha.ToString("dd MMM yyyy")
+                        </p>
+                    </div>
+
+                </div>
+
+                <p class="text-gray-700 dark:text-gray-200 leading-relaxed">
+                    @item.Contenido
+                </p>
+            </article>
+        }
+
+    </div>
+
+</section>

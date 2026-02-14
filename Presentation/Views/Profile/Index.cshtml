@@ -1,0 +1,202 @@
+﻿@model Presentation.Models.ProfileViewModel
+@{
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+    ViewBag.Title = "Mi Perfil";
+}
+
+<!-- HERO PERFIL -->
+<section class="relative overflow-hidden bg-gradient-to-br from-primary via-secondary to-primary text-white">
+    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_white,_transparent_70%)]"></div>
+
+    <div class="relative max-w-[1000px] mx-auto px-6 py-16 flex flex-col items-center text-center gap-5">
+
+        <!-- AVATAR -->
+        <div class="relative group">
+            <div class="w-32 h-32 rounded-full bg-white/30 flex items-center justify-center
+                        text-5xl font-bold text-white shadow-2xl overflow-hidden
+                        ring-4 ring-white/40 transition group-hover:scale-105">
+
+                @if (!string.IsNullOrEmpty(Model.FotoRuta))
+                {
+                    <img src="@Model.FotoRuta?@DateTime.Now.Ticks" class="w-full h-full object-cover" />
+                }
+                else
+                {
+                    <span>
+                        @(Model.Nombre?.Substring(0, 1))@(Model.Apellido?.Substring(0, 1))
+                    </span>
+                }
+            </div>
+
+            <span class="absolute bottom-1 right-1 bg-green-400 text-xs px-2 py-1 rounded-full text-black font-semibold">
+                Activo
+            </span>
+        </div>
+
+        <h1 class="text-3xl font-extrabold tracking-tight">
+            ¡Hola, @Model.Nombre! 👋
+        </h1>
+
+        <p class="text-white/85 max-w-[480px] text-sm sm:text-base">
+            Este es tu perfil personal. Aquí puedes actualizar tu información,
+            personalizar tu experiencia y sentirte cómodo usando la plataforma.
+        </p>
+
+    </div>
+</section>
+<!-- MENSAJES -->
+@if (ViewBag.Mensaje != null || ViewBag.Error != null)
+{
+    <div id="toast"
+         class="fixed top-24 left-1/2 -translate-x-1/2 z-50
+                max-w-sm w-full
+                px-5 py-4 rounded-2xl shadow-xl
+                font-medium flex items-center gap-3
+                transition-all duration-500 ease-in-out
+                @(ViewBag.Mensaje != null
+                    ? "bg-green-100 text-green-800"
+                    : "bg-red-100 text-red-800")">
+
+        <span class="text-xl">
+            @(ViewBag.Mensaje != null ? "✅" : "⚠️")
+        </span>
+
+        <span>
+            @(ViewBag.Mensaje ?? ViewBag.Error)
+        </span>
+    </div>
+}
+
+<!-- CONTENIDO -->
+<main class="relative z-10 max-w-[1000px] mx-auto px-6 -mt-10 space-y-8 pb-16">
+
+    <!-- INFO PERSONAL -->
+    <section class="bg-card dark:bg-slate-800 rounded-2xl shadow-soft p-7">
+        <div class="flex items-center gap-2 mb-6">
+            <span class="text-2xl">🧾</span>
+            <h2 class="text-secondary font-bold text-lg">
+                Información personal
+            </h2>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-6 text-sm">
+            <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+                <span class="text-muted text-xs uppercase">Nombre</span>
+                <p class="font-semibold text-deep dark:text-white text-base">
+                    @Model.Nombre
+                </p>
+            </div>
+
+            <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+                <span class="text-muted text-xs uppercase">Apellido</span>
+                <p class="font-semibold text-deep dark:text-white text-base">
+                    @Model.Apellido
+                </p>
+            </div>
+
+            <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 sm:col-span-1">
+                <span class="text-muted text-xs uppercase">Usuario</span>
+                <p class="font-semibold text-deep dark:text-white text-base break-all">
+                    @Model.Usuario
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDITAR PERFIL -->
+    <section class="bg-card dark:bg-slate-800 rounded-2xl shadow-soft p-7">
+        <div class="flex items-center gap-2 mb-6">
+            <span class="text-2xl">⚙️</span>
+            <h2 class="text-secondary font-bold text-lg">
+                Personaliza tu perfil
+            </h2>
+        </div>
+
+        @using (Html.BeginForm("Index", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+
+            <div class="grid sm:grid-cols-2 gap-5">
+
+                <!-- NOMBRE -->
+                <div>
+                    <label class="text-sm font-medium text-muted">
+                        Nombre
+                    </label>
+                    @Html.TextBoxFor(m => m.Nombre, new
+                    {
+                        @class = "w-full mt-1 px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 " +
+                                 "border border-gray-200 dark:border-gray-600 focus:ring-2 " +
+                                 "focus:ring-primary focus:border-primary outline-none transition"
+                    })
+                </div>
+
+                <!-- APELLIDO -->
+                <div>
+                    <label class="text-sm font-medium text-muted">
+                        Apellido
+                    </label>
+                    @Html.TextBoxFor(m => m.Apellido, new
+                    {
+                        @class = "w-full mt-1 px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 " +
+                                 "border border-gray-200 dark:border-gray-600 focus:ring-2 " +
+                                 "focus:ring-primary focus:border-primary outline-none transition"
+                    })
+                </div>
+                <!-- USUARIO -->
+                <div class="sm:col-span-2">
+                    <label class="text-sm font-medium text-muted">
+                        Usuario
+                    </label>
+                    @Html.TextBoxFor(m => m.Usuario, new
+                    {
+                        @class = "w-full mt-1 px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 " +
+                                 "border border-gray-200 dark:border-gray-600 focus:ring-2 " +
+                                 "focus:ring-primary outline-none transition"
+                    })
+                </div>
+
+
+                <!-- FOTO -->
+                <div class="sm:col-span-2">
+                    <label class="text-sm font-medium text-muted">
+                        Foto de perfil
+                    </label>
+
+                    <div class="mt-1 flex items-center justify-between gap-4
+                                bg-gray-50 dark:bg-gray-700 border border-dashed
+                                border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3">
+
+                        <input type="file"
+                               name="Foto"
+                               accept=".jpg,.jpeg,.png"
+                               class="text-sm w-full text-gray-600 dark:text-gray-300" />
+
+                        <span class="text-xs text-gray-400 whitespace-nowrap">
+                            JPG / PNG
+                        </span>
+                    </div>
+                </div>
+
+                <!-- BOTÓN -->
+                <div class="sm:col-span-2 flex justify-end pt-2">
+                    <button type="submit"
+                            class="group bg-primary hover:bg-primary-600
+                                   text-black dark:text-white
+                                   px-8 py-3 rounded-xl font-bold
+                                   transition-all flex items-center gap-2
+                                   shadow-lg hover:shadow-xl">
+                        <span class="group-hover:scale-110 transition">💾</span>
+                        Guardar cambios
+                    </button>
+                </div>
+
+            </div>
+        }
+    </section>
+
+</main>
+@section Scripts {
+    <script src="~/Scripts/profile.js"></script>
+}
