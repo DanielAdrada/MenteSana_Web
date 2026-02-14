@@ -1,0 +1,114 @@
+﻿@{
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+    ViewBag.Title = "Panel del Psicólogo";
+}
+
+<!-- HEADER -->
+<section class="bg-gradient-to-br from-secondary to-primary text-white">
+    <div class="max-w-[1100px] mx-auto px-5 py-12">
+        <span class="inline-block bg-white/20 px-4 py-1 rounded-full text-sm mb-3">
+            🧠 Panel profesional
+        </span>
+
+        <h1 class="text-[clamp(28px,5vw,42px)] font-bold leading-tight">
+            Panel del Psicólogo
+        </h1>
+
+        <p class="text-white/90 mt-3 max-w-[600px]">
+            Visualiza patrones emocionales, gestiona recursos
+            y acompaña a los estudiantes desde un enfoque preventivo.
+        </p>
+    </div>
+</section>
+
+<!-- MAIN -->
+<main class="max-w-[1100px] mx-auto px-5 my-6 space-y-6">
+
+    <!-- MÉTRICAS -->
+    <section class="grid md:grid-cols-3 gap-5">
+        <div class="bg-card rounded-xl2 shadow-soft p-5">
+            <p class="text-sm text-muted">Estudiantes evaluados</p>
+            <h3 class="text-3xl font-bold text-secondary mt-1">128</h3>
+        </div>
+
+        <div class="bg-card rounded-xl2 shadow-soft p-5">
+            <p class="text-sm text-muted">Emoción predominante</p>
+            <h3 class="text-xl font-semibold text-primary mt-1">
+                Ansiedad
+            </h3>
+        </div>
+
+        <div class="bg-card rounded-xl2 shadow-soft p-5">
+            <p class="text-sm text-muted">Alertas activas</p>
+            <h3 class="text-3xl font-bold text-red-500 mt-1">5</h3>
+        </div>
+    </section>
+
+    <!-- ANÁLISIS EMOCIONAL -->
+    <section class="bg-card rounded-xl2 shadow-soft p-6">
+        <h3 class="text-secondary font-semibold mb-4">
+            📊 Distribución emocional (simulada)
+        </h3>
+
+        <div class="space-y-4">
+            <div>
+                <p class="text-sm">Ansiedad</p>
+                <div class="h-3 bg-gray-200 rounded">
+                    <div class="h-3 bg-primary rounded w-[60%]"></div>
+                </div>
+            </div>
+
+            <div>
+                <p class="text-sm">Estrés</p>
+                <div class="h-3 bg-gray-200 rounded">
+                    <div class="h-3 bg-secondary rounded w-[45%]"></div>
+                </div>
+            </div>
+
+            <div>
+                <p class="text-sm">Tristeza</p>
+                <div class="h-3 bg-gray-200 rounded">
+                    <div class="h-3 bg-yellow-400 rounded w-[30%]"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RECURSOS -->
+    <section class="bg-card rounded-xl2 shadow-soft p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-secondary font-semibold">
+                📁 Recursos para estudiantes
+            </h3>
+
+            <button class="bg-primary text-black px-4 py-2 rounded-xl font-semibold hover:opacity-90 transition">
+                + Nuevo recurso
+            </button>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4">
+            <div class="bg-gray-50 rounded-xl p-4">
+                🧘 Guía de respiración para ansiedad
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+                📄 Manejo del estrés académico
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+                🎧 Audio de relajación guiada
+            </div>
+        </div>
+    </section>
+
+    <!-- ML PLACEHOLDER -->
+    <section class="bg-gradient-to-br from-blue-50 to-transparent rounded-xl2 p-6 border border-blue-200">
+        <h3 class="font-semibold text-secondary mb-2">
+            🤖 Análisis con Machine Learning (próximamente)
+        </h3>
+        <p class="text-sm text-muted max-w-[600px]">
+            Aquí se mostrarán los resultados automáticos
+            del análisis emocional basado en respuestas abiertas
+            de los estudiantes.
+        </p>
+    </section>
+
+</main>

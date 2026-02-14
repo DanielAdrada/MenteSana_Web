@@ -1,0 +1,38 @@
+﻿@model Presentation.Models.UsuarioViewModel
+
+@{
+    ViewBag.Title = "Registro de Estudiante";
+}
+
+<h2>Registro de Estudiante</h2>
+
+@Html.ValidationSummary(true, "", new { style = "color:red" })
+
+@using (Html.BeginForm())
+{
+    <div>
+        @Html.LabelFor(m => m.Usuario)
+        @Html.TextBoxFor(m => m.Usuario)
+        @Html.ValidationMessageFor(m => m.Usuario)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Identificacion)
+        @Html.PasswordFor(m => m.Identificacion)
+        @Html.ValidationMessageFor(m => m.Identificacion)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Nombre)
+        @Html.TextBoxFor(m => m.Nombre)
+        @Html.ValidationMessageFor(m => m.Nombre)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Apellido)
+        @Html.TextBoxFor(m => m.Apellido)
+        @Html.ValidationMessageFor(m => m.Apellido)
+    </div>
+
+    <button type="submit">Registrarse</button>
+}

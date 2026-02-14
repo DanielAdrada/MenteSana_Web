@@ -1,0 +1,380 @@
+﻿@model Presentation.Models.LoginViewModel
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    ViewBag.Title = "Bienvenido a Mente Sana";
+}
+
+<!-- HERO -->
+<section class="hero hero-soft">
+    <div class="hero-content">
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+            Tu mente importa.<br />
+            <span class="text-menteYellow">Y aquí la escuchamos.</span>
+        </h1>
+
+        <p class="mt-6 text-lg md:text-xl opacity-90 max-w-xl mx-auto">
+            Un espacio seguro para entender lo que sientes,
+            expresarte sin miedo y crecer emocionalmente.
+        </p>
+
+        <div class="hero-buttons">
+            <button class="btn" id="openRegister">Registrarme</button>
+            <button class="btn-outline" id="openLogin">Ya tengo cuenta</button>
+        </div>
+    </div>
+</section>
+
+<!-- SOBRE LA PLATAFORMA -->
+<section class="section bg-gray-50">
+    <h2 class="text-3xl md:text-4xl font-bold text-center">
+        A veces no sabes qué te pasa…
+    </h2>
+
+    <p class="mt-4 max-w-2xl mx-auto text-center text-gray-600 text-lg">
+        Y está bien. Nadie nos enseñó a entender nuestras emociones.
+        Por eso existe Mente Sana.
+    </p>
+
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="mv-card
+            bg-white rounded-2xl p-6 text-center
+            transition-all duration-300 ease-in-out
+            hover:-translate-y-1.5 hover:shadow-2xl
+            hover:ring-2 hover:ring-menteBlue/20">
+            😞
+            <p>No sabes por qué te sientes así</p>
+        </div>
+        <div class="mv-card
+            bg-white rounded-2xl p-6 text-center
+            transition-all duration-300 ease-in-out
+            hover:-translate-y-1.5 hover:shadow-2xl
+            hover:ring-2 hover:ring-menteBlue/20">
+            🤐
+            <p>No te sientes cómodo hablando de lo que sientes</p>
+        </div>
+        <div class="mv-card
+            bg-white rounded-2xl p-6 text-center
+            transition-all duration-300 ease-in-out
+            hover:-translate-y-1.5 hover:shadow-2xl
+            hover:ring-2 hover:ring-menteBlue/20">
+            😰
+            <p>El estrés y la presión te sobrepasan</p>
+        </div>
+    </div>
+</section>
+
+<!-- MISIÓN / VISIÓN -->
+<section class="section">
+    <h2 class="text-3xl md:text-4xl font-bold text-center">
+        ¿Qué encuentras en Mente Sana?
+    </h2>
+
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="mv-card
+            bg-white rounded-2xl p-6 text-center
+            transition-all duration-300 ease-in-out
+            hover:-translate-y-1.5 hover:shadow-2xl
+            hover:ring-2 hover:ring-menteBlue/20">
+            😊
+            <h4>Autoconocimiento</h4>
+            <p>Aprende a identificar y entender tus emociones.</p>
+        </div>
+
+        <div class="mv-card
+            bg-white rounded-2xl p-6 text-center
+            transition-all duration-300 ease-in-out
+            hover:-translate-y-1.5 hover:shadow-2xl
+            hover:ring-2 hover:ring-menteBlue/20">
+            💬
+            <h4>Espacio seguro</h4>
+            <p>Exprésate sin miedo ni juicios.</p>
+        </div>
+
+        <div class="mv-card
+            bg-white rounded-2xl p-6 text-center
+            transition-all duration-300 ease-in-out
+            hover:-translate-y-1.5 hover:shadow-2xl
+            hover:ring-2 hover:ring-menteBlue/20">
+            🌱
+            <h4>Crecimiento personal</h4>
+            <p>Desarrolla habilidades emocionales para la vida.</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- CTA -->
+<section class="cta">
+    <h2 class="text-3xl md:text-4xl font-extrabold">
+        Empieza a entenderte mejor 💚
+    </h2>
+
+    <p class="mt-4 text-lg opacity-90 max-w-xl mx-auto">
+        No tienes que tener todas las respuestas.
+        Solo dar el primer paso.
+    </p>
+
+    <button class="btn mt-4" id="openRegister2">
+        Crear mi cuenta
+    </button>
+</section>
+
+
+<!-- ================= LOGIN MODAL ================= -->
+<div id="loginModal"
+     class="fixed inset-0 z-50 flex items-center justify-center
+       bg-black/50 opacity-0 pointer-events-none transition-all duration-300">
+
+    <div class="modal-box w-full max-w-md rounded-2xl bg-white shadow-2xl
+            transform scale-95 transition-all duration-300">
+
+        <!-- HEADER -->
+        <div class="relative rounded-t-2xl bg-gradient-to-br from-menteGreen to-menteBlue px-6 py-6 text-white">
+            <h3 class="text-xl font-bold">Inicia sesión 🌱</h3>
+            <p class="mt-1 text-sm opacity-90">
+                Accede a tu espacio de bienestar emocional
+            </p>
+
+            <button id="closeLogin"
+                    class="absolute top-4 right-4 flex h-9 w-9 items-center justify-center
+               rounded-full bg-red-400 text-white text-lg
+               hover:bg-red-500 active:scale-95 transition"
+                    aria-label="Cerrar">
+                ✕
+            </button>
+
+        </div>
+
+        <!-- BODY -->
+        <div class="px-6 py-6 space-y-4">
+
+            @if (ViewBag.LoginError != null)
+            {
+                <div id="loginError"
+                     class="rounded-lg bg-red-100 px-4 py-3 text-sm text-red-700 transition-all duration-300">
+                    ⚠️ @ViewBag.LoginError
+                </div>
+            }
+
+
+            @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <!-- Rol -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-semibold text-gray-700">
+                        👤 Tipo de usuario
+                    </label>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="Rol" value="ESTUDIANTE" class="hidden peer" required>
+                            <div class="rounded-xl border px-4 py-3 text-center text-sm font-medium
+                        transition-all duration-200
+                        peer-checked:border-menteGreen peer-checked:bg-menteGreen/10 peer-checked:text-menteGreen
+                        hover:border-menteGreen">
+                                🎓 Estudiante
+                            </div>
+                        </label>
+
+                        <label class="cursor-pointer">
+                            <input type="radio" name="Rol" value="PSICOLOGO" class="hidden peer" required>
+                            <div class="rounded-xl border px-4 py-3 text-center text-sm font-medium
+                        transition-all duration-200
+                        peer-checked:border-menteBlue peer-checked:bg-menteBlue/10 peer-checked:text-menteBlue
+                        hover:border-menteBlue">
+                                🧠 Psicólogo
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Usuario -->
+                <div>
+                    <label class="mb-1 block text-sm font-medium text-gray-700">
+                        Nombre de usuario
+                    </label>
+                    <input type="text"
+                           name="Usuario"
+                           placeholder="Ingrese el nombre de usuario"
+                           class="w-full rounded-xl border px-4 py-3 focus:ring-menteBlue/30 focus:border-menteBlue outline-none"
+                           required />
+
+                </div>
+
+                <!-- Contraseña -->
+                <div>
+                    <label class="mb-1 block text-sm font-medium text-gray-700">
+                        Contraseña
+                    </label>
+                    <div class="relative">
+                        <input type="password"
+                               name="Identificacion"
+                               placeholder="Ingrese la contraseña"
+                               class="w-full rounded-xl border px-4 py-3 focus:ring-menteBlue/30 focus:border-menteBlue outline-none"
+                               required />
+
+                        <button type="button"
+                                class="absolute right-4 top-1/2 -translate-y-1/2
+                   toggle-password text-gray-700 hover:text-black"
+                                aria-label="Mostrar contraseña">
+                            🙈
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Botón -->
+                <button type="submit"
+                        class="mt-3 w-full rounded-xl bg-gradient-to-r from-menteGreen to-menteBlue
+                               py-3 font-semibold text-white hover:scale-[1.02] active:scale-95 transition shadow-lg">
+                    Entrar
+                </button>
+            }
+        </div>
+    </div>
+</div>
+
+
+<!-- ================= REGISTER MODAL ================= -->
+<div id="registerModal"
+     class="fixed inset-0 z-50 flex items-center justify-center
+       bg-black/50 opacity-0 pointer-events-none transition-all duration-300">
+
+    <div class="modal-box w-full max-w-md rounded-2xl bg-white shadow-2xl
+            transform scale-95 transition-all duration-300">
+        <!-- HEADER -->
+        <div class="relative rounded-t-2xl bg-gradient-to-br from-menteGreen to-menteBlue px-6 py-6 text-white">
+            <h3 class="text-xl font-bold">Crea tu cuenta ✨</h3>
+            <p class="mt-1 text-sm opacity-90">
+                Comienza tu camino hacia una mente más sana
+            </p>
+
+            <button id="closeRegister"
+                    class="absolute top-4 right-4 flex h-9 w-9 items-center justify-center
+               rounded-full bg-red-400 text-white text-lg
+               hover:bg-red-500 active:scale-95 transition"
+                    aria-label="Cerrar">
+                ✕
+            </button>
+
+        </div>
+
+        <!-- BODY -->
+        <div class="px-6 py-6 space-y-4">
+
+            @if (ViewBag.RegError != null)
+            {
+                <div id="registerError"
+                     class="mb-4 rounded-lg bg-red-100 px-4 py-3 text-sm text-red-700">
+                    ⚠️ @ViewBag.RegError
+                </div>
+            }
+
+            @if (ViewBag.RegSuccess != null)
+            {
+                <div class="rounded-lg bg-green-100 px-4 py-3 text-sm text-green-700">
+                    ✅ @ViewBag.RegSuccess
+                </div>
+            }
+
+            @using (Html.BeginForm("Index", "Register", FormMethod.Post))
+            {
+                <!-- Usuario -->
+                <div>
+                    <input name="Usuario"
+                           placeholder="Elige un nombre de usuario"
+                           required
+                           class="w-full rounded-xl border border-gray-300 px-4 py-3
+              focus:border-menteBlue focus:ring-2 focus:ring-menteBlue/30
+              outline-none transition" />
+                </div>
+
+                <!-- Nombre / Apellido -->
+                <div class="grid grid-cols-2 gap-3">
+                    <input name="Nombre" placeholder="Nombre" required
+                           class="rounded-xl border px-4 py-3 focus:ring-menteBlue/30 focus:border-menteBlue outline-none" />
+                    <input name="Apellido" placeholder="Apellido" required
+                           class="rounded-xl border px-4 py-3 focus:ring-menteBlue/30 focus:border-menteBlue outline-none" />
+                </div>
+
+                <!-- Password -->
+                <div class="space-y-1">
+                    <div class="relative">
+                        <input id="regPassword"
+                               name="Identificacion"
+                               type="password"
+                               placeholder="Contraseña"
+                               required
+                               class="w-full rounded-xl border px-4 py-3 pr-12
+                      focus:ring-menteBlue/30 focus:border-menteBlue outline-none" />
+
+                        <button type="button"
+                                class="absolute right-4 top-1/2 -translate-y-1/2
+                       toggle-password text-gray-700 hover:text-black">
+                            🙈
+                        </button>
+                    </div>
+
+                    <p id="rule-length"
+                       class="text-xs flex items-center gap-1 text-gray-400 transition">
+                        ⭕ Mínimo 6 caracteres
+                    </p>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="space-y-1">
+                    <div class="relative">
+                        <input id="regConfirmPassword"
+                               name="ConfirmPassword"
+                               type="password"
+                               placeholder="Confirmar contraseña"
+                               required
+                               class="w-full rounded-xl border px-4 py-3 pr-12
+                      focus:ring-menteBlue/30 focus:border-menteBlue outline-none" />
+
+                        <button type="button"
+                                class="absolute right-4 top-1/2 -translate-y-1/2
+                       toggle-password text-gray-700 hover:text-black">
+                            🙈
+                        </button>
+                    </div>
+
+                    <p id="rule-match"
+                       class="text-xs flex items-center gap-1 text-gray-400 transition">
+                        ⭕ Las contraseñas coinciden
+                    </p>
+                </div>
+
+                <div id="regPasswordError"
+                     class="hidden rounded-lg bg-red-100 px-4 py-2 text-sm text-red-700">
+                    ⚠️ Las contraseñas no coinciden
+                </div>
+
+                <button type="submit"
+                        class="mt-3 w-full rounded-xl bg-gradient-to-r from-menteGreen to-menteBlue
+                               py-3 font-semibold text-white hover:scale-[1.02] active:scale-95 transition shadow-lg">
+                    Crear cuenta
+                </button>
+            }
+        </div>
+    </div>
+</div>
+
+
+<!-- AUTO OPEN MODALS -->
+@if (ViewBag.LoginError != null)
+{
+    <div id="openLoginModalAuto" data-open="true"></div>
+}
+
+@if (ViewBag.OpenRegisterModal != null)
+{
+    <div id="openRegisterModalAuto" data-open="true"></div>
+}
+
+
+
+
+
+
