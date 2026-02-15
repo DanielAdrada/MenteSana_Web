@@ -1,0 +1,257 @@
+﻿@model Presentation.Models.ResourcesViewModel
+@{
+    Layout = "~/Views/Shared/_PsychologistLayout.cshtml";
+    ViewBag.Title = "";
+}
+
+
+@if (TempData["Mensaje"] != null)
+{
+    <div id="contenedor-alerta">
+        <div class="alert alert-success alerta-animada" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            @TempData["Mensaje"]
+        </div>
+    </div>
+}
+
+<hr class="separador" />
+
+@using (Html.BeginForm("Create", "Resources", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id, new { id = "ResourceId" })
+    @Html.HiddenFor(m => m.ArchivoActual, new { id = "ArchivoActual" })
+
+    <div class="container">
+        <section class="banner-content encabezado-gradiente">
+            <div class="text-center">
+                <h2 class="text-white text-5 font-bold text-deep mb-0">Publicar Recursos Educativos</h2>
+            </div>
+        </section>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(m => m.Titulo)
+                @Html.EditorFor(m => m.Titulo, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingrese el título" } })
+                @Html.ValidationMessageFor(m => m.Titulo, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(m => m.Tipo, "Tipo de Recurso")
+                @Html.DropDownListFor(
+                    m => m.Tipo,
+                    new SelectList(new[] { "Video", "Documento", "Imagen", "URL" }),
+                    "Seleccione un tipo",
+                    new { @class = "form-control" }
+                )
+                @Html.ValidationMessageFor(m => m.Tipo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 form-group">
+                @Html.LabelFor(m => m.Descripcion)
+                @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control", rows = "3", placeholder = "Ingrese la descripción" })
+                @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label>Subir Archivo</label>
+                <input type="file" name="Archivo" class="form-control" />
+            </div>
+
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(m => m.Url, "Ingresar URL (opcional)")
+                @Html.EditorFor(m => m.Url, new { htmlAttributes = new { @class = "form-control", placeholder = "https://ejemplo.com" } })
+                @Html.ValidationMessageFor(m => m.Url, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12 d-flex justify-content-end gap-3">
+                <button type="button" id="btnCancelar" class="btn btn-cancelar" onclick="limpiarFormulario()">
+                    Cancelar
+                </button>
+                <button type="submit" id="btnGuardar" class="btn btn-success">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+<hr class="separador" />
+
+<div class="container">
+
+    <div class="banner-content text-center py-3 ">
+        <h2 style="color: #1e3a8a;">⚙️ Gestión de Recursos Educativos Publicados</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-12 px-0">
+            <div class="table-responsive">
+                <table class="table encabezado-gradiente align-middle text-center tabla-recursos  mb-0">
+
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Descripción</th>
+                            <th>Tipo</th>
+                            <th>Archivo</th>
+                            <th>Enlace</th>
+                            <th>Fecha</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model.ListaRecursos != null)
+                        {
+                            foreach (var item in Model.ListaRecursos)
+                            {
+                                <tr>
+                                    <td class="text-start">@item.Titulo</td>
+                                    <td>
+                                        <div class="text-dark small descripcion-corta">
+                                            @item.Descripcion
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-center text-dark">
+                                            @switch (item.Tipo?.ToLower())
+                                            {
+                                                case "imagen":<i class="bi bi-image text-primary me-2"></i> break;
+                                                case "documento": <i class="bi bi-file-earmark-text text-danger me-2"></i> break;
+                                                case "video": <i class="bi bi-play-btn-fill text-success me-2"></i> break;
+                                                case "url": <i class="bi bi-link-45deg text-info me-2"></i>break;
+                                            }
+                                            <span>@item.Tipo</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.Archivo))
+                                        {
+                                            <a href="@Url.Content("~/Uploads/" + item.Archivo)" target="_blank" class="btn-sm text-dark text-decoration-none">
+                                                <i class="bi bi-eye-fill text-info"></i> Ver Archivo
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-secondary ">
+                                                <i class=" bi bi-file-earmark-x me-1"></i> Sin archivo
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.Url))
+                                        {
+                                            <a href="@item.Url" target="_blank" class="btn-sm text-dark text-decoration-none">
+                                                <i class="bi bi-box-arrow-up-right text-info"></i> Visitar Sitio
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class=" text-secondary ">
+                                                <i class="bi bi-link-45deg me-1"></i> No disponible
+                                            </span>
+                                        }
+                                    </td>
+                                    <td class="align-middle text-nowrap text-secondary">
+                                        <i class="bi bi-calendar3 me-2 text-primary " style="opacity: 0.7;"></i>
+                                        @item.Fecha.ToString("dd MMM yyyy")
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-center gap-2">
+                                            <button class="btn btn-editar btn-sm" onclick="cargarParaEditar('@item.Id','@item.Titulo','@item.Descripcion','@item.Tipo','@item.Archivo','@item.Url')">
+                                                <i class="bi bi-pencil-square me-1"></i>
+                                                Editar
+                                            </button>
+                                            @using (Html.BeginForm("Delete", "Resources", new { id = item.Id }, FormMethod.Post, new { onsubmit = "return confirm('¿Desea eliminar?');" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-danger btn-sm"> <i class="bi bi-x-circle me-1"></i> Eliminar</button>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="separador" />
+
+<div class="container" style="background: transparent; box-shadow: none;">
+    <h2 style="color: #1e3a8a;"> 📚 Biblioteca de Recursos Educativos</h2>
+    <div class="filtros-container">
+        <div class="filtros">
+            <button class="filtro-btn active" onclick="filtrarRecursos('Todos', this)">
+                <i class="bi bi-grid-fill"></i> Todos
+            </button>
+            <button class="filtro-btn" onclick="filtrarRecursos('Video', this)">
+                <i class="bi bi-play-circle-fill"></i> Videos
+            </button>
+            <button class="filtro-btn" onclick="filtrarRecursos('Documento', this)">
+                <i class="bi bi-file-earmark-text-fill"></i> Documentos
+            </button>
+            <button class="filtro-btn" onclick="filtrarRecursos('Imagen', this)">
+                <i class="bi bi-image-fill"></i> Imágenes
+            </button>
+            <button class="filtro-btn" onclick="filtrarRecursos('URL', this)">
+                <i class="bi bi-link-45deg"></i> Enlaces
+            </button>
+        </div>
+    </div>
+
+    <div class="contenedor-recursos" id="contenedorRecursos">
+        @foreach (var item in Model.ListaRecursos)
+        {
+            <div class="recurso-card" data-tipo="@item.Tipo">
+                <div class="recurso-card-inner">
+                    <div class="icono-recurso">
+                        @if (item.Tipo == "Video")
+                        {<i class="bi bi-play-circle-fill"></i> }
+                        else if (item.Tipo == "Documento")
+                        { <i class="bi bi-file-earmark-text-fill"></i> }
+                        else if (item.Tipo == "Imagen")
+                        { <i class="bi bi-image-fill"></i>}
+                        else if (item.Tipo == "URL")
+                        { <i class="bi bi-link-45deg"></i>}
+                    </div>
+                    <div class="contenido-recurso">
+                        <h5>@item.Titulo</h5>
+                        <p>@item.Descripcion</p>
+                        <span class="tipo-recurso">@item.Tipo</span>
+                    </div>
+                    <div class="acciones-recurso">
+                        @if (!string.IsNullOrEmpty(item.Archivo))
+                        {<a href="@Url.Content("~/Uploads/" + item.Archivo)" target="_blank" class="btn-secundario">Ver Archivo</a>}
+                        @if (!string.IsNullOrEmpty(item.Url))
+                        {<a href="@item.Url" target="_blank" class="btn-primario">Visitar Enlace</a>}
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+<link href="~/Content/resources.css" rel="stylesheet" />
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+
+
+
