@@ -1,0 +1,136 @@
+﻿/* ================== Estilos MenteSana ================== */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+/* =========================
+   HERO
+========================= */
+.hero {
+    background: linear-gradient(135deg, #6BCB77, #4D96FF);
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+    position: relative;
+    overflow: hidden;
+}
+    .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top, rgba(255,255,255,0.15), transparent 60%);
+        pointer-events: none; 
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: auto;
+    }
+
+.hero-buttons {
+    margin-top: 30px;
+}
+
+/* =========================
+   BOTONES GENERALES
+========================= */
+.btn {
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #FFD93D, #F6C90E);
+    color: #1f2d3d;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+.btn-outline {
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    background: transparent;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+    .btn-outline:hover {
+        background: #ffffff;
+        color: #4D96FF;
+    }
+
+/* =========================
+   SECCIONES
+========================= */
+.section {
+    padding: 60px 20px;
+    text-align: center;
+    max-width: 900px;
+    margin: auto;
+}
+
+.acerca h2,
+.mision-vision h3 {
+    color: #4D96FF;
+}
+
+.mision-vision {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.mv-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    flex: 1 1 300px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* =========================
+   CTA
+========================= */
+.cta {
+    background: #6BCB77;
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+    .cta h2 {
+        margin-bottom: 20px;
+    }
+
+#loginModal,
+#registerModal {
+    display: flex !important;
+    z-index: 9999 !important;
+}
+
+
+
+
+
+
+
+

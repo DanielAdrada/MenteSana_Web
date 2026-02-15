@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Mente Sana</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/Login.css" rel="stylesheet" />
+
+    <!-- Tailwind vía CDN solo para entorno académico / prototipo UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        menteGreen: '#6BCB77',
+                        menteBlue: '#4D96FF',
+                        menteYellow: '#FFD93D'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="login-body">
+
+    @RenderBody()
+
+    <script src="@Url.Content("~/Scripts/modal.js")"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
