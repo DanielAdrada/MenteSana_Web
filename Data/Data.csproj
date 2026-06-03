@@ -122,10 +122,12 @@
     <Compile Include="Models\CommentDTO.cs" />
     <Compile Include="Models\LoginResultadoDTO.cs" />
     <Compile Include="Models\ProfileDTO.cs" />
+    <Compile Include="Models\ResourcesDTO.cs" />
     <Compile Include="Models\UsuarioSesionDTO.cs" />
     <Compile Include="Persistence.cs" />
     <Compile Include="ProfileDat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourcesDat.cs" />
     <Compile Include="StudentDat.cs" />
     <Compile Include="UserDat.cs" />
   </ItemGroup>
