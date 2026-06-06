@@ -54,6 +54,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (box) {
             box.style.transform = "scale(0.95)";
         }
+
+        const form = modal.querySelector("form");
+        if (form) {
+            form.reset();
+        }
+
+        document.getElementById("regPasswordError")?.classList.add("hidden");
+        document.getElementById("loginError")?.remove();
+        document.getElementById("registerError")?.remove();
+
     }
 
 
@@ -147,5 +157,16 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+    const autoLogin = document.getElementById("openLoginModalAuto");
+    if (autoLogin) {
+        openModal(loginModal);
+    }
+
+    const autoRegister = document.getElementById("openRegisterModalAuto");
+    if (autoRegister) {
+        openModal(registerModal);
+    }
+
 });
 
