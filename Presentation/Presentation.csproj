@@ -229,6 +229,7 @@
     <Content Include="Views\TestEmotional\Result.cshtml" />
     <Content Include="Views\Resources\Index.cshtml" />
     <Content Include="Views\Shared\_PsychologistLayout.cshtml" />
+    <Content Include="Views\Community\CommentManagement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

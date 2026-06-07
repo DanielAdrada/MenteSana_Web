@@ -52,5 +52,21 @@ namespace Presentation.Controllers
 
             return RedirectToAction("Index");
         }
+
+        // Gestion de comentarios 
+        [HttpGet]
+        public ActionResult CommentManagement()
+        {
+            if (Session["Rol"] == null || Session["Rol"].ToString() != "PSICOLOGO")
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            CommentLog commentLog = new CommentLog();
+
+            var comentarios = commentLog.ObtenerComentarios();
+
+            return View(comentarios);
+        }
     }
 }

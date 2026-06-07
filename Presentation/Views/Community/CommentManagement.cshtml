@@ -1,0 +1,68 @@
+﻿@model List<Data.Models.CommentDTO>
+
+@{
+    Layout = "~/Views/Shared/_PsychologistLayout.cshtml";
+    ViewBag.Title = "Gestion de Comentarios";
+}
+
+<<section class="max-w-5xl mx-auto px-6 my-8">
+
+    <div class="mb-8">
+        <h2 class="text-3xl font-bold">Gestión de Comentarios</h2>
+        <p class="text-gray-500">
+            Visualiza los comentarios publicados por los estudiantes.
+        </p>
+    </div>
+
+    <div class="space-y-6">
+
+        @foreach (var item in Model)
+        {
+            <article class="group bg-gradient-to-br from-white to-gray-50
+                           border border-gray-200
+                           rounded-2xl p-5
+                           shadow-sm hover:shadow-xl
+                           transition-all duration-500">
+
+                <div class="flex items-center gap-4 mb-3">
+
+                    <div class="w-11 h-11 rounded-full overflow-hidden shadow flex items-center justify-center
+                                bg-gradient-to-br from-primary to-secondary text-white font-bold text-lg">
+
+                        @if (!string.IsNullOrEmpty(item.FotoRuta))
+                        {
+                            <img src="@Url.Content(item.FotoRuta)"
+                                 class="w-full h-full object-cover" />
+                        }
+                        else
+                        {
+                            @($"{item.Nombre[0]}{item.Apellido[0]}".ToUpper())
+                        }
+                    </div>
+
+                    <div class="flex-1">
+                        <p class="font-semibold">
+                            @item.Nombre @item.Apellido
+                        </p>
+
+                        <p class="text-xs text-gray-500">
+                            Usuario: @item.Usuario
+                        </p>
+
+                        <p class="text-xs text-gray-500">
+                            @item.Fecha.ToString("dd/MM/yyyy HH:mm")
+                        </p>
+                    </div>
+
+                </div>
+
+                <p class="text-gray-700 leading-relaxed">
+                    @item.Contenido
+                </p>
+
+            </article>
+        }
+
+    </div>
+
+</section>
