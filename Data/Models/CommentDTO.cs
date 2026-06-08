@@ -19,5 +19,7 @@ namespace Data.Models
         public string Contenido { get; set; }
         public DateTime Fecha { get; set; }
         public bool Positivo { get; set; }
+        public string Respuesta { get; set; }
+        public DateTime? FechaRespuesta { get; set; }
     }
 }
