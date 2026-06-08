@@ -51,6 +51,7 @@ namespace Data
                                 Usuario = reader["usu_nombre_usuario"].ToString(),
 
                                 Nombre = reader["est_nombre"].ToString(),
+
                                 Apellido = reader["est_apellido"].ToString(),
 
                                 FotoRuta = reader["per_foto_ruta"] == DBNull.Value
@@ -58,7 +59,16 @@ namespace Data
                                     : reader["per_foto_ruta"].ToString(),
 
                                 Contenido = reader["com_contenido"].ToString(),
-                                Fecha = Convert.ToDateTime(reader["com_fecha"])
+
+                                Fecha = Convert.ToDateTime(reader["com_fecha"]),
+
+                                Respuesta = reader["com_respuesta"] == DBNull.Value
+                                    ? null
+                                    : reader["com_respuesta"].ToString(),
+
+                                FechaRespuesta = reader["com_respuesta_fecha"] == DBNull.Value
+                                    ? (DateTime?)null
+                                    : Convert.ToDateTime(reader["com_respuesta_fecha"])
                             });
                         }
                     }
@@ -112,5 +122,32 @@ namespace Data
                 }
             }
         }
+
+
+        public bool ResponderComentario(int comentarioId,string respuesta)
+        {
+            Persistence db = new Persistence();
+
+            using (MySqlConnection conn = db.OpenConnection())
+            {
+                using (MySqlCommand cmd =
+                    new MySqlCommand("proResponderComentario", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue(
+                        "v_com_id",
+                        comentarioId);
+
+                    cmd.Parameters.AddWithValue(
+                        "v_respuesta",
+                        respuesta);
+
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+
+
     }
 }

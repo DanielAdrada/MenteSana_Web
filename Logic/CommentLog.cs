@@ -59,5 +59,12 @@ namespace Logic
 
             return commentDat.DesactivarComentario(comentarioId);
         }
+
+
+        public bool ResponderComentario(int comentarioId,string respuesta)
+        {
+            return commentDat.ResponderComentario(comentarioId,respuesta);
+        }
+
     }
 }

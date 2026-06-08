@@ -68,5 +68,18 @@ namespace Presentation.Controllers
 
             return View(comentarios);
         }
+
+        [HttpPost]
+        public ActionResult ResponderComentario(int comentarioId,string respuesta)
+        {
+            if (string.IsNullOrWhiteSpace(respuesta))
+            {
+                TempData["ErrorRespuesta"] = "Debe escribir una respuesta antes de enviarla.";
+                return RedirectToAction("CommentManagement");
+            }
+            commentLog.ResponderComentario(comentarioId,respuesta);
+            return RedirectToAction("CommentManagement");
+        }
+
     }
 }
