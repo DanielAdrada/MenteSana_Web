@@ -116,6 +116,52 @@
                         </small>
 
                     </div>
+
+                    <button type="button"
+                            onclick="mostrarEdicion(@item.Id)"
+                            class="mt-2 text-blue-600 font-semibold">
+
+                        ✏️ Editar respuesta
+
+                    </button>
+
+                    <div id="editar-@item.Id"
+                         style="display:none;">
+
+                        <form method="post"
+                              action="@Url.Action("ResponderComentario","Community")">
+
+                            <input type="hidden"
+                                   name="comentarioId"
+                                   value="@item.Id" />
+
+                            <textarea name="respuesta"
+                                      rows="4"
+                                      class="w-full border rounded p-2 mt-2">@item.Respuesta</textarea>
+
+                            <div class="flex gap-2 mt-2">
+
+                                <button type="submit"
+                                        class="bg-blue-600 text-white px-4 py-2 rounded">
+
+                                    Guardar cambios
+
+                                </button>
+
+                                <button type="button"
+                                        onclick="cancelarEdicion(@item.Id)"
+                                        class="bg-gray-500 text-white px-4 py-2 rounded">
+
+                                    Cancelar
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
                 }
 
             </article>
@@ -124,3 +170,7 @@
     </div>
 
 </section>
+
+@section Scripts{
+    <script src="~/Scripts/Comments.js"></script>
+}
