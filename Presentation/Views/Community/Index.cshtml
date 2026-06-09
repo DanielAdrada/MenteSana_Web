@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<Presentation.Models.CommentViewModel>
+
+@{
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
     ViewBag.Title = "Comunidad";
 }
@@ -105,6 +107,28 @@
                 <p class="text-gray-700 dark:text-gray-200 leading-relaxed">
                     @item.Contenido
                 </p>
+
+                @if (!string.IsNullOrEmpty(item.Respuesta))
+                {
+                    <div class="mt-4 p-4 bg-blue-50 dark:bg-slate-700 rounded-xl border-l-4 border-blue-500">
+
+                        <p class="font-semibold text-blue-700 dark:text-blue-300">
+                            👨‍⚕️ Respuesta del psicólogo
+                        </p>
+
+                        <p class="mt-2 text-gray-700 dark:text-gray-200">
+                            @item.Respuesta
+                        </p>
+
+                        @if (item.FechaRespuesta != null)
+                        {
+                            <small class="text-gray-500">
+                                Respondido el @(item.FechaRespuesta.Value.ToString("dd/MM/yyyy HH:mm"))
+                            </small>
+                        }
+                    </div>
+                }
+
             </article>
         }
 

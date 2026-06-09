@@ -32,7 +32,9 @@ namespace Presentation.Controllers
                 Apellido = c.Apellido,
                 FotoPerfil = c.FotoRuta,
                 Contenido = c.Contenido,
-                Fecha = c.Fecha
+                Fecha = c.Fecha,
+                Respuesta = c.Respuesta,
+                FechaRespuesta = c.FechaRespuesta
             }).ToList();
 
             // 3. Enviar ViewModel a la vista
