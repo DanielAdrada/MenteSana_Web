@@ -123,6 +123,21 @@ namespace Data
             }
         }
 
+        public bool ActivarComentario(int comentarioId)
+        {
+            Persistence db = new Persistence();
+
+            using (MySqlConnection conn = db.OpenConnection())
+            {
+                using (MySqlCommand cmd = new MySqlCommand("proActivarComentario", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("v_com_id", comentarioId);
+
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
 
         public bool ResponderComentario(int comentarioId,string respuesta)
         {
@@ -147,6 +162,61 @@ namespace Data
                 }
             }
         }
+
+
+        public List<CommentDTO> GetComentariosPsicologo()
+        {
+            Persistence db = new Persistence();
+            List<CommentDTO> lista = new List<CommentDTO>();
+
+            using (MySqlConnection conn = db.OpenConnection())
+            {
+                using (MySqlCommand cmd = new MySqlCommand("proGetComentariosPsicologo", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            lista.Add(new CommentDTO
+                            {
+                                Id = Convert.ToInt32(reader["com_id"]),
+                                Usuario = reader["usu_nombre_usuario"].ToString(),
+
+                                Nombre = reader["est_nombre"].ToString(),
+
+                                Apellido = reader["est_apellido"].ToString(),
+
+                                FotoRuta = reader["per_foto_ruta"] == DBNull.Value
+                                    ? null
+                                    : reader["per_foto_ruta"].ToString(),
+
+                                Contenido = reader["com_contenido"].ToString(),
+
+                                Fecha = Convert.ToDateTime(reader["com_fecha"]),
+
+                                Activo = Convert.ToBoolean(reader["com_activo"]),
+
+                                Respuesta = reader["com_respuesta"] == DBNull.Value
+                                    ? null
+                                    : reader["com_respuesta"].ToString(),
+
+                                FechaRespuesta = reader["com_respuesta_fecha"] == DBNull.Value
+                                    ? (DateTime?)null
+                                    : Convert.ToDateTime(reader["com_respuesta_fecha"])
+                            });
+                        }
+                    }
+                }
+            }
+
+            return lista;
+        }
+
+
+
+
 
 
     }

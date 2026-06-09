@@ -5,155 +5,220 @@
     ViewBag.Title = "Gestion de Comentarios";
 }
 
-<section class="max-w-5xl mx-auto px-6 my-8">
+<section class="max-w-6xl mx-auto px-6 py-8">
 
     <div class="mb-8">
-        <h2 class="text-3xl font-bold">Gestión de Comentarios</h2>
-        <p class="text-gray-500">
-            Visualiza los comentarios publicados por los estudiantes.
+
+        <h2 class="text-3xl font-bold text-gray-800">
+            Gestión de Comentarios
+        </h2>
+
+        <p class="text-gray-500 mt-1">
+            Visualiza y gestiona los comentarios publicados por los estudiantes.
         </p>
+
     </div>
 
-    @if (TempData["ErrorRespuesta"] != null)
-    {
-        <div class="bg-red-100
-                border border-red-300
-                text-red-700
-                px-4 py-3
-                rounded-lg
-                mb-4">
-
-            @TempData["ErrorRespuesta"]
-
-        </div>
-    }
-
-    <div class="space-y-6">
+    <div class="space-y-5">
 
         @foreach (var item in Model)
         {
-            <article class="group bg-gradient-to-br from-white to-gray-50
-                           border border-gray-200
-                           rounded-2xl p-5
-                           shadow-sm hover:shadow-xl
-                           transition-all duration-500">
+            <article class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
 
-                <div class="flex items-center gap-4 mb-3">
+                <!-- CABECERA -->
+                <div class="flex justify-between items-start">
 
-                    <div class="w-11 h-11 rounded-full overflow-hidden shadow flex items-center justify-center
-                                bg-gradient-to-br from-primary to-secondary text-white font-bold text-lg">
+                    <div class="flex gap-4">
 
-                        @if (!string.IsNullOrEmpty(item.FotoRuta))
-                        {
-                            <img src="@Url.Content(item.FotoRuta)"
-                                 class="w-full h-full object-cover" />
-                        }
-                        else
-                        {
-                            @($"{item.Nombre[0]}{item.Apellido[0]}".ToUpper())
-                        }
+                        <div class="w-12 h-12 rounded-full flex items-center justify-center
+                        bg-gradient-to-br from-primary to-secondary
+                        text-white font-bold">
+
+                            @if (!string.IsNullOrEmpty(item.FotoRuta))
+                            {
+                                <img src="@Url.Content(item.FotoRuta)"
+                                     class="w-full h-full object-cover rounded-full" />
+                            }
+                            else
+                            {
+                                @($"{item.Nombre[0]}{item.Apellido[0]}")
+                            }
+
+                        </div>
+
+                        <div>
+
+                            <h3 class="font-semibold text-gray-800">
+                                @item.Nombre @item.Apellido
+                            </h3>
+
+                            <p class="text-sm text-gray-500">
+                                Usuario: @item.Usuario
+                            </p>
+
+                            <p class="text-xs text-gray-400">
+                                @item.Fecha.ToString("dd/MM/yyyy HH:mm")
+                            </p>
+
+                        </div>
+
                     </div>
 
-                    <div class="flex-1">
-                        <p class="font-semibold">
-                            @item.Nombre @item.Apellido
-                        </p>
-
-                        <p class="text-xs text-gray-500">
-                            Usuario: @item.Usuario
-                        </p>
-
-                        <p class="text-xs text-gray-500">
-                            @item.Fecha.ToString("dd/MM/yyyy HH:mm")
-                        </p>
-                    </div>
+                    @if (item.Activo)
+                    {
+                        <span class="px-3 py-1 rounded-lg bg-green-100 text-green-700 text-sm font-medium">
+                            Activo
+                        </span> }
+                    else
+                    {
+                        <span class="px-3 py-1 rounded-lg bg-red-100 text-red-600 text-sm font-medium">
+                            Desactivado
+                        </span>}
 
                 </div>
 
-                <p class="text-gray-700 leading-relaxed">
-                    @item.Contenido
-                </p>
+                <!-- COMENTARIO -->
+                <div class="mt-4 border rounded-xl p-4 bg-gray-50">
 
+                    <h4 class="font-semibold text-gray-800 mb-2">
+                        💬 Comentario del estudiante
+                    </h4>
+
+                    <p class="text-gray-700">
+                        @item.Contenido
+                    </p>
+
+                </div>
+
+                <!-- RESPUESTA EXISTENTE -->
+                @if (!string.IsNullOrEmpty(item.Respuesta))
+                {
+                    <div class="mt-3 border border-blue-100 bg-blue-50 rounded-xl p-4">
+
+                        <h4 class="font-semibold text-blue-700 mb-2">
+                            Respuesta del psicólogo
+                        </h4>
+
+                        <p class="text-gray-700">
+                            @item.Respuesta
+                        </p>
+
+                        <p class="text-xs text-gray-500 mt-2">
+                            @(item.FechaRespuesta?.ToString("dd/MM/yyyy HH:mm"))
+                        </p>
+
+                    </div>
+                }
+
+                <!-- RESPONDER -->
                 @if (string.IsNullOrEmpty(item.Respuesta))
                 {
                     <form method="post"
-                          action="@Url.Action("ResponderComentario","Community")">
+                          action="@Url.Action("ResponderComentario","Community")"
+                          class="mt-4">
 
                         <input type="hidden"
                                name="comentarioId"
                                value="@item.Id" />
 
-                        <textarea name="respuesta"
-                                  rows="3"
-                                  required
-                                  class="w-full border rounded-lg mt-3 p-2"
-                                  placeholder="Escribir respuesta">
-                        </textarea>
+                        <textarea name="respuesta" rows="3" class="w-full border rounded-xl p-3" placeholder="Escribir respuesta..."
+                                  required></textarea>
 
-                        <button type="submit"
-                                class="mt-2 px-4 py-2 bg-blue-600 text-white rounded">
-                            Responder
-                        </button>
+                        <div class="flex gap-3 mt-3">
+
+                            <button type="submit"
+                                    class="px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700">
+                                Responder
+                            </button>
+
+                        </div>
+
                     </form>
 
                 }
-                else
+
+                <!-- BOTONES -->
+            <div class="flex gap-3 mt-3 items-center flex-wrap">
+
+                @if (!string.IsNullOrEmpty(item.Respuesta))
                 {
-                    <div class="mt-4 p-3 bg-blue-50 rounded-lg">
-
-                        <p class="font-semibold">
-                            Respuesta del psicólogo
-                        </p>
-
-                        <p>
-                            @item.Respuesta
-                        </p>
-
-                        <small>
-                            @(item.FechaRespuesta != null
-                                ? item.FechaRespuesta.Value.ToString("dd/MM/yyyy HH:mm")
-                                : "")
-                        </small>
-
-                    </div>
-
                     <button type="button"
                             onclick="mostrarEdicion(@item.Id)"
-                            class="mt-2 text-blue-600 font-semibold">
+                            class="px-4 py-2 rounded-lg bg-purple-50 text-purple-700 border border-purple-200">
 
-                        ✏️ Editar respuesta
-
+                        Editar respuesta
                     </button>
+                }
+                @if (item.Activo)
+                {
+                    <form method="post"
+                          action="@Url.Action("DesactivarComentario","Community")">
 
+                        <input type="hidden"
+                               name="comentarioId"
+                               value="@item.Id" />
+
+                        <button type="submit"
+                                class="px-4 py-2 rounded-lg border border-red-200 bg-red-50 text-red-600">
+
+                            Desactivar comentario
+
+                        </button>
+
+                    </form>
+                }
+                else
+                {
+                    <form method="post"
+                          action="@Url.Action("ActivarComentario","Community")">
+
+                        <input type="hidden"
+                               name="comentarioId"
+                               value="@item.Id" />
+
+                        <button type="submit"
+                                class="px-4 py-2 rounded-lg border border-green-200 bg-green-50 text-green-700">
+
+                            Activar comentario
+
+                        </button>
+
+                    </form>
+                }
+
+            </div>
+
+                <!-- EDITAR RESPUESTA -->
+                @if (!string.IsNullOrEmpty(item.Respuesta))
+                {
                     <div id="editar-@item.Id"
-                         style="display:none;">
+                         class="hidden mt-4">
 
                         <form method="post"
-                              action="@Url.Action("ResponderComentario","Community")">
+                              action="@Url.Action("ResponderComentario","Community")"
+                              class="border border-gray-200 rounded-xl p-4 bg-gray-50">
 
                             <input type="hidden"
                                    name="comentarioId"
                                    value="@item.Id" />
 
                             <textarea name="respuesta"
-                                      rows="4"
-                                      class="w-full border rounded p-2 mt-2">@item.Respuesta</textarea>
+                                      rows="3"
+                                      class="w-full border rounded-lg p-3">@item.Respuesta</textarea>
 
-                            <div class="flex gap-2 mt-2">
+                            <div class="flex gap-3 mt-3">
 
                                 <button type="submit"
-                                        class="bg-blue-600 text-white px-4 py-2 rounded">
+                                        class="px-4 py-2 rounded-lg bg-blue-600 text-white">
 
                                     Guardar cambios
-
                                 </button>
 
                                 <button type="button"
                                         onclick="cancelarEdicion(@item.Id)"
-                                        class="bg-gray-500 text-white px-4 py-2 rounded">
+                                        class="px-4 py-2 rounded-lg border bg-gray-100 text-gray-700">
 
                                     Cancelar
-
                                 </button>
 
                             </div>
@@ -161,11 +226,11 @@
                         </form>
 
                     </div>
-
                 }
 
             </article>
-        }
+
+         }
 
     </div>
 
