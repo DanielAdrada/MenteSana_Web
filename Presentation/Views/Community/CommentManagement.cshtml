@@ -113,7 +113,7 @@
                 <!-- RESPONDER -->
                 @if (string.IsNullOrEmpty(item.Respuesta))
                 {
-                    <form method="post"
+                    <form id="respuesta-@item.Id" method="post"
                           action="@Url.Action("ResponderComentario","Community")"
                           class="mt-4">
 
@@ -121,34 +121,34 @@
                                name="comentarioId"
                                value="@item.Id" />
 
-                        <textarea name="respuesta" rows="3" class="w-full border rounded-xl p-3" placeholder="Escribir respuesta..."
+                        <textarea name="respuesta"
+                                  rows="3" class="w-full border rounded-xl p-3"
+                                  placeholder="Escribir respuesta..."
                                   required></textarea>
-
-                        <div class="flex gap-3 mt-3">
-
-                            <button type="submit"
-                                    class="px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700">
-                                Responder
-                            </button>
-
-                        </div>
 
                     </form>
 
-                }
-
-                <!-- BOTONES -->
+                 }
+                
             <div class="flex gap-3 mt-3 items-center flex-wrap">
 
-                @if (!string.IsNullOrEmpty(item.Respuesta))
+                @if (string.IsNullOrEmpty(item.Respuesta))
+                {
+                    <button type="submit"
+                            form="respuesta-@item.Id"
+                            class="px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700">
+                        Responder
+                    </button>
+                }
+                else
                 {
                     <button type="button"
                             onclick="mostrarEdicion(@item.Id)"
                             class="px-4 py-2 rounded-lg bg-purple-50 text-purple-700 border border-purple-200">
-
                         Editar respuesta
                     </button>
                 }
+
                 @if (item.Activo)
                 {
                     <form method="post"
@@ -160,9 +160,7 @@
 
                         <button type="submit"
                                 class="px-4 py-2 rounded-lg border border-red-200 bg-red-50 text-red-600">
-
                             Desactivar comentario
-
                         </button>
 
                     </form>
@@ -178,55 +176,53 @@
 
                         <button type="submit"
                                 class="px-4 py-2 rounded-lg border border-green-200 bg-green-50 text-green-700">
-
                             Activar comentario
-
                         </button>
 
                     </form>
                 }
-
             </div>
 
-                <!-- EDITAR RESPUESTA -->
-                @if (!string.IsNullOrEmpty(item.Respuesta))
-                {
-                    <div id="editar-@item.Id"
-                         class="hidden mt-4">
 
-                        <form method="post"
-                              action="@Url.Action("ResponderComentario","Community")"
-                              class="border border-gray-200 rounded-xl p-4 bg-gray-50">
+                    <!-- EDITAR RESPUESTA -->
+                    @if (!string.IsNullOrEmpty(item.Respuesta))
+                    {
+                        <div id="editar-@item.Id"
+                             class="hidden mt-4">
 
-                            <input type="hidden"
-                                   name="comentarioId"
-                                   value="@item.Id" />
+                            <form method="post"
+                                  action="@Url.Action("ResponderComentario","Community")"
+                                  class="border border-gray-200 rounded-xl p-4 bg-gray-50">
 
-                            <textarea name="respuesta"
-                                      rows="3"
-                                      class="w-full border rounded-lg p-3">@item.Respuesta</textarea>
+                                <input type="hidden"
+                                       name="comentarioId"
+                                       value="@item.Id" />
 
-                            <div class="flex gap-3 mt-3">
+                                <textarea name="respuesta"
+                                          rows="3"
+                                          class="w-full border rounded-lg p-3">@item.Respuesta</textarea>
 
-                                <button type="submit"
-                                        class="px-4 py-2 rounded-lg bg-blue-600 text-white">
+                                <div class="flex gap-3 mt-3">
 
-                                    Guardar cambios
-                                </button>
+                                    <button type="submit"
+                                            class="px-4 py-2 rounded-lg bg-blue-600 text-white">
 
-                                <button type="button"
-                                        onclick="cancelarEdicion(@item.Id)"
-                                        class="px-4 py-2 rounded-lg border bg-gray-100 text-gray-700">
+                                        Guardar cambios
+                                    </button>
 
-                                    Cancelar
-                                </button>
+                                    <button type="button"
+                                            onclick="cancelarEdicion(@item.Id)"
+                                            class="px-4 py-2 rounded-lg border bg-gray-100 text-gray-700">
 
-                            </div>
+                                        Cancelar
+                                    </button>
 
-                        </form>
+                                </div>
 
-                    </div>
-                }
+                            </form>
+
+                        </div>
+                    }
 
             </article>
 
