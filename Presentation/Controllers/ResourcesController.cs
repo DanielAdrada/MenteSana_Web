@@ -106,5 +106,17 @@ namespace Presentation.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        public ActionResult SelectResources()
+        {
+            List<ResourcesDTO> listaDesdeBD = resourcesLog.ObtenerRecursos();
+
+            ResourcesViewModel modeloParaVista = new ResourcesViewModel();
+
+            modeloParaVista.ListaRecursos = listaDesdeBD;
+
+            return View(modeloParaVista);
+        }
+
     }
 }

@@ -67,8 +67,10 @@
                     Test emocional
                 </a>
 
-                <a href="#recursos"
-                   class="text-gray-700 dark:text-gray-300 hover:text-secondary transition-colors">
+                <a href="@Url.Action("SelectResources", "Resources")"
+                   class="@(currentController == "Resources"
+                         ? "text-secondary border-b-2 border-secondary pb-1"
+                         : "text-gray-700 dark:text-gray-300 hover:text-secondary transition-colors")">
                     Recursos
                 </a>
 

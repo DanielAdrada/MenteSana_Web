@@ -1,0 +1,38 @@
+﻿@model Presentation.Models.ResourcesViewModel
+@{
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+    ViewBag.Title = "Recursos educativos";
+}
+
+<div class="contenedor-recursos" id="contenedorRecursos">
+    @foreach (var item in Model.ListaRecursos)
+    {
+        <div class="recurso-card" data-tipo="@item.Tipo">
+            <div class="recurso-card-inner">
+                <div class="icono-recurso">
+                    @if (item.Tipo == "Video")
+                    {<i class="bi bi-play-circle-fill"></i> }
+                    else if (item.Tipo == "Documento")
+                    { <i class="bi bi-file-earmark-text-fill"></i> }
+                    else if (item.Tipo == "Imagen")
+                    { <i class="bi bi-image-fill"></i>}
+                    else if (item.Tipo == "URL")
+                    { <i class="bi bi-link-45deg"></i>}
+                </div>
+                <div class="contenido-recurso">
+                    <h5>@item.Titulo</h5>
+                    <p>@item.Descripcion</p>
+                    <span class="tipo-recurso">@item.Tipo</span>
+                </div>
+                <div class="acciones-recurso">
+                    @if (!string.IsNullOrEmpty(item.Archivo))
+                    {<a href="@Url.Content("~/Uploads/" + item.Archivo)" target="_blank" class="btn-secundario">Ver Archivo</a>}
+                    @if (!string.IsNullOrEmpty(item.Url))
+                    {<a href="@item.Url" target="_blank" class="btn-primario">Visitar Enlace</a>}
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
