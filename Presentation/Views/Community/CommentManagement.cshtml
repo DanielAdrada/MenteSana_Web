@@ -7,15 +7,35 @@
 
 <section class="max-w-6xl mx-auto px-6 py-8">
 
-    <div class="mb-8">
+    <div class="relative overflow-hidden rounded-3xl shadow-2xl border border-white/20 bg-gradient-to-r from-emerald-400 via-cyan-500 to-blue-600 p-10 mb-8">
 
-        <h2 class="text-3xl font-bold text-gray-800">
-            Gestión de Comentarios
-        </h2>
+        <!-- Estrellitas -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-10 right-[48%] text-white/40 text-xl">✦</div>
+            <div class="absolute top-20 right-[35%] text-white/50 text-2xl">✦</div>
+            <div class="absolute top-32 right-[28%] text-white/40 text-sm">✦</div>
+            <div class="absolute top-44 right-[18%] text-white/60 text-3xl">✦</div>
+            <div class="absolute bottom-24 right-[30%] text-white/40 text-xl">✦</div>
+            <div class="absolute bottom-16 right-20 text-white/50 text-2xl">✦</div>
+            <div class="absolute top-56 right-[40%] text-white/30 text-lg">✦</div>
+            <div class="absolute top-16 right-60 text-white/60 text-sm">✦</div>
+        </div>
 
-        <p class="text-gray-500 mt-1">
-            Visualiza y gestiona los comentarios publicados por los estudiantes.
-        </p>
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+
+            <div>
+
+                <h1 class="mt-4 text-3xl md:text-5xl font-extrabold text-white drop-shadow-lg whitespace-nowrap">
+                    Gestion de Comentarios 💬
+                </h1>
+
+                <p class="mt-1 text-lg md:text-1xl text-white">
+                    Visualiza y gesiona los comentarios publicados por los estudiantes.
+                </p>
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -128,105 +148,105 @@
 
                     </form>
 
-                 }
-                
-            <div class="flex gap-3 mt-3 items-center flex-wrap">
-
-                @if (string.IsNullOrEmpty(item.Respuesta))
-                {
-                    <button type="submit"
-                            form="respuesta-@item.Id"
-                            class="px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700">
-                        Responder
-                    </button>
-                }
-                else
-                {
-                    <button type="button"
-                            onclick="mostrarEdicion(@item.Id)"
-                            class="px-4 py-2 rounded-lg bg-purple-50 text-purple-700 border border-purple-200">
-                        Editar respuesta
-                    </button>
                 }
 
-                @if (item.Activo)
-                {
-                    <form method="post"
-                          action="@Url.Action("DesactivarComentario","Community")">
+                <div class="flex gap-3 mt-3 items-center flex-wrap">
 
-                        <input type="hidden"
-                               name="comentarioId"
-                               value="@item.Id" />
-
-                        <button type="submit"
-                                class="px-4 py-2 rounded-lg border border-red-200 bg-red-50 text-red-600">
-                            Desactivar comentario
-                        </button>
-
-                    </form>
-                }
-                else
-                {
-                    <form method="post"
-                          action="@Url.Action("ActivarComentario","Community")">
-
-                        <input type="hidden"
-                               name="comentarioId"
-                               value="@item.Id" />
-
-                        <button type="submit"
-                                class="px-4 py-2 rounded-lg border border-green-200 bg-green-50 text-green-700">
-                            Activar comentario
-                        </button>
-
-                    </form>
-                }
-            </div>
-
-
-                    <!-- EDITAR RESPUESTA -->
-                    @if (!string.IsNullOrEmpty(item.Respuesta))
+                    @if (string.IsNullOrEmpty(item.Respuesta))
                     {
-                        <div id="editar-@item.Id"
-                             class="hidden mt-4">
-
-                            <form method="post"
-                                  action="@Url.Action("ResponderComentario","Community")"
-                                  class="border border-gray-200 rounded-xl p-4 bg-gray-50">
-
-                                <input type="hidden"
-                                       name="comentarioId"
-                                       value="@item.Id" />
-
-                                <textarea name="respuesta"
-                                          rows="3"
-                                          class="w-full border rounded-lg p-3">@item.Respuesta</textarea>
-
-                                <div class="flex gap-3 mt-3">
-
-                                    <button type="submit"
-                                            class="px-4 py-2 rounded-lg bg-blue-600 text-white">
-
-                                        Guardar cambios
-                                    </button>
-
-                                    <button type="button"
-                                            onclick="cancelarEdicion(@item.Id)"
-                                            class="px-4 py-2 rounded-lg border bg-gray-100 text-gray-700">
-
-                                        Cancelar
-                                    </button>
-
-                                </div>
-
-                            </form>
-
-                        </div>
+                        <button type="submit"
+                                form="respuesta-@item.Id"
+                                class="px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700">
+                            Responder
+                        </button>
                     }
+                    else
+                    {
+                        <button type="button"
+                                onclick="mostrarEdicion(@item.Id)"
+                                class="px-4 py-2 rounded-lg bg-purple-50 text-purple-700 border border-purple-200">
+                            Editar respuesta
+                        </button>
+                    }
+
+                    @if (item.Activo)
+                    {
+                        <form method="post"
+                              action="@Url.Action("DesactivarComentario","Community")">
+
+                            <input type="hidden"
+                                   name="comentarioId"
+                                   value="@item.Id" />
+
+                            <button type="submit"
+                                    class="px-4 py-2 rounded-lg border border-red-200 bg-red-50 text-red-600">
+                                Desactivar comentario
+                            </button>
+
+                        </form>
+                    }
+                    else
+                    {
+                        <form method="post"
+                              action="@Url.Action("ActivarComentario","Community")">
+
+                            <input type="hidden"
+                                   name="comentarioId"
+                                   value="@item.Id" />
+
+                            <button type="submit"
+                                    class="px-4 py-2 rounded-lg border border-green-200 bg-green-50 text-green-700">
+                                Activar comentario
+                            </button>
+
+                        </form>
+                    }
+                </div>
+
+
+                <!-- EDITAR RESPUESTA -->
+                @if (!string.IsNullOrEmpty(item.Respuesta))
+                {
+                    <div id="editar-@item.Id"
+                         class="hidden mt-4">
+
+                        <form method="post"
+                              action="@Url.Action("ResponderComentario","Community")"
+                              class="border border-gray-200 rounded-xl p-4 bg-gray-50">
+
+                            <input type="hidden"
+                                   name="comentarioId"
+                                   value="@item.Id" />
+
+                            <textarea name="respuesta"
+                                      rows="3"
+                                      class="w-full border rounded-lg p-3">@item.Respuesta</textarea>
+
+                            <div class="flex gap-3 mt-3">
+
+                                <button type="submit"
+                                        class="px-4 py-2 rounded-lg bg-blue-600 text-white">
+
+                                    Guardar cambios
+                                </button>
+
+                                <button type="button"
+                                        onclick="cancelarEdicion(@item.Id)"
+                                        class="px-4 py-2 rounded-lg border bg-gray-100 text-gray-700">
+
+                                    Cancelar
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+                }
 
             </article>
 
-         }
+        }
 
     </div>
 
