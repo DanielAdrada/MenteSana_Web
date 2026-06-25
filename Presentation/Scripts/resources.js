@@ -42,3 +42,47 @@ function filtrarRecursos(tipo, elemento) {
         card.style.display = (tipo === "Todos" || card.dataset.tipo === tipo) ? "block" : "none";
     });
 }
+
+function buscarRecursos() {
+
+    const texto = document
+        .getElementById("buscarRecurso")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const tarjetas = document.querySelectorAll(".recurso-card");
+
+    let encontrados = 0;
+
+    tarjetas.forEach(card => {
+
+        const titulo = card.dataset.titulo.toLowerCase();
+        const descripcion = card.dataset.descripcion.toLowerCase();
+
+        if (
+            texto === "" ||
+            titulo.includes(texto) ||
+            descripcion.includes(texto)
+        ) {
+
+            card.style.display = "flex";
+            encontrados++;
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+    const mensaje = document.getElementById("sinResultados");
+
+    if (encontrados === 0) {
+        mensaje.classList.remove("hidden");
+    } else {
+        mensaje.classList.add("hidden");
+    }
+
+}
