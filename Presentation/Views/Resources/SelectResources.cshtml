@@ -85,20 +85,42 @@
                  data-descripcion="@item.Descripcion">
                 <div>
                     <div class="flex justify-between items-center mb-4">
-                        <div class="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center text-2xl">
+                        <div class="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center text-3xl">
                             @if (item.Tipo == "Video")
-                            {<i class="bi bi-play-circle-fill text-green-500"></i>}
+                            {<i class="bi bi-play-circle-fill text-red-500"></i>}
                             else if (item.Tipo == "Documento")
                             {<i class="bi bi-file-earmark-text-fill text-blue-600"></i>}
                             else if (item.Tipo == "Imagen")
-                            {<i class="bi bi-image-fill text-pink-500"></i>}
+                            {<i class="bi bi-image-fill text-emerald-500"></i>}
                             else if (item.Tipo == "URL")
-                            {<i class="bi bi-link-45deg text-purple-500"></i>}
+                            {<i class="bi bi-link-45deg text-cyan-500"></i>}
                         </div>
 
-                        <span class="bg-slate-100 text-slate-600 text-xs px-3 py-1 rounded-full">
-                            @item.Tipo
-                        </span>
+                        @{
+                            string colorTipo = "bg-slate-100 text-slate-600";
+
+                            if (item.Tipo == "Video")
+                            {
+                                colorTipo = "bg-transparent border border-red-500 text-red-600";
+                            }
+                            else if (item.Tipo == "Documento")
+                            {
+                                colorTipo = "bg-transparent border border-blue-500 text-blue-600";
+                            }
+                            else if (item.Tipo == "Imagen")
+                            {
+                                colorTipo = "bg-transparent border border-emerald-500 text-emerald-600";
+                            }
+                            else if (item.Tipo == "URL")
+                            {
+                                colorTipo = "bg-transparent border border-cyan-500 text-cyan-600";
+                            }
+                        }
+
+                    <span class="@colorTipo text-sm px-4 py-2 rounded-full fw-semibold">
+                        @item.Tipo
+                    </span>
+
                     </div>
 
                     <h3 class="font-bold text-xl text-slate-800 mb-3">@item.Titulo</h3>
@@ -110,16 +132,22 @@
                     {
                         <a href="@Url.Content("~/Uploads/" + item.Archivo)"
                            target="_blank"
-                           class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl">
-                            Ver archivo
+                           class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white py-2.5 rounded-xl font-medium transition">
+
+                            <i class="bi bi-download me-2"></i>
+                            Abrir archivo
+
                         </a>
                     }
                     @if (!string.IsNullOrEmpty(item.Url))
                     {
                         <a href="@item.Url"
                            target="_blank"
-                           class="block w-full text-center border border-blue-500 text-blue-600 hover:bg-blue-50 py-3 rounded-xl">
+                           class="block w-full text-center border border-sky-400 text-sky-600 hover:bg-sky-50 py-2.5 rounded-xl font-medium transition">
+
+                            <i class="bi bi-box-arrow-up-right me-2"></i>
                             Visitar enlace
+
                         </a>
                     }
                 </div>
