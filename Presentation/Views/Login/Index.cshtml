@@ -210,7 +210,7 @@
                     </label>
                     <div class="relative">
                         <input type="password"
-                               name="Identificacion"
+                               name="Password"
                                placeholder="Ingrese la contraseña"
                                class="w-full rounded-xl border px-4 py-3 focus:ring-menteBlue/30 focus:border-menteBlue outline-none"
                                required />
@@ -280,6 +280,8 @@
 
             @using (Html.BeginForm("Index", "Register", FormMethod.Post))
             {
+                @Html.AntiForgeryToken()
+
                 <!-- Usuario -->
                 <div>
                     <input name="Usuario"
@@ -298,11 +300,21 @@
                            class="rounded-xl border px-4 py-3 focus:ring-menteBlue/30 focus:border-menteBlue outline-none" />
                 </div>
 
+                <!-- Numero de identificacion -->
+                <div>
+                    <input name="Identificacion"
+                           placeholder="Número de identificación"
+                           required
+                           class="w-full rounded-xl border border-gray-300 px-4 py-3
+                  focus:border-menteBlue focus:ring-2 focus:ring-menteBlue/30
+                  outline-none transition" />
+                </div>
+
                 <!-- Password -->
                 <div class="space-y-1">
                     <div class="relative">
                         <input id="regPassword"
-                               name="Identificacion"
+                               name="Password"
                                type="password"
                                placeholder="Contraseña"
                                required
@@ -318,7 +330,7 @@
 
                     <p id="rule-length"
                        class="text-xs flex items-center gap-1 text-gray-400 transition">
-                        ⭕ Mínimo 6 caracteres
+                        ⭕ Mínimo 8 caracteres
                     </p>
                 </div>
 

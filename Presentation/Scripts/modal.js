@@ -130,8 +130,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const c = confirm.value;
 
         updateRule("rule-length",
-            p.length === 0 ? "neutral" : p.length < 6 ? "error" : "ok",
-            "Mínimo 6 caracteres"
+            p.length === 0 ? "neutral" : p.length < 8 ? "error" : "ok",
+            "Mínimo 8 caracteres"
         );
 
         updateRule("rule-match",
@@ -148,13 +148,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (registerForm && pass && confirm) {
         registerForm.addEventListener("submit", (e) => {
+
+            if (pass.value.length < 8) {
+                e.preventDefault();
+                passwordError.textContent = "⚠️ La contraseña debe tener al menos 8 caracteres.";
+                passwordError.classList.remove("hidden");
+                pass.focus();
+                return;
+            }
+
             if (pass.value !== confirm.value) {
                 e.preventDefault();
-                passwordError?.classList.remove("hidden");
+                passwordError.textContent = "⚠️ Las contraseñas no coinciden.";
+                passwordError.classList.remove("hidden");
                 confirm.focus();
-            } else {
-                passwordError?.classList.add("hidden");
+                return;
             }
+
+            passwordError.classList.add("hidden");
         });
     }
 

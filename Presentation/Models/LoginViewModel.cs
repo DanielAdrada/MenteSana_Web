@@ -13,7 +13,7 @@ namespace Presentation.Models
 
         [Required(ErrorMessage = "Ingrese la contraseña")]
         [DataType(DataType.Password)]
-        public string Identificacion { get; set; }
+        public string Password { get; set; }
 
         [Required(ErrorMessage = "Seleccione el tipo de usuario")]
         [RegularExpression("^(ESTUDIANTE|PSICOLOGO)$",

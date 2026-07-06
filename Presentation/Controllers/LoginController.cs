@@ -37,7 +37,7 @@ namespace Presentation.Controllers
                 return View("Index");
             }
 
-            var resultado = userLogic.IniciarSesion(model.Usuario, model.Identificacion, model.Rol);
+            var resultado = userLogic.IniciarSesion(model.Usuario, model.Password, model.Rol);
 
             if (!resultado.Exitoso)
             {
