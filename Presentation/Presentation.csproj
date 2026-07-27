@@ -129,6 +129,7 @@
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\ResourcesViewModel.cs" />
     <Compile Include="Models\StudentHomeViewModel.cs" />
+    <Compile Include="Models\TestDassViewModel.cs" />
     <Compile Include="Models\UsuarioViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PythonApiStarter.cs" />
