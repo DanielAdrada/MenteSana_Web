@@ -8,10 +8,9 @@ namespace Logic.Models
 {
     public class EmotionResult
     {
-        public string emocion_principal { get; set; }
-        public string emocion_secundaria { get; set; }
-
-        public Dictionary<string, double> scores { get; set; }
+        public string depresion { get; set; }
+        public string ansiedad { get; set; }
+        public string estres { get; set; }
 
     }
 }

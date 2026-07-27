@@ -1,76 +1,96 @@
-﻿@using System.Linq
-@model Logic.Models.EmotionResult
+﻿@model Logic.Models.EmotionResult
 
 @{
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
-    ViewBag.Title = "Resultado emocional";
+    ViewBag.Title = "Resultado DASS-42";
 }
 
-<section class="max-w-3xl mx-auto mt-12 px-4">
-    <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl p-8">
+<section class="max-w-4xl mx-auto mt-10 px-5">
 
-        <!-- TÍTULO -->
-        <div class="text-center mb-6">
-            <div class="text-5xl mb-2">🧠</div>
-            <h2 class="text-2xl font-bold">
-                Resultado de tu evaluación emocional
+    <div class="bg-white rounded-3xl shadow-xl p-8">
+
+        <div class="text-center mb-8">
+
+            <div class="text-6xl mb-3">
+                🧠
+            </div>
+
+            <h2 class="text-3xl font-bold">
+                Resultado de tu evaluación
             </h2>
-            <p class="text-muted mt-2">
-                Este resultado es orientativo y no reemplaza la evaluación de un profesional
+
+            <p class="text-gray-600 mt-2">
+                Este resultado es orientativo y no reemplaza una evaluación profesional.
             </p>
+
         </div>
 
-        <!-- EMOCIÓN PRINCIPAL -->
-        <div class="bg-secondary/10 rounded-2xl p-6 text-center mb-6">
-            <p class="text-sm text-gray-600 mb-1">
-                Emoción predominante en este momento
-            </p>
-            <p class="text-3xl font-extrabold text-secondary">
-                @(Model?.emocion_principal ?? "No determinada")
-            </p>
+        <div class="grid md:grid-cols-3 gap-6">
 
-            @if (!string.IsNullOrEmpty(Model?.emocion_secundaria))
-            {
-                <p class="text-sm text-gray-500 mt-2">
-                    Emoción secundaria: @Model.emocion_secundaria
-                </p>
-            }
-        </div>
+            <!-- DEPRESIÓN -->
+            <div class="border rounded-2xl p-6 text-center shadow-sm">
 
-        <!-- DISTRIBUCIÓN DE SCORES -->
-        <div class="mb-6">
-            <h4 class="font-semibold text-lg mb-3">
-                Distribución emocional
-            </h4>
-
-            @if (Model?.scores != null && Model.scores.Any())
-            {
-                <div class="space-y-2">
-                    @foreach (var item in Model.scores.OrderByDescending(x => x.Value))
-                    {
-                        <div class="flex justify-between text-sm">
-                            <span>@item.Key</span>
-                            <span>@item.Value %</span>
-                        </div>
-                    }
+                <div class="text-5xl mb-3">
+                    🌧️
                 </div>
-            }
 
-            else
-            {
-                <p class="text-muted">
-                    No hay datos disponibles.
+                <h3 class="font-bold text-xl">
+                    Depresión
+                </h3>
+
+                <p class="text-2xl font-bold text-red-600 mt-3">
+                    @Model.depresion
                 </p>
-            }
+
+            </div>
+
+            <!-- ANSIEDAD -->
+            <div class="border rounded-2xl p-6 text-center shadow-sm">
+
+                <div class="text-5xl mb-3">
+                    😰
+                </div>
+
+                <h3 class="font-bold text-xl">
+                    Ansiedad
+                </h3>
+
+                <p class="text-2xl font-bold text-yellow-600 mt-3">
+                    @Model.ansiedad
+                </p>
+
+            </div>
+
+            <!-- ESTRÉS -->
+            <div class="border rounded-2xl p-6 text-center shadow-sm">
+
+                <div class="text-5xl mb-3">
+                    ⚡
+                </div>
+
+                <h3 class="font-bold text-xl">
+                    Estrés
+                </h3>
+
+                <p class="text-2xl font-bold text-blue-600 mt-3">
+                    @Model.estres
+                </p>
+
+            </div>
+
         </div>
 
-        <!-- ACCIÓN -->
-        <div class="text-center mt-8">
-            <a href="@Url.Action("Survey", "TestEmotional")"
-               class="inline-block bg-primary text-white px-8 py-3 rounded-2xl font-semibold">
-                🔄 Volver a realizar el test
+        <div class="text-center mt-10">
+
+            <a href="@Url.Action("Survey","TestEmotional")"
+               class="bg-secondary text-white px-8 py-3 rounded-xl font-semibold">
+
+                🔄 Realizar nuevamente el test
+
             </a>
+
         </div>
 
     </div>
+
 </section>
