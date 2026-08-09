@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommentDat.cs" />
+    <Compile Include="DassDat.cs" />
     <Compile Include="Models\CommentDTO.cs" />
     <Compile Include="Models\LoginResultadoDTO.cs" />
     <Compile Include="Models\ProfileDTO.cs" />

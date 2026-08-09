@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommentLog.cs" />
+    <Compile Include="DassLogic.cs" />
     <Compile Include="Models\EmotionResult.cs" />
     <Compile Include="ProfileLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
