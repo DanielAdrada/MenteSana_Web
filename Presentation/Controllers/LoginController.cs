@@ -60,7 +60,13 @@ namespace Presentation.Controllers
                 return RedirectToAction("Index", "Psychologist");
             }
 
+            else if (resultado.Sesion.Rol.Equals("ADMINISTRADOR", StringComparison.OrdinalIgnoreCase))
+            {
+                return RedirectToAction("Index", "Administrator");
+            }
+
             return RedirectToAction("Index", "Login");
+
 
         }
         // Acción para cerrar sesión

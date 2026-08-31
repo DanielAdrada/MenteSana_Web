@@ -138,5 +138,18 @@ namespace Logic
 
             return userDat.UpdateUsername(userId, nuevoUsuario);
         }
+
+        public bool RegisterUser(string id, string usuario, string password, string rol)
+        {
+            string salt = GenerateSalt();
+            string hash = HashPassword(password + salt);
+
+            return userDat.RegistrarUsuarioConSalt(
+                id,
+                usuario,
+                hash,
+                salt,
+                rol);
+        }
     }
 }

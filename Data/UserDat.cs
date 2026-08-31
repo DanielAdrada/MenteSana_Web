@@ -42,6 +42,7 @@ namespace Data
             }
         }
 
+
         public bool RegistrarUsuarioConSalt(
             string id,
             string nombreUsuario,
@@ -117,6 +118,5 @@ namespace Data
                 }
             }
         }
-
     }
 }
