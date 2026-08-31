@@ -127,8 +127,10 @@
     <Compile Include="Models\EmotionResult.cs" />
     <Compile Include="ProfileLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PsychologistLog.cs" />
     <Compile Include="ResourceLog.cs" />
     <Compile Include="Services\EmotionService.cs" />
+    <Compile Include="StudentLog.cs" />
     <Compile Include="UserLog.cs" />
   </ItemGroup>
   <ItemGroup>

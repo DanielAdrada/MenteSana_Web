@@ -3,6 +3,7 @@ using Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Web;
 
 namespace Logic
@@ -12,7 +13,7 @@ namespace Logic
         ResourcesDat resourcesDat = new ResourcesDat();
 
         // ================= INSERTAR RECURSOS EDUCATIVOS  =================
-        public bool agregarRecurso(string _titulo, string _descripcion, string _tipo, string _archivo, string _url)
+        public bool agregarRecurso(string _titulo, string _descripcion, string _tipo, string _archivo, string _url, string _psiId)
         {
             // Valida que no sea nulo ni espacios en blanco
             if (string.IsNullOrWhiteSpace(_titulo))
@@ -28,7 +29,7 @@ namespace Logic
             if (_titulo.Length < 5 || _titulo.Length > 100)
                 return false;
 
-            return resourcesDat.saveResource(_titulo, _descripcion, _tipo, _archivo, _url);
+            return resourcesDat.saveResource(_titulo, _descripcion, _tipo, _archivo, _url, _psiId);
 
         }
 
@@ -65,6 +66,11 @@ namespace Logic
 
 
             return resourcesDat.updateResource(_id, _titulo, _descripcion, _tipo, _archivo, _url);
+        }
+
+        public int CountResources()
+        {
+            return resourcesDat.CountResources();
         }
 
     }

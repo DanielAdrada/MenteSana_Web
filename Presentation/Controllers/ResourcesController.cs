@@ -44,7 +44,6 @@ namespace Presentation.Controllers
             string nombreArchivoParaBD = model.ArchivoActual;
 
             if (model.Archivo != null && model.Archivo.ContentLength > 0)
-
             {
                 nombreArchivoParaBD = System.IO.Path.GetFileName(model.Archivo.FileName);
                 string rutaFisica = Server.MapPath("~/Uploads/" + nombreArchivoParaBD);
@@ -53,17 +52,32 @@ namespace Presentation.Controllers
 
             bool resultado;
 
-            //  DIFERENCIAR CREATE / UPDATE
+            // ================= CREATE =================
             if (model.Id == 0)
             {
-                // ================= CREATE =================
+                // Obtener el ID del psicólogo que tiene la sesión iniciada
+                string psiId = Session["UserId"]?.ToString();
+
+                if (string.IsNullOrWhiteSpace(psiId))
+                {
+                    ModelState.AddModelError(
+                        "",
+                        "No se pudo identificar al psicólogo que publica el recurso."
+                    );
+
+                    model.ListaRecursos = resourcesLog.ObtenerRecursos();
+                    return View("Index", model);
+                }
+
                 resultado = resourcesLog.agregarRecurso(
                     model.Titulo,
                     model.Descripcion,
                     model.Tipo,
                     nombreArchivoParaBD,
-                    model.Url
+                    model.Url,
+                    psiId
                 );
+
                 TempData["Mensaje"] = "Recurso creado correctamente.";
             }
             else
@@ -77,14 +91,17 @@ namespace Presentation.Controllers
                     nombreArchivoParaBD,
                     model.Url
                 );
+
                 TempData["Mensaje"] = "Recurso actualizado correctamente.";
             }
 
             if (!resultado)
             {
                 ModelState.AddModelError("", "No se pudo guardar el recurso.");
+                model.ListaRecursos = resourcesLog.ObtenerRecursos();
                 return View("Index", model);
             }
+
             return RedirectToAction("Index");
 
         }

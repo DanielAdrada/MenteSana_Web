@@ -167,26 +167,47 @@
                         👤 Tipo de usuario
                     </label>
 
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-3 gap-3">
+
+                        <!-- Estudiante -->
                         <label class="cursor-pointer">
-                            <input type="radio" name="Rol" value="ESTUDIANTE" class="hidden peer" >
+                            <input type="radio" name="Rol" value="ESTUDIANTE" class="hidden peer">
                             <div class="rounded-xl border px-4 py-3 text-center text-sm font-medium
-                        transition-all duration-200
-                        peer-checked:border-menteGreen peer-checked:bg-menteGreen/10 peer-checked:text-menteGreen
-                        hover:border-menteGreen">
+                transition-all duration-200
+                peer-checked:border-menteGreen
+                peer-checked:bg-menteGreen/10
+                peer-checked:text-menteGreen
+                hover:border-menteGreen">
                                 🎓 Estudiante
                             </div>
                         </label>
 
+                        <!-- Psicólogo -->
                         <label class="cursor-pointer">
-                            <input type="radio" name="Rol" value="PSICOLOGO" class="hidden peer" >
+                            <input type="radio" name="Rol" value="PSICOLOGO" class="hidden peer">
                             <div class="rounded-xl border px-4 py-3 text-center text-sm font-medium
-                        transition-all duration-200
-                        peer-checked:border-menteBlue peer-checked:bg-menteBlue/10 peer-checked:text-menteBlue
-                        hover:border-menteBlue">
+                transition-all duration-200
+                peer-checked:border-menteBlue
+                peer-checked:bg-menteBlue/10
+                peer-checked:text-menteBlue
+                hover:border-menteBlue">
                                 🧠 Psicólogo
                             </div>
                         </label>
+
+                        <!-- Administrador -->
+                        <label class="cursor-pointer">
+                            <input type="radio" name="Rol" value="ADMINISTRADOR" class="hidden peer">
+                            <div class="rounded-xl border px-4 py-3 text-center text-sm font-medium
+                transition-all duration-200
+                peer-checked:border-purple-600
+                peer-checked:bg-purple-100
+                peer-checked:text-purple-700
+                hover:border-purple-600">
+                                ⚙️ Administrador
+                            </div>
+                        </label>
+
                     </div>
                 </div>
 
@@ -210,7 +231,7 @@
                     </label>
                     <div class="relative">
                         <input type="password"
-                               name="Identificacion"
+                               name="Password"
                                placeholder="Ingrese la contraseña"
                                class="w-full rounded-xl border px-4 py-3 focus:ring-menteBlue/30 focus:border-menteBlue outline-none"
                                required />
@@ -280,6 +301,8 @@
 
             @using (Html.BeginForm("Index", "Register", FormMethod.Post))
             {
+                @Html.AntiForgeryToken()
+
                 <!-- Usuario -->
                 <div>
                     <input name="Usuario"
@@ -298,11 +321,21 @@
                            class="rounded-xl border px-4 py-3 focus:ring-menteBlue/30 focus:border-menteBlue outline-none" />
                 </div>
 
+                <!-- Numero de identificacion -->
+                <div>
+                    <input name="Identificacion"
+                           placeholder="Número de identificación"
+                           required
+                           class="w-full rounded-xl border border-gray-300 px-4 py-3
+                  focus:border-menteBlue focus:ring-2 focus:ring-menteBlue/30
+                  outline-none transition" />
+                </div>
+
                 <!-- Password -->
                 <div class="space-y-1">
                     <div class="relative">
                         <input id="regPassword"
-                               name="Identificacion"
+                               name="Password"
                                type="password"
                                placeholder="Contraseña"
                                required
@@ -318,7 +351,7 @@
 
                     <p id="rule-length"
                        class="text-xs flex items-center gap-1 text-gray-400 transition">
-                        ⭕ Mínimo 6 caracteres
+                        ⭕ Mínimo 8 caracteres
                     </p>
                 </div>
 
