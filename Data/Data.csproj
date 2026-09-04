@@ -129,6 +129,7 @@
     <Compile Include="ProfileDat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourcesDat.cs" />
+    <Compile Include="StrategiesDat.cs" />
     <Compile Include="StudentDat.cs" />
     <Compile Include="UserDat.cs" />
   </ItemGroup>

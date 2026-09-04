@@ -18,6 +18,7 @@ namespace Presentation.Controllers
     {
         private readonly EmotionService _emotionService = new EmotionService();
         private readonly DassLogic _dassLog = new DassLogic();
+        private readonly EstrategiaService _estrategiaService = new EstrategiaService();
 
         // ====== GET: SURVEY ======
         [HttpGet]
@@ -140,6 +141,7 @@ namespace Presentation.Controllers
             try
             {
                 EmotionResult resultado = await _emotionService.DetectarEmocionAsync(respuestas);
+                resultado.estrategias = _estrategiaService.ObtenerEstrategias(resultado);
 
                 string estudianteId = Session["UserId"]?.ToString();
                 if (string.IsNullOrWhiteSpace(estudianteId))
