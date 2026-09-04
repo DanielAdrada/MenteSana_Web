@@ -1,0 +1,206 @@
+﻿@model List<Presentation.Models.StrategiesViewModel>
+
+@{
+    ViewBag.Title = "Gestión de estrategias";
+}
+
+<div class="max-w-7xl mx-auto mt-10 px-5">
+
+    <div class="bg-white rounded-3xl shadow-xl p-8">
+
+        <!-- Encabezado -->
+        <div class="flex justify-between items-center mb-8">
+
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800">
+                    Gestión de estrategias
+                </h1>
+
+                <p class="text-gray-600 mt-2">
+                    Administra las estrategias disponibles para los estudiantes.
+                </p>
+            </div>
+
+            <a href="@Url.Action("Crear", "Strategies")"
+               class="bg-blue-600 text-white px-5 py-3 rounded-xl font-semibold hover:bg-blue-700">
+                + Agregar estrategia
+            </a>
+
+        </div>
+
+
+        <!-- Mensaje de éxito -->
+        @if (TempData["Mensaje"] != null)
+        {
+            <div class="bg-green-100 text-green-800 px-4 py-3 rounded-xl mb-6">
+                @TempData["Mensaje"]
+            </div>
+        }
+
+
+        <!-- Mensaje de error -->
+        @if (TempData["Error"] != null)
+        {
+            <div class="bg-red-100 text-red-800 px-4 py-3 rounded-xl mb-6">
+                @TempData["Error"]
+            </div>
+        }
+
+
+        <!-- Tabla -->
+        @if (Model != null && Model.Any())
+        {
+            <div class="overflow-x-auto">
+
+                <table class="w-full border-collapse">
+
+                    <thead>
+                        <tr class="border-b text-left">
+
+                            <th class="p-4">
+                                Dimensión
+                            </th>
+
+                            <th class="p-4">
+                                Área
+                            </th>
+
+                            <th class="p-4">
+                                Nivel
+                            </th>
+
+                            <th class="p-4">
+                                Título
+                            </th>
+
+                            <th class="p-4">
+                                Estado
+                            </th>
+
+                            <th class="p-4 text-center">
+                                Acciones
+                            </th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var estrategia in Model)
+                        {
+                            <tr class="border-b hover:bg-gray-50">
+
+                                <td class="p-4">
+                                    @estrategia.Dimension
+                                </td>
+
+                                <td class="p-4">
+                                    @estrategia.Area
+                                </td>
+
+                                <td class="p-4">
+                                    @estrategia.Nivel
+                                </td>
+
+                                <td class="p-4 font-semibold">
+                                    @estrategia.Titulo
+                                </td>
+
+                                <td class="p-4">
+
+                                    @if (estrategia.Activa)
+                                    {
+                                        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+                                            Activa
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">
+                                            Inactiva
+                                        </span>
+                                    }
+
+                                </td>
+
+                                <td class="p-4">
+
+                                    <div class="flex justify-center gap-2">
+
+                                        <!-- Editar -->
+                                        <a href="@Url.Action(
+                                            "Editar",
+                                            "Strategies",
+                                            new { id = estrategia.EstrategiaId }
+                                        )"
+                                           class="bg-yellow-500 text-white px-3 py-2 rounded-lg hover:bg-yellow-600">
+                                            Editar
+                                        </a>
+
+
+                                        <!-- Activar / Desactivar -->
+                                        <form action="@Url.Action(
+                                            "CambiarEstado",
+                                            "Strategies"
+                                        )"
+                                              method="post"
+                                              style="display:inline;">
+
+                                            <input type="hidden"
+                                                   name="estrategiaId"
+                                                   value="@estrategia.EstrategiaId" />
+
+                                            <input type="hidden"
+                                                   name="activa"
+                                                   value="@(estrategia.Activa ? 0 : 1)" />
+
+                                            @if (estrategia.Activa)
+                                            {
+                                                <button type="submit"
+                                                        class="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600">
+                                                    Desactivar
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="submit"
+                                                        class="bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700">
+                                                    Activar
+                                                </button>
+                                            }
+
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-12">
+
+                <p class="text-gray-500 text-lg">
+                    No hay estrategias registradas.
+                </p>
+
+                <a href="@Url.Action("Crear", "Strategies")"
+                   class="inline-block mt-4 bg-blue-600 text-white px-5 py-3 rounded-xl">
+                    Agregar la primera estrategia
+                </a>
+
+            </div>
+        }
+
+    </div>
+
+</div>
+

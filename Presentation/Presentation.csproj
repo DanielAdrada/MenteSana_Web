@@ -118,6 +118,7 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\PsychologistController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
+    <Compile Include="Controllers\StrategiesController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\PsychologistViewModel.cs" />
     <Compile Include="Models\ResourcesViewModel.cs" />
+    <Compile Include="Models\StrategiesViewModel.cs" />
     <Compile Include="Models\StudentHomeViewModel.cs" />
     <Compile Include="Models\TestDassViewModel.cs" />
     <Compile Include="Models\StudentViewModel.cs" />
@@ -238,6 +240,7 @@
     <Content Include="Views\Shared\_PsychologistLayout.cshtml" />
     <Content Include="Views\Community\CommentManagement.cshtml" />
     <Content Include="Views\Resources\SelectResources.cshtml" />
+    <Content Include="Views\Strategies\Index.cshtml" />
     <Content Include="Views\Administrator\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Administrator\Psychologists.cshtml" />
