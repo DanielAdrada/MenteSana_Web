@@ -1,0 +1,257 @@
+﻿@model List<Data.Models.CommentDTO>
+
+@{
+    Layout = "~/Views/Shared/_PsychologistLayout.cshtml";
+    ViewBag.Title = "Gestion de Comentarios";
+}
+
+<section class="max-w-6xl mx-auto px-6 py-8">
+
+    <div class="relative overflow-hidden rounded-3xl shadow-2xl border border-white/20 bg-gradient-to-r from-emerald-400 via-cyan-500 to-blue-600 p-10 mb-8">
+
+        <!-- Estrellitas -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-10 right-[48%] text-white/40 text-xl">✦</div>
+            <div class="absolute top-20 right-[35%] text-white/50 text-2xl">✦</div>
+            <div class="absolute top-32 right-[28%] text-white/40 text-sm">✦</div>
+            <div class="absolute top-44 right-[18%] text-white/60 text-3xl">✦</div>
+            <div class="absolute bottom-24 right-[30%] text-white/40 text-xl">✦</div>
+            <div class="absolute bottom-16 right-20 text-white/50 text-2xl">✦</div>
+            <div class="absolute top-56 right-[40%] text-white/30 text-lg">✦</div>
+            <div class="absolute top-16 right-60 text-white/60 text-sm">✦</div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+
+            <div>
+
+                <h1 class="mt-4 text-3xl md:text-5xl font-extrabold text-white drop-shadow-lg whitespace-nowrap">
+                    Gestion de Comentarios 💬
+                </h1>
+
+                <p class="mt-1 text-lg md:text-1xl text-white">
+                    Visualiza y gesiona los comentarios publicados por los estudiantes.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="space-y-5">
+
+        @foreach (var item in Model)
+        {
+            <article class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+
+                <!-- CABECERA -->
+                <div class="flex justify-between items-start">
+
+                    <div class="flex gap-4">
+
+                        <div class="w-12 h-12 rounded-full flex items-center justify-center
+                        bg-gradient-to-br from-primary to-secondary
+                        text-white font-bold">
+
+                            @if (!string.IsNullOrEmpty(item.FotoRuta))
+                            {
+                                <img src="@Url.Content(item.FotoRuta)"
+                                     class="w-full h-full object-cover rounded-full" />
+                            }
+                            else
+                            {
+                                @($"{item.Nombre[0]}{item.Apellido[0]}")
+                            }
+
+                        </div>
+
+                        <div>
+
+                            <h3 class="font-semibold text-gray-800">
+                                @item.Nombre @item.Apellido
+                            </h3>
+
+                            <p class="text-sm text-gray-500">
+                                Usuario: @item.Usuario
+                            </p>
+
+                            <p class="text-xs text-gray-400">
+                                @item.Fecha.ToString("dd/MM/yyyy HH:mm")
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    @if (item.Activo)
+                    {
+                        <span class="px-3 py-1 rounded-lg bg-green-100 text-green-700 text-sm font-medium">
+                            Activo
+                        </span> }
+                    else
+                    {
+                        <span class="px-3 py-1 rounded-lg bg-red-100 text-red-600 text-sm font-medium">
+                            Desactivado
+                        </span>}
+
+                </div>
+
+                <!-- COMENTARIO -->
+                <div class="mt-4 border rounded-xl p-4 bg-gray-50">
+
+                    <h4 class="font-semibold text-gray-800 mb-2">
+                        💬 Comentario del estudiante
+                    </h4>
+
+                    <p class="text-gray-700">
+                        @item.Contenido
+                    </p>
+
+                </div>
+
+                <!-- RESPUESTA EXISTENTE -->
+                @if (!string.IsNullOrEmpty(item.Respuesta))
+                {
+                    <div class="mt-3 border border-blue-100 bg-blue-50 rounded-xl p-4">
+
+                        <h4 class="font-semibold text-blue-700 mb-2">
+                            Respuesta del psicólogo
+                        </h4>
+
+                        <p class="text-gray-700">
+                            @item.Respuesta
+                        </p>
+
+                        <p class="text-xs text-gray-500 mt-2">
+                            @(item.FechaRespuesta?.ToString("dd/MM/yyyy HH:mm"))
+                        </p>
+
+                    </div>
+                }
+
+                <!-- RESPONDER -->
+                @if (string.IsNullOrEmpty(item.Respuesta))
+                {
+                    <form id="respuesta-@item.Id" method="post"
+                          action="@Url.Action("ResponderComentario","Community")"
+                          class="mt-4">
+
+                        <input type="hidden"
+                               name="comentarioId"
+                               value="@item.Id" />
+
+                        <textarea name="respuesta"
+                                  rows="3" class="w-full border rounded-xl p-3"
+                                  placeholder="Escribir respuesta..."
+                                  required></textarea>
+
+                    </form>
+
+                }
+
+                <div class="flex gap-3 mt-3 items-center flex-wrap">
+
+                    @if (string.IsNullOrEmpty(item.Respuesta))
+                    {
+                        <button type="submit"
+                                form="respuesta-@item.Id"
+                                class="px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700">
+                            Responder
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button"
+                                onclick="mostrarEdicion(@item.Id)"
+                                class="px-4 py-2 rounded-lg bg-purple-50 text-purple-700 border border-purple-200">
+                            Editar respuesta
+                        </button>
+                    }
+
+                    @if (item.Activo)
+                    {
+                        <form method="post"
+                              action="@Url.Action("DesactivarComentario","Community")">
+
+                            <input type="hidden"
+                                   name="comentarioId"
+                                   value="@item.Id" />
+
+                            <button type="submit"
+                                    class="px-4 py-2 rounded-lg border border-red-200 bg-red-50 text-red-600">
+                                Desactivar comentario
+                            </button>
+
+                        </form>
+                    }
+                    else
+                    {
+                        <form method="post"
+                              action="@Url.Action("ActivarComentario","Community")">
+
+                            <input type="hidden"
+                                   name="comentarioId"
+                                   value="@item.Id" />
+
+                            <button type="submit"
+                                    class="px-4 py-2 rounded-lg border border-green-200 bg-green-50 text-green-700">
+                                Activar comentario
+                            </button>
+
+                        </form>
+                    }
+                </div>
+
+
+                <!-- EDITAR RESPUESTA -->
+                @if (!string.IsNullOrEmpty(item.Respuesta))
+                {
+                    <div id="editar-@item.Id"
+                         class="hidden mt-4">
+
+                        <form method="post"
+                              action="@Url.Action("ResponderComentario","Community")"
+                              class="border border-gray-200 rounded-xl p-4 bg-gray-50">
+
+                            <input type="hidden"
+                                   name="comentarioId"
+                                   value="@item.Id" />
+
+                            <textarea name="respuesta"
+                                      rows="3"
+                                      class="w-full border rounded-lg p-3">@item.Respuesta</textarea>
+
+                            <div class="flex gap-3 mt-3">
+
+                                <button type="submit"
+                                        class="px-4 py-2 rounded-lg bg-blue-600 text-white">
+
+                                    Guardar cambios
+                                </button>
+
+                                <button type="button"
+                                        onclick="cancelarEdicion(@item.Id)"
+                                        class="px-4 py-2 rounded-lg border bg-gray-100 text-gray-700">
+
+                                    Cancelar
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+                }
+
+            </article>
+
+        }
+
+    </div>
+
+</section>
+
+@section Scripts{
+    <script src="~/Scripts/Comments.js"></script>
+}

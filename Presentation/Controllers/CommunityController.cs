@@ -32,7 +32,9 @@ namespace Presentation.Controllers
                 Apellido = c.Apellido,
                 FotoPerfil = c.FotoRuta,
                 Contenido = c.Contenido,
-                Fecha = c.Fecha
+                Fecha = c.Fecha,
+                Respuesta = c.Respuesta,
+                FechaRespuesta = c.FechaRespuesta
             }).ToList();
 
             // 3. Enviar ViewModel a la vista
@@ -52,5 +54,55 @@ namespace Presentation.Controllers
 
             return RedirectToAction("Index");
         }
+
+        // Gestion de comentarios 
+        [HttpGet]
+        public ActionResult CommentManagement()
+        {
+            if (Session["Rol"] == null || Session["Rol"].ToString() != "PSICOLOGO")
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            CommentLog commentLog = new CommentLog();
+
+            var comentarios = commentLog.ObtenerComentariosPsicologo();
+
+            return View(comentarios);
+        }
+
+        [HttpPost]
+        public ActionResult ResponderComentario(int comentarioId,string respuesta)
+        {
+            if (string.IsNullOrWhiteSpace(respuesta))
+            {
+                TempData["ErrorRespuesta"] = "Debe escribir una respuesta antes de enviarla.";
+                return RedirectToAction("CommentManagement");
+            }
+            commentLog.ResponderComentario(comentarioId,respuesta);
+            return RedirectToAction("CommentManagement");
+        }
+
+
+        [HttpPost]
+        public ActionResult DesactivarComentario(int comentarioId)
+        {
+            string rol = Session["Rol"]?.ToString();
+
+            commentLog.DesactivarComentario(comentarioId, rol);
+
+            return RedirectToAction("CommentManagement");
+        }
+
+        [HttpPost]
+        public ActionResult ActivarComentario(int comentarioId)
+        {
+            string rol = Session["Rol"]?.ToString();
+
+            commentLog.ActivarComentario(comentarioId, rol);
+
+            return RedirectToAction("CommentManagement");
+        }
+
     }
 }

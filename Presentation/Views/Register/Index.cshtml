@@ -18,8 +18,20 @@
 
     <div>
         @Html.LabelFor(m => m.Identificacion)
-        @Html.PasswordFor(m => m.Identificacion)
+        @Html.TextBoxFor(m => m.Identificacion)
         @Html.ValidationMessageFor(m => m.Identificacion)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(m => m.Password)
+        @Html.ValidationMessageFor(m => m.Password)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.ConfirmPassword)
+        @Html.PasswordFor(m => m.ConfirmPassword)
+        @Html.ValidationMessageFor(m => m.ConfirmPassword)
     </div>
 
     <div>

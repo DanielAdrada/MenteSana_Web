@@ -28,47 +28,21 @@ namespace Logic.Services
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response =
-                await client.PostAsync("predecir_emocion", content);
+                await client.PostAsync("predecir_dass42", content);
 
             string resultJson = await response.Content.ReadAsStringAsync();
 
-            System.Diagnostics.Debug.WriteLine("JSON RECIBIDO DESDE PYTHON:");
-            System.Diagnostics.Debug.WriteLine(resultJson);
-
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception(
-                    $"Error API ({response.StatusCode}): {resultJson}"
-                );
+                throw new Exception(resultJson);
             }
 
-            if (string.IsNullOrWhiteSpace(resultJson))
-            {
-                throw new Exception("La API devolvió una respuesta vacía.");
-            }
+            EmotionResult resultado =
+                JsonConvert.DeserializeObject<EmotionResult>(resultJson);
 
-            dynamic raw = JsonConvert.DeserializeObject(resultJson);
+            return resultado;
 
-            var result = new EmotionResult
-            {
-                emocion_principal = raw.emocion_principal,
-                emocion_secundaria = raw.emocion_secundaria,
-                scores = new Dictionary<string, double>()
-            };
 
-            foreach (var item in raw.scores)
-            {
-                string nombre = item[0];
-                double valor = Convert.ToDouble(item[1]);
-                result.scores.Add(nombre, valor);
-            }
-
-            if (result == null)
-            {
-                throw new Exception("No se pudo deserializar EmotionResult.");
-            }
-
-            return result;
         }
     }
 }
