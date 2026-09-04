@@ -12,7 +12,7 @@ namespace Data
 {
     public class UserDat
     {
-        public UsuarioSesionDTO Login(string usuario, string passwordHash)
+        public string Login(string usuario, string passwordHash)
         {
             Persistence db = new Persistence();
 
@@ -27,21 +27,13 @@ namespace Data
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
-                        {
-                            return new UsuarioSesionDTO
-                            {
-                                Id = reader["usu_id"].ToString(),
-                                Usuario = reader["usu_nombre_usuario"].ToString(),
-                                Rol = reader["usu_rol"].ToString()
-                            };
-                        }
+                            return reader["usu_rol"].ToString();
 
                         return null;
                     }
                 }
             }
         }
-
 
         public bool RegistrarUsuarioConSalt(
             string id,
@@ -118,5 +110,6 @@ namespace Data
                 }
             }
         }
+
     }
 }

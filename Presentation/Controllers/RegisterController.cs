@@ -18,15 +18,14 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Index(UsuarioViewModel model)
         {
             if (ModelState.IsValid)
             {
                 bool registrado = userLogic.RegistrarUsuario(
-    model.Identificacion, // ID del estudiante
-    model.Usuario,        // Nombre de usuario
-    model.Password,       // Contraseña elegida
+    model.Identificacion, // id
+    model.Usuario,        // usuario
+    model.Identificacion, // identificacion (contraseña)
     model.Nombre,
     model.Apellido
 );

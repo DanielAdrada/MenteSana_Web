@@ -18,8 +18,6 @@ namespace Presentation.Models
         public string Usuario { get; set; }
         public string Contenido { get; set; }
         public DateTime Fecha { get; set; }
-        public string Respuesta { get; set; }
-        public DateTime? FechaRespuesta { get; set; }
 
         // Helper 
         public string Iniciales =>
