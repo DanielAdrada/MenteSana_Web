@@ -37,7 +37,7 @@ namespace Presentation.Controllers
                 return View("Index");
             }
 
-            var resultado = userLogic.IniciarSesion(model.Usuario, model.Identificacion, model.Rol);
+            var resultado = userLogic.IniciarSesion(model.Usuario, model.Password, model.Rol);
 
             if (!resultado.Exitoso)
             {
@@ -60,7 +60,13 @@ namespace Presentation.Controllers
                 return RedirectToAction("Index", "Psychologist");
             }
 
+            else if (resultado.Sesion.Rol.Equals("ADMINISTRADOR", StringComparison.OrdinalIgnoreCase))
+            {
+                return RedirectToAction("Index", "Administrator");
+            }
+
             return RedirectToAction("Index", "Login");
+
 
         }
         // Acción para cerrar sesión

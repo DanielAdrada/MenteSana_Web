@@ -213,11 +213,20 @@ namespace Data
 
             return lista;
         }
+        public int CountComments()
+        {
+            Persistence db = new Persistence();
 
+            using (MySqlConnection conn = db.OpenConnection())
+            {
+                string sql = "SELECT COUNT(*) FROM tbl_comentarios";
 
-
-
-
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                {
+                    return Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+        }
 
     }
 }

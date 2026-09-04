@@ -83,5 +83,10 @@ namespace Logic
             return commentDat.GetComentariosPsicologo();
         }
 
+        public int CountComments()
+        {
+            return commentDat.CountComments();
+        }
+
     }
 }

@@ -11,7 +11,7 @@ namespace Data
     public class ResourcesDat
     {
         // Metodo para agregar un recurso educativo
-        public bool saveResource(string _titulo, string _descripcion, string _tipo, string _archivo, string _url)
+        public bool saveResource(string _titulo, string _descripcion, string _tipo, string _archivo, string _url, string _psiId)
         {
             Persistence db = new Persistence();
 
@@ -27,7 +27,7 @@ namespace Data
                     cmd.Parameters.Add("p_tipo", MySqlDbType.VarChar).Value = _tipo;
                     cmd.Parameters.Add("p_archivo", MySqlDbType.VarChar).Value = _archivo;
                     cmd.Parameters.Add("p_url", MySqlDbType.VarChar).Value = _url;
-
+                    cmd.Parameters.Add("p_psi_id", MySqlDbType.VarChar).Value = _psiId;
                     try
                     {
                         return cmd.ExecuteNonQuery() > 0;
@@ -67,7 +67,19 @@ namespace Data
                                     Tipo = reader["rec_tipo"].ToString(),
                                     Archivo = reader["rec_archivo"].ToString(),
                                     Url = reader["rec_url"].ToString(),
-                                    Fecha = Convert.ToDateTime(reader["rec_fecha"])
+                                    Fecha = Convert.ToDateTime(reader["rec_fecha"]),
+                                    IdPsicologo = reader["rec_psi_id"] == DBNull.Value
+                                        ? null
+                                        : reader["rec_psi_id"].ToString(),
+
+                                    NombrePsicologo = reader["psi_nombre"] == DBNull.Value
+                                        ? null
+                                        : reader["psi_nombre"].ToString(),
+
+                                    ApellidoPsicologo = reader["psi_apellido"] == DBNull.Value
+                                        ? null
+                                        : reader["psi_apellido"].ToString()
+
                                 });
                             }
                         }
@@ -136,6 +148,21 @@ namespace Data
                         Console.WriteLine("Error al eliminar: " + e.Message);
                         return false;
                     }
+                }
+            }
+        }
+
+        public int CountResources()
+        {
+            Persistence db = new Persistence();
+
+            using (MySqlConnection conn = db.OpenConnection())
+            {
+                string sql = "SELECT COUNT(*) FROM tbl_recursos";
+
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                {
+                    return Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
         }

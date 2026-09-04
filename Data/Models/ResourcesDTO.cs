@@ -14,5 +14,10 @@ namespace Data.Models
         public string Archivo { get; set; }
         public string Url { get; set; }
         public DateTime Fecha { get; set; }
+
+        // Información del psicólogo que publicó el recurso
+        public string IdPsicologo { get; set; }
+        public string NombrePsicologo { get; set; }
+        public string ApellidoPsicologo { get; set; }
     }
 }

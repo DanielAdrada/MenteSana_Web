@@ -13,11 +13,11 @@ namespace Presentation.Models
 
         [Required(ErrorMessage = "Ingrese la contraseña")]
         [DataType(DataType.Password)]
-        public string Identificacion { get; set; }
+        public string Password { get; set; }
 
         [Required(ErrorMessage = "Seleccione el tipo de usuario")]
-        [RegularExpression("^(ESTUDIANTE|PSICOLOGO)$",
+        [RegularExpression("^(ESTUDIANTE|PSICOLOGO|ADMINISTRADOR)$",
             ErrorMessage = "Rol inválido")]
-        public string Rol { get; set; } // ESTUDIANTE | PSICOLOGO
+        public string Rol { get; set; } // ESTUDIANTE|PSICOLOGO|ADMINISTRADOR
     }
 }
