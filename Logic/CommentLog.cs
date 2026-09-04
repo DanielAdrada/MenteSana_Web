@@ -59,34 +59,5 @@ namespace Logic
 
             return commentDat.DesactivarComentario(comentarioId);
         }
-
-        public bool ActivarComentario(int comentarioId, string rol)
-        {
-            // Solo psicólogo puede desactivar
-            if (rol != "PSICOLOGO")
-                return false;
-
-            if (comentarioId <= 0)
-                return false;
-
-            return commentDat.ActivarComentario(comentarioId);
-        }
-
-        public bool ResponderComentario(int comentarioId,string respuesta)
-        {
-            return commentDat.ResponderComentario(comentarioId,respuesta);
-        }
-
-
-        public List<CommentDTO> ObtenerComentariosPsicologo()
-        {
-            return commentDat.GetComentariosPsicologo();
-        }
-
-        public int CountComments()
-        {
-            return commentDat.CountComments();
-        }
-
     }
 }

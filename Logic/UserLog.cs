@@ -40,9 +40,9 @@ namespace Logic
         }
 
         // ================= USUARIO =================
-        public LoginResultadoDTO IniciarSesion(string usuario, string password, string rolSeleccionado)
+        public LoginResultadoDTO IniciarSesion(string usuario, string identificacion, string rolSeleccionado)
         {
-            if (string.IsNullOrWhiteSpace(usuario) || string.IsNullOrWhiteSpace(password) ||
+            if (string.IsNullOrWhiteSpace(usuario) || string.IsNullOrWhiteSpace(identificacion) ||
         string.IsNullOrWhiteSpace(rolSeleccionado))
             {
                 return new LoginResultadoDTO
@@ -63,12 +63,17 @@ namespace Logic
                 };
             }
 
-            
-                string hash = HashPassword(password + salt);
+            using (SHA256 sha = SHA256.Create())
+            {
+                byte[] bytes = Encoding.UTF8.GetBytes(identificacion + salt);
+                string hash = BitConverter
+                    .ToString(sha.ComputeHash(bytes))
+                    .Replace("-", "")
+                    .ToLower();
 
-                UsuarioSesionDTO sesion = userDat.Login(usuario, hash);
+                string rol = userDat.Login(usuario, hash);
 
-                if (sesion == null)
+                if (rol == null)
                 {
                     return new LoginResultadoDTO
                     {
@@ -78,7 +83,7 @@ namespace Logic
                 }
 
                 //  VALIDACIÓN DE ROL (REQUERIMIENTO CLAVE)
-                if (!sesion.Rol.Equals(rolSeleccionado, StringComparison.OrdinalIgnoreCase))
+                if (!rol.Equals(rolSeleccionado, StringComparison.OrdinalIgnoreCase))
                 {
                     return new LoginResultadoDTO
                     {
@@ -91,21 +96,26 @@ namespace Logic
                 {
                     Exitoso = true,
                     Mensaje = "¡Bienvenido! Inicio de sesión exitoso.",
-                    Sesion = sesion
+                    Sesion = new UsuarioSesionDTO
+                    {
+                        Id = identificacion,
+                        Usuario = usuario,
+                        Rol = rol
+                    }
                 };
             }
-        
+        }
 
         public bool RegistrarUsuario(
             string id,
             string usuario,
-            string password,
+            string identificacion,
             string nombre,
             string apellido
         )
         {
             string salt = GenerateSalt();
-            string hash = HashPassword(password + salt);
+            string hash = HashPassword(identificacion + salt);
 
             bool creado = userDat.RegistrarUsuarioConSalt(
                 id,
@@ -137,19 +147,6 @@ namespace Logic
                 return false;
 
             return userDat.UpdateUsername(userId, nuevoUsuario);
-        }
-
-        public bool RegisterUser(string id, string usuario, string password, string rol)
-        {
-            string salt = GenerateSalt();
-            string hash = HashPassword(password + salt);
-
-            return userDat.RegistrarUsuarioConSalt(
-                id,
-                usuario,
-                hash,
-                salt,
-                rol);
         }
     }
 }

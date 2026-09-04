@@ -7,17 +7,5 @@ namespace Data.Models
 {
     public class ResourcesDTO
     {
-        public int Id { get; set; }
-        public string Titulo { get; set; }
-        public string Descripcion { get; set; }
-        public string Tipo { get; set; }
-        public string Archivo { get; set; }
-        public string Url { get; set; }
-        public DateTime Fecha { get; set; }
-
-        // Información del psicólogo que publicó el recurso
-        public string IdPsicologo { get; set; }
-        public string NombrePsicologo { get; set; }
-        public string ApellidoPsicologo { get; set; }
     }
 }
