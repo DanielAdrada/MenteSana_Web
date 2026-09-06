@@ -210,6 +210,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\profile.js" />
     <Content Include="Scripts\resources.js" />
+    <Content Include="Scripts\strategies.js" />
     <Content Include="Scripts\student.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

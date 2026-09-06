@@ -154,5 +154,27 @@ namespace Logic
             );
         }
 
+        // Obtiene estrategias activas según el resultado del DASS-42
+        public List<Dictionary<string, object>> ObtenerEstrategiasPorResultado(
+            string dimension,
+            string area,
+            string nivel)
+        {
+            if (string.IsNullOrWhiteSpace(dimension))
+                return new List<Dictionary<string, object>>();
+
+            if (string.IsNullOrWhiteSpace(area))
+                return new List<Dictionary<string, object>>();
+
+            if (string.IsNullOrWhiteSpace(nivel))
+                return new List<Dictionary<string, object>>();
+
+            return strategiesDat.GetEstrategiasPorResultado(
+                dimension.Trim().ToUpper(),
+                area.Trim(),
+                nivel.Trim()
+            );
+        }
+
     }
 }
