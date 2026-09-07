@@ -24,12 +24,13 @@ namespace Presentation.Controllers
             if (ModelState.IsValid)
             {
                 bool registrado = userLogic.RegistrarUsuario(
-    model.Identificacion, // ID del estudiante
-    model.Usuario,        // Nombre de usuario
-    model.Password,       // Contraseña elegida
-    model.Nombre,
-    model.Apellido
-);
+                    model.Identificacion, // ID del estudiante
+                    model.Usuario, // Nombre de usuario
+                    model.Correo,
+                    model.Password,       // Contraseña elegida
+                    model.Nombre,
+                    model.Apellido
+                );
 
 
                 if (registrado)

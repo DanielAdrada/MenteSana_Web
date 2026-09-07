@@ -1,4 +1,4 @@
-﻿console.log("✅ modal.js cargado");
+﻿console.log("🚨🚨🚨 MODAL JS NUEVO - PRUEBA 2026 🚨🚨🚨");
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("✅ DOM cargado");
@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const loginModal = document.getElementById("loginModal");
     const registerModal = document.getElementById("registerModal");
+    const recoveryModal = document.getElementById("recoveryModal");
 
     const pass = document.getElementById("regPassword");
     const confirm = document.getElementById("regConfirmPassword");
@@ -28,6 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const closeLogin = document.getElementById("closeLogin");
     const closeRegister = document.getElementById("closeRegister");
+
+    const openRecovery = document.getElementById("openRecovery");
+    const closeRecovery = document.getElementById("closeRecovery");
+    const backToLogin = document.getElementById("backToLogin");
+
+    console.log("openRecovery:", openRecovery);
+    console.log("recoveryModal:", recoveryModal);
+    console.log("closeRecovery:", closeRecovery);
+    console.log("backToLogin:", backToLogin);
 
     function openModal(modal) {
         if (!modal) return;
@@ -89,10 +99,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     closeLogin?.addEventListener("click", () => closeModal(loginModal));
     closeRegister?.addEventListener("click", () => closeModal(registerModal));
+    openRecovery?.addEventListener("click", () => {
+        closeModal(loginModal);
+        openModal(recoveryModal);
+    });
+
+    closeRecovery?.addEventListener("click", () => {
+        closeModal(recoveryModal);
+    });
+
+    backToLogin?.addEventListener("click", () => {
+        closeModal(recoveryModal);
+        openModal(loginModal);
+    });
 
     window.addEventListener("click", (e) => {
         if (e.target === loginModal) closeModal(loginModal);
         if (e.target === registerModal) closeModal(registerModal);
+        if (e.target === recoveryModal) closeModal(recoveryModal);
     });
 
     document.querySelectorAll(".toggle-password").forEach(button => {
@@ -177,6 +201,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const autoRegister = document.getElementById("openRegisterModalAuto");
     if (autoRegister) {
         openModal(registerModal);
+    }
+
+    const autoRecovery = document.getElementById("openRecoveryModalAuto");
+    if (autoRecovery) {
+        openModal(recoveryModal);
     }
 
 });

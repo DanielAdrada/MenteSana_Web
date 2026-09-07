@@ -43,24 +43,26 @@
 
 
     <!-- Contenedor principal -->
-    <div class="bg-white border border-gray-200 rounded-3xl shadow-md p-8">
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-md p-8">
 
         <div class="flex flex-col md:flex-row md:items-center
                     md:justify-between gap-4 mb-8">
 
             <div>
 
-                <h2 class="text-2xl font-bold text-gray-800">
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-8">
                     Recursos publicados
                 </h2>
 
-                <p class="text-gray-500 mt-1">
+                <p class="text-sm text-gray-500 dark:text-gray-300">
                     Listado de recursos disponibles para los estudiantes.
                 </p>
 
             </div>
 
-            <div class="bg-cyan-50 text-cyan-700 px-5 py-3 rounded-xl font-semibold">
+            <div class="bg-cyan-50 dark:bg-cyan-900/40
+            text-cyan-700 dark:text-cyan-300
+            px-5 py-3 rounded-xl font-semibold">
 
                 <i class="bi bi-collection-play me-2"></i>
 
@@ -80,13 +82,15 @@
 
                 @foreach (var recurso in Model.ListaRecursos)
                 {
-                    <div class="border border-gray-200 rounded-2xl p-6
+                    <div class="border border-gray-200 dark:border-gray-700
+                                bg-white dark:bg-gray-800
+                                rounded-2xl p-6
                                 hover:shadow-lg transition duration-300">
 
                         <!-- Tipo -->
                         <div class="flex justify-between items-center mb-5">
 
-                            <div class="w-12 h-12 rounded-xl bg-slate-100
+                            <div class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-gray-700
                                         flex items-center justify-center text-2xl">
 
                                 @if (recurso.Tipo == "Video")
@@ -113,7 +117,8 @@
                             </div>
 
                             <span class="px-3 py-1 rounded-full
-                                         bg-gray-100 text-gray-600
+                                         bg-gray-100 dark:bg-gray-700
+                                         text-gray-600 dark:text-gray-200
                                          text-sm font-semibold">
 
                                 @recurso.Tipo
@@ -124,13 +129,13 @@
 
 
                         <!-- Información del recurso -->
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">
+                        <h3 class="font-bold text-xl text-gray-800 dark:text-white mb-6">
 
                             @recurso.Titulo
 
                         </h3>
 
-                        <p class="text-sm text-gray-500 mb-5">
+                        <p class="text-sm text-gray-500 dark:text-gray-300">
 
                             @recurso.Descripcion
 
@@ -140,8 +145,7 @@
                         <!-- Psicólogo -->
                         <div class="border-t border-gray-100 pt-4 mb-5">
 
-                            <p class="text-xs uppercase tracking-wide
-                                      text-gray-400 font-semibold mb-1">
+                            <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-300">
 
                                 Publicado por
 
@@ -149,7 +153,7 @@
 
                             @if (!string.IsNullOrWhiteSpace(recurso.NombrePsicologo))
                             {
-                                <p class="font-semibold text-gray-700">
+                                <p class="font-semibold text-gray-700 dark:text-white mb-6">
 
                                     <i class="bi bi-person-badge text-cyan-500 me-1"></i>
 
@@ -158,7 +162,7 @@
 
                                 </p>
 
-                                <p class="text-xs text-gray-400 mt-1">
+                                <p class="text-sm text-gray-500 dark:text-gray-300">
 
                                     ID: @recurso.IdPsicologo
 
@@ -166,7 +170,7 @@
                             }
                             else
                             {
-                                <p class="text-gray-400 italic">
+                                <p class="text-gray-400 italic dark:text-gray-300">
 
                                     Psicólogo no identificado
 
@@ -178,7 +182,7 @@
 
                         <!-- Fecha -->
                         <div class="flex items-center gap-2
-                                    text-sm text-gray-400 mb-5">
+                                    text-sm text-gray-400 mb-5 dark:text-gray-300">
 
                             <i class="bi bi-calendar3"></i>
 
@@ -211,10 +215,11 @@
                                 <a href="@recurso.Url"
                                    target="_blank"
                                    class="block w-full text-center
-                                          border border-cyan-400
-                                          text-cyan-600 hover:bg-cyan-50
-                                          py-2.5 rounded-xl
-                                          font-medium transition">
+                                       border border-cyan-400
+                                       text-cyan-600 dark:text-cyan-300
+                                       hover:bg-cyan-50 dark:hover:bg-cyan-900/30
+                                       py-2.5 rounded-xl
+                                       font-medium transition">
 
                                     <i class="bi bi-box-arrow-up-right me-2"></i>
 
@@ -239,11 +244,11 @@
                     📚
                 </div>
 
-                <h3 class="text-2xl font-bold text-gray-700">
+                <h3 class="text-2xl font-bold text-gray-700 dark:text-white">
                     No hay recursos publicados
                 </h3>
 
-                <p class="text-gray-500 mt-2">
+                <p class="text-gray-500 dark:text-gray-300 mt-2">
                     Cuando un psicólogo publique un recurso,
                     aparecerá aquí.
                 </p>

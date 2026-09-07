@@ -171,39 +171,65 @@
 
                         <!-- Estudiante -->
                         <label class="cursor-pointer">
-                            <input type="radio" name="Rol" value="ESTUDIANTE" class="hidden peer">
-                            <div class="rounded-xl border px-4 py-3 text-center text-sm font-medium
-                transition-all duration-200
-                peer-checked:border-menteGreen
-                peer-checked:bg-menteGreen/10
-                peer-checked:text-menteGreen
-                hover:border-menteGreen">
+                            <input type="radio"
+                                   name="Rol"
+                                   value="ESTUDIANTE"
+                                   class="hidden peer">
+
+                            <div class="h-14 rounded-xl border border-gray-200 px-2
+                        flex items-center justify-center gap-1
+                        text-center text-sm font-medium
+                        whitespace-nowrap
+                        transition-all duration-200
+                        peer-checked:border-menteGreen
+                        peer-checked:bg-menteGreen/10
+                        peer-checked:text-menteGreen
+                        hover:border-menteGreen">
+
                                 🎓 Estudiante
                             </div>
                         </label>
 
+
                         <!-- Psicólogo -->
                         <label class="cursor-pointer">
-                            <input type="radio" name="Rol" value="PSICOLOGO" class="hidden peer">
-                            <div class="rounded-xl border px-4 py-3 text-center text-sm font-medium
-                transition-all duration-200
-                peer-checked:border-menteBlue
-                peer-checked:bg-menteBlue/10
-                peer-checked:text-menteBlue
-                hover:border-menteBlue">
+                            <input type="radio"
+                                   name="Rol"
+                                   value="PSICOLOGO"
+                                   class="hidden peer">
+
+                            <div class="h-14 rounded-xl border border-gray-200 px-2
+                        flex items-center justify-center gap-1
+                        text-center text-sm font-medium
+                        whitespace-nowrap
+                        transition-all duration-200
+                        peer-checked:border-menteBlue
+                        peer-checked:bg-menteBlue/10
+                        peer-checked:text-menteBlue
+                        hover:border-menteBlue">
+
                                 🧠 Psicólogo
                             </div>
                         </label>
 
+
                         <!-- Administrador -->
                         <label class="cursor-pointer">
-                            <input type="radio" name="Rol" value="ADMINISTRADOR" class="hidden peer">
-                            <div class="rounded-xl border px-4 py-3 text-center text-sm font-medium
-                transition-all duration-200
-                peer-checked:border-purple-600
-                peer-checked:bg-purple-100
-                peer-checked:text-purple-700
-                hover:border-purple-600">
+                            <input type="radio"
+                                   name="Rol"
+                                   value="ADMINISTRADOR"
+                                   class="hidden peer">
+
+                            <div class="h-14 rounded-xl border border-gray-200 px-2
+                        flex items-center justify-center gap-1
+                        text-center text-sm font-medium
+                        whitespace-nowrap
+                        transition-all duration-200
+                        peer-checked:border-purple-600
+                        peer-checked:bg-purple-100
+                        peer-checked:text-purple-700
+                        hover:border-purple-600">
+
                                 ⚙️ Administrador
                             </div>
                         </label>
@@ -245,6 +271,15 @@
                     </div>
                 </div>
 
+                <!-- Recuperar contraseña -->
+                <div class="text-center">
+                    <button type="button"
+                            id="openRecovery"
+                            class="text-sm font-medium text-menteBlue hover:underline">
+                        ¿Olvidaste tu contraseña?
+                    </button>
+                </div>
+
                 <!-- Botón -->
                 <button type="submit"
                         class="mt-3 w-full rounded-xl bg-gradient-to-r from-menteGreen to-menteBlue
@@ -255,7 +290,113 @@
         </div>
     </div>
 </div>
+<!-- ================= RECUPERACIÓN DE CONTRASEÑA ================= -->
+<div id="recoveryModal"
+     class="fixed inset-0 z-50 flex items-center justify-center
+       bg-black/50 opacity-0 pointer-events-none transition-all duration-300">
 
+    <div class="modal-box w-full max-w-md rounded-2xl bg-white shadow-2xl
+            transform scale-95 transition-all duration-300">
+
+        <!-- HEADER -->
+        <div class="relative rounded-t-2xl bg-gradient-to-br from-menteGreen to-menteBlue px-6 py-6 text-white">
+
+            <h3 class="text-xl font-bold">
+                Recuperar contraseña 🔑
+            </h3>
+
+            <p class="mt-1 text-sm opacity-90">
+                Ingresa tu correo electrónico para recuperar el acceso a tu cuenta.
+            </p>
+
+            <button id="closeRecovery"
+                    type="button"
+                    class="absolute top-4 right-4 flex h-9 w-9 items-center justify-center
+                       rounded-full bg-red-400 text-white text-lg
+                       hover:bg-red-500 active:scale-95 transition"
+                    aria-label="Cerrar">
+                ✕
+            </button>
+
+        </div>
+
+        <!-- BODY -->
+        <div class="px-6 py-6 space-y-4">
+
+            @if (ViewBag.RecoveryError != null)
+            {
+                <div class="rounded-lg bg-red-100 px-4 py-3 text-sm text-red-700">
+                    ⚠️ @ViewBag.RecoveryError
+                </div>
+            }
+
+            @if (ViewBag.RecoverySuccess != null)
+            {
+                <div class="rounded-lg bg-green-100 px-4 py-3 text-sm text-green-700">
+                    ✅ @ViewBag.RecoverySuccess
+                </div>
+            }
+
+            @using (Html.BeginForm("SolicitarRecuperacion", "Login", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div>
+                    <label class="mb-1 block text-sm font-medium text-gray-700">
+                        Correo electrónico
+                    </label>
+
+                    <input type="email"
+                           name="correo"
+                           placeholder="Ingrese el correo registrado"
+                           required
+                           class="w-full rounded-xl border border-gray-300 px-4 py-3
+                                  focus:border-menteBlue focus:ring-2 focus:ring-menteBlue/30
+                                  outline-none transition" />
+                </div>
+
+                <button type="submit"
+                        class="mt-3 w-full rounded-xl bg-gradient-to-r from-menteGreen to-menteBlue
+                               py-3 font-semibold text-white hover:scale-[1.02]
+                               active:scale-95 transition shadow-lg">
+                    Enviar enlace de recuperación
+                </button>
+            }
+
+            <div class="text-center">
+                <button type="button"
+                        id="backToLogin"
+                        class="text-sm text-gray-600 hover:text-menteBlue hover:underline">
+                    ← Volver al inicio de sesión
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.OpenRecoveryModal == true)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const modal = document.getElementById("recoveryModal");
+
+            if (!modal) return;
+
+            modal.classList.remove("opacity-0", "pointer-events-none");
+
+            modal.classList.add("opacity-100");
+
+            const box = modal.querySelector(".modal-box");
+
+            if (box) {
+                box.classList.remove("scale-95");
+                box.classList.add("scale-100");
+            }
+        });
+    </script>
+}
 
 <!-- ================= REGISTER MODAL ================= -->
 <div id="registerModal"
@@ -329,6 +470,18 @@
                            class="w-full rounded-xl border border-gray-300 px-4 py-3
                   focus:border-menteBlue focus:ring-2 focus:ring-menteBlue/30
                   outline-none transition" />
+                </div>
+
+                <!-- CORREO ELECTRÓNICO -->
+                <div>
+                    <input name="Correo"
+                           type="email"
+                           placeholder="Correo electrónico"
+                           required
+                           autocomplete="email"
+                           class="w-full rounded-xl border border-gray-300 px-4 py-3
+                                  focus:border-menteBlue focus:ring-2 focus:ring-menteBlue/30
+                                  outline-none transition" />
                 </div>
 
                 <!-- Password -->

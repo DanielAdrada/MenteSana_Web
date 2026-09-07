@@ -56,9 +56,9 @@
 
         <div class="lg:col-span-3">
 
-            <div class="bg-white border border-gray-200 rounded-3xl shadow-md p-8">
+            <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-md p-8">
 
-                <h2 class="text-2xl font-bold mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-8">
                     @(Model.IsEditing
       ? "Editar Psicólogo"
       : "Registrar Psicólogo")
@@ -94,7 +94,7 @@
                             {
                                 @Html.TextBoxFor(m => m.Id, new
                                 {
-                                    @class = "border rounded-xl p-3 w-full bg-gray-100",
+                                    @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full",
                                     placeholder = "Identificación",
                                     @readonly = "readonly"
                                 })
@@ -103,7 +103,7 @@
                             {
                                 @Html.TextBoxFor(m => m.Id, new
                                 {
-                                    @class = "border rounded-xl p-3 w-full",
+                                    @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full",
                                     placeholder = "Identificación"
                                 })
                             }
@@ -117,7 +117,7 @@
                         <div>
                             @Html.TextBoxFor(m => m.Usuario, new
                             {
-                                @class = "border rounded-xl p-3 w-full",
+                                @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full",
                                 placeholder = "Usuario"
                             })
                             @Html.ValidationMessageFor(m => m.Usuario, "", new
@@ -127,15 +127,35 @@
                         </div>
 
                         <div>
-                            @Html.PasswordFor(m => m.Password, new
-                            {
-                                @class = "border rounded-xl p-3 w-full",
-                                placeholder = "Contraseña"
-                            })
+                            <label class="block text-sm font-medium text-gray-700 mb-1"></label>
+
+                            <div class="relative">
+
+                                @Html.PasswordFor(m => m.Password, new
+                                {
+                                    @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full",
+                                    placeholder = "Contraseña",
+                                    id = "Password"
+                                })
+
+                                <button type="button"
+                                        id="togglePassword"
+                                        class="absolute inset-y-0 right-0 flex items-center px-4
+                                          text-gray-500 hover:text-cyan-600 transition"
+                                        aria-label="Mostrar contraseña"
+                                        title="Mostrar contraseña">
+
+                                    <i id="passwordIcon" class="bi bi-eye text-lg"></i>
+
+                                </button>
+
+                            </div>
+
                             @Html.ValidationMessageFor(m => m.Password, "", new
                             {
                                 @class = "text-red-500 text-sm"
                             })
+
                         </div>
 
                     </div>
@@ -149,7 +169,7 @@
                         <div>
                             @Html.TextBoxFor(m => m.Nombre, new
                             {
-                                @class = "border rounded-xl p-3 w-full",
+                                @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full",
                                 placeholder = "Nombre"
                             })
                             @Html.ValidationMessageFor(m => m.Nombre, "", new
@@ -161,7 +181,7 @@
                         <div>
                             @Html.TextBoxFor(m => m.Apellido, new
                             {
-                                @class = "border rounded-xl p-3 w-full",
+                                @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full",
                                 placeholder = "Apellido"
                             })
                             @Html.ValidationMessageFor(m => m.Apellido, "", new
@@ -173,7 +193,7 @@
                         <div>
                             @Html.TextBoxFor(m => m.Correo, new
                             {
-                                @class = "border rounded-xl p-3 w-full",
+                                @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full",
                                 placeholder = "Correo institucional",
                                 type = "email"
                             })
@@ -186,7 +206,7 @@
                         <div>
                             @Html.TextBoxFor(m => m.Telefono, new
                             {
-                                @class = "border rounded-xl p-3 w-full",
+                                @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full",
                                 placeholder = "Teléfono"
                             })
                             @Html.ValidationMessageFor(m => m.Telefono, "", new
@@ -204,7 +224,7 @@
                     <div>
                         @Html.TextBoxFor(m => m.Formacion, new
                         {
-                            @class = "border rounded-xl p-3 w-full",
+                            @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full",
                             placeholder = "Formación académica"
                         })
                         @Html.ValidationMessageFor(m => m.Formacion, "", new
@@ -216,7 +236,7 @@
                     <div class="mt-5">
                         @Html.TextAreaFor(m => m.Horario, new
                         {
-                            @class = "border rounded-xl p-3 w-full",
+                            @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full",
                             rows = 4,
                             placeholder = "Horario de atención"
                         })
@@ -235,6 +255,12 @@
                                 <i class="bi bi-save"></i>
                                 Guardar Cambios
                             </button>
+
+                            <a href="@Url.Action("Psychologists", "Administrator")"
+                               class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-3 rounded-xl font-semibold mr-2">
+                                
+                                Cancelar
+                            </a>
                         }
                         else
                         {
@@ -253,7 +279,7 @@
 
         </div>
 
-        <div class="bg-white border border-gray-200 rounded-3xl shadow-md p-6 h-fit">
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-md p-6 h-fit">
 
             <h3 class="font-bold text-xl mb-6">
                 📋 Buenas prácticas
@@ -263,28 +289,28 @@
 
                 <div>
                     <p class="font-semibold">👤 Información completa</p>
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-gray-500 dark:text-gray-300">
                         Verifica los datos antes de registrar al profesional.
                     </p>
                 </div>
 
                 <div>
                     <p class="font-semibold">🔐 Credenciales seguras</p>
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-gray-500 dark:text-gray-300">
                         Entrega el usuario y contraseña únicamente al psicólogo.
                     </p>
                 </div>
 
                 <div>
                     <p class="font-semibold">📞 Contacto actualizado</p>
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-gray-500 dark:text-gray-300">
                         Mantén el correo, teléfono y horario siempre actualizados.
                     </p>
                 </div>
 
                 <div>
                     <p class="font-semibold">🏫 Personal autorizado</p>
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-gray-500 dark:text-gray-300">
                         Solo registra profesionales aprobados por la institución.
                     </p>
                 </div>
@@ -295,28 +321,38 @@
 
     </div>
 
-    <div class="mt-10 bg-white rounded-3xl shadow-md border border-gray-200 p-8">
+    <div id="psychologists"
+         class="mt-10 bg-white dark:bg-gray-800 rounded-3xl shadow-md border border-gray-200 dark:border-gray-700 p-8">
 
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold">
                 Psicólogos registrados
             </h2>
 
-            @using (Html.BeginForm("Psychologists", "Administrator", FormMethod.Get))
-            {
+            <form method="get"
+                  action="@Url.Action("Psychologists", "Administrator")#psychologists">
+
                 <div class="flex gap-2">
+
                     <input type="text"
                            name="search"
                            value="@Request["search"]"
                            placeholder="Buscar psicólogo..."
-                           class="border rounded-xl p-3 w-72" />
+                           class="border border-gray-300 dark:border-gray-600
+                   bg-white dark:bg-gray-700
+                   text-gray-800 dark:text-white
+                   rounded-xl p-3 w-72" />
 
                     <button type="submit"
                             class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 rounded-xl">
+
                         <i class="bi bi-search"></i>
+
                     </button>
+
                 </div>
-            }
+
+            </form>
         </div>
 
         <table class="w-full">
@@ -337,7 +373,7 @@
                 {
                     foreach (var psicologo in Model.Psychologists)
                     {
-                        <tr class="border-b hover:bg-gray-50">
+                        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
 
                             <td class="py-4 font-medium">
                                 @psicologo.Nombre @psicologo.Apellido

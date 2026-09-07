@@ -57,7 +57,7 @@
     <!-- Formulario de edición -->
     @if (Model.IsEditing)
     {
-        <div class="mt-10 bg-white rounded-3xl shadow-md border border-gray-200 p-8">
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-md p-8">
 
             <h2 class="text-2xl font-bold mb-8">
                 Editar Estudiante
@@ -77,7 +77,7 @@
                         @Html.TextBoxFor(m => m.Id,
                             new
                             {
-                                @class = "border rounded-xl p-3 w-full bg-gray-100",
+                                @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full",
                                 @readonly = "readonly"
                             })
                     </div>
@@ -88,7 +88,7 @@
                         @Html.TextBoxFor(m => m.Usuario,
                             new
                             {
-                                @class = "border rounded-xl p-3 w-full bg-gray-100",
+                                @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full",
                                 @readonly = "readonly"
                             })
                     </div>
@@ -99,7 +99,7 @@
                         @Html.TextBoxFor(m => m.Nombre,
                             new
                             {
-                                @class = "border rounded-xl p-3 w-full"
+                                @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full"
                             })
 
                         @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-red-500 text-sm" })
@@ -111,7 +111,7 @@
                         @Html.TextBoxFor(m => m.Apellido,
                             new
                             {
-                                @class = "border rounded-xl p-3 w-full"
+                                @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full"
                             })
 
                         @Html.ValidationMessageFor(m => m.Apellido, "", new { @class = "text-red-500 text-sm" })
@@ -143,7 +143,7 @@
     }
 
     <!-- Tabla -->
-    <div class="mt-10 bg-white rounded-3xl shadow-md border border-gray-200 p-8">
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-md p-8">
 
         <div class="flex justify-between items-center mb-6">
 
@@ -159,7 +159,10 @@
                            name="search"
                            value="@Request["search"]"
                            placeholder="Buscar estudiante..."
-                           class="border rounded-xl p-3 w-72" />
+                           class="border border-gray-300 dark:border-gray-600
+                               bg-white dark:bg-gray-700
+                               text-gray-800 dark:text-white
+                               rounded-xl p-3 w-72" />
 
                     <button type="submit"
                             class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 rounded-xl">
@@ -196,7 +199,7 @@
                 {
                     foreach (var estudiante in Model.Students)
                     {
-                        <tr class="border-b hover:bg-gray-50">
+                        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
 
                             <td class="py-4">
                                 @estudiante.Id

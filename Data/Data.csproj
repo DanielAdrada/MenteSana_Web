@@ -124,8 +124,10 @@
     <Compile Include="Models\PsychologistDTO.cs" />
     <Compile Include="Models\LoginResultadoDTO.cs" />
     <Compile Include="Models\ProfileDTO.cs" />
+    <Compile Include="Models\RecuperacionContrasenaDTO.cs" />
     <Compile Include="Models\ResourcesDTO.cs" />
     <Compile Include="Models\StudentDTO.cs" />
+    <Compile Include="Models\UsuarioRecuperacionDTO.cs" />
     <Compile Include="Models\UsuarioSesionDTO.cs" />
     <Compile Include="Persistence.cs" />
     <Compile Include="ProfileDat.cs" />

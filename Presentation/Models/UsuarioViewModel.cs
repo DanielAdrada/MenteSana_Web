@@ -12,6 +12,12 @@ namespace Presentation.Models
         [Display(Name = "Usuario")]
         public string Usuario { get; set; }
 
+        [Required(ErrorMessage = "El correo electrónico es obligatorio.")]
+        [EmailAddress(ErrorMessage = "Ingresa un correo electrónico válido.")]
+        [StringLength(100)]
+        [Display(Name = "Correo electrónico")]
+        public string Correo { get; set; }
+
         [Required]
         [StringLength(20)]
         [Display(Name = "Identificación")]
