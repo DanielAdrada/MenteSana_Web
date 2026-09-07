@@ -41,14 +41,6 @@ namespace Presentation.Controllers
         }
 
 
-        // Muestra el formulario para crear una estrategia
-        [HttpGet]
-        public ActionResult Crear()
-        {
-            return View();
-        }
-
-
         // Guarda una nueva estrategia
         [HttpPost]
         public ActionResult Crear(
@@ -60,7 +52,7 @@ namespace Presentation.Controllers
         {
             try
             {
-                string usuId = Session["usu_id"]?.ToString();
+                string usuId = Session["UserId"]?.ToString();
 
                 if (string.IsNullOrWhiteSpace(usuId))
                 {
@@ -102,49 +94,6 @@ namespace Presentation.Controllers
             }
         }
 
-
-        // Muestra el formulario para editar
-        [HttpGet]
-        public ActionResult Editar(int id)
-        {
-            try
-            {
-                var datos = strategiesLogic.ObtenerEstrategias();
-
-                Dictionary<string, object> estrategia = null;
-
-                foreach (var item in datos)
-                {
-                    if (item.ContainsKey("estrategia_id") &&
-                        Convert.ToInt32(item["estrategia_id"]) == id)
-                    {
-                        estrategia = item;
-                        break;
-                    }
-                }
-
-                if (estrategia == null)
-                {
-                    TempData["Error"] =
-                        "La estrategia no existe.";
-
-                    return RedirectToAction("Index");
-                }
-
-                StrategiesViewModel modelo =
-                    ConvertirEstrategia(estrategia);
-
-                return View(modelo);
-            }
-            catch (Exception ex)
-            {
-                TempData["Error"] =
-                    "Ocurrió un error al cargar la estrategia: " +
-                    ex.Message;
-
-                return RedirectToAction("Index");
-            }
-        }
 
 
         // Actualiza una estrategia

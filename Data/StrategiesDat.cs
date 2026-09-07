@@ -124,7 +124,7 @@ namespace Data
             using (MySqlConnection conn = db.OpenConnection())
             {
                 using (MySqlCommand cmd =
-                    new MySqlCommand("proCambiarEstadoEstrategia", conn))
+                    new MySqlCommand("proEstadoEstrategia", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -273,5 +273,67 @@ namespace Data
             }
             return historial;
         }
+
+
+        // Obtiene las estrategias activas que corresponden al resultado del DASS-42
+        public List<Dictionary<string, object>> GetEstrategiasPorResultado(
+            string _dimension,
+            string _area,
+            string _nivel)
+        {
+            Persistence db = new Persistence();
+
+            List<Dictionary<string, object>> estrategias =
+                new List<Dictionary<string, object>>();
+
+            using (MySqlConnection conn = db.OpenConnection())
+            {
+                using (MySqlCommand cmd =
+                    new MySqlCommand("proGetEstrategiasRecomendadas", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("p_dimension", MySqlDbType.VarChar).Value =
+                        _dimension;
+
+                    cmd.Parameters.Add("p_area", MySqlDbType.VarChar).Value =
+                        _area;
+
+                    cmd.Parameters.Add("p_nivel", MySqlDbType.VarChar).Value =
+                        _nivel;
+
+                    try
+                    {
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Dictionary<string, object> estrategia =
+                                    new Dictionary<string, object>();
+
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    estrategia[reader.GetName(i)] =
+                                        reader.IsDBNull(i)
+                                            ? null
+                                            : reader.GetValue(i);
+                                }
+
+                                estrategias.Add(estrategia);
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(
+                            "Error al obtener estrategias por resultado: "
+                            + e.Message);
+                    }
+                }
+            }
+
+            return estrategias;
+        }
+
     }
 }

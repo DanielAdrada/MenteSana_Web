@@ -1,6 +1,7 @@
 ﻿@model List<Presentation.Models.StrategiesViewModel>
 
 @{
+    Layout = "~/Views/Shared/_PsychologistLayout.cshtml";
     ViewBag.Title = "Gestión de estrategias";
 }
 
@@ -20,11 +21,6 @@
                     Administra las estrategias disponibles para los estudiantes.
                 </p>
             </div>
-
-            <a href="@Url.Action("Crear", "Strategies")"
-               class="bg-blue-600 text-white px-5 py-3 rounded-xl font-semibold hover:bg-blue-700">
-                + Agregar estrategia
-            </a>
 
         </div>
 
@@ -46,6 +42,125 @@
             </div>
         }
 
+        <!-- FORMULARIO DE ESTRATEGIA -->
+        <div class="bg-gray-50 rounded-2xl p-6 mb-8">
+
+            <h2 id="tituloFormulario"
+                class="text-xl font-bold text-gray-800 mb-5">
+                ➕ Nueva estrategia
+            </h2>
+
+            <form id="formEstrategia" action="@Url.Action("Crear", "Strategies")" method="post">
+
+                <div class="grid md:grid-cols-3 gap-5">
+
+                    <!-- Dimensión -->
+                    <div>
+                        <label for="dimension" class="block text-sm font-semibold mb-2">
+                            Dimensión
+                        </label>
+
+                        <select id="dimension"
+                                name="dimension"
+                                class="w-full border rounded-xl px-4 py-3"
+                                required
+                                onchange="cargarAreas()">
+
+                            <option value="">Seleccione una dimensión</option>
+                            <option value="DEPRESION">Depresión</option>
+                            <option value="ANSIEDAD">Ansiedad</option>
+                            <option value="ESTRES">Estrés</option>
+
+                        </select>
+                    </div>
+
+                    <!-- Área -->
+                    <div>
+                        <label for="area" class="block text-sm font-semibold mb-2">
+                            Área
+                        </label>
+
+                        <select id="area"
+                                name="area"
+                                class="w-full border rounded-xl px-4 py-3"
+                                required>
+
+                            <option value="">Seleccione primero una dimensión</option>
+
+                        </select>
+                    </div>
+
+                    <!-- Nivel -->
+                    <div>
+                        <label for="nivel" class="block text-sm font-semibold mb-2">
+                            Nivel
+                        </label>
+
+                        <select id="nivel"
+                                name="nivel"
+                                class="w-full border rounded-xl px-4 py-3"
+                                required>
+
+                            <option value="">Seleccione un nivel</option>
+                            <option value="Normal">Normal</option>
+                            <option value="Leve">Leve</option>
+                            <option value="Moderado">Moderado</option>
+                            <option value="Severo">Severo</option>
+                            <option value="Extremadamente Severo">
+                                Extremadamente Severo
+                            </option>
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- Título -->
+                <div class="mt-5">
+
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Título
+                    </label>
+
+                    <input type="text"
+                           id="titulo"
+                           name="titulo"
+                           class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           placeholder="Título de la estrategia"
+                           required />
+
+                </div>
+
+                <!-- Descripción -->
+                <div class="mt-5">
+
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Descripción
+                    </label>
+
+                    <textarea id="descripcion"
+                              name="descripcion"
+                              rows="4"
+                              class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              placeholder="Describe la estrategia que se aplicará al estudiante..."
+                              required></textarea>
+
+                </div>
+
+                <!-- Botón -->
+                <div class="mt-5 flex justify-end">
+
+                    <button id="btnGuardar"
+                            type="submit"
+                            class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">
+                        Guardar estrategia
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
 
         <!-- Tabla -->
         @if (Model != null && Model.Any())
@@ -128,15 +243,18 @@
                                     <div class="flex justify-center gap-2">
 
                                         <!-- Editar -->
-                                        <a href="@Url.Action(
-                                            "Editar",
-                                            "Strategies",
-                                            new { id = estrategia.EstrategiaId }
-                                        )"
-                                           class="bg-yellow-500 text-white px-3 py-2 rounded-lg hover:bg-yellow-600">
+                                        <button type="button"
+                                                onclick="editarEstrategia(
+                                                    @estrategia.EstrategiaId,
+                                                    '@Html.Raw(HttpUtility.JavaScriptStringEncode(estrategia.Dimension ?? ""))',
+                                                    '@Html.Raw(HttpUtility.JavaScriptStringEncode(estrategia.Area ?? ""))',
+                                                    '@Html.Raw(HttpUtility.JavaScriptStringEncode(estrategia.Nivel ?? ""))',
+                                                    '@Html.Raw(HttpUtility.JavaScriptStringEncode(estrategia.Titulo ?? ""))',
+                                                    '@Html.Raw(HttpUtility.JavaScriptStringEncode(estrategia.Descripcion ?? ""))'
+                                                )"
+                                                class="bg-yellow-500 text-white px-3 py-2 rounded-lg hover:bg-yellow-600">
                                             Editar
-                                        </a>
-
+                                        </button>
 
                                         <!-- Activar / Desactivar -->
                                         <form action="@Url.Action(
@@ -192,11 +310,6 @@
                     No hay estrategias registradas.
                 </p>
 
-                <a href="@Url.Action("Crear", "Strategies")"
-                   class="inline-block mt-4 bg-blue-600 text-white px-5 py-3 rounded-xl">
-                    Agregar la primera estrategia
-                </a>
-
             </div>
         }
 
@@ -204,3 +317,6 @@
 
 </div>
 
+@section Scripts {
+    <script src="~/Scripts/strategies.js"></script>
+}
