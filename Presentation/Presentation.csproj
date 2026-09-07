@@ -165,6 +165,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\admin.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -209,6 +210,7 @@
     <Content Include="Scripts\modal.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\profile.js" />
+    <Content Include="Scripts\RecuperarContrasena.js" />
     <Content Include="Scripts\resources.js" />
     <Content Include="Scripts\strategies.js" />
     <Content Include="Scripts\student.js" />
@@ -247,6 +249,7 @@
     <Content Include="Views\Administrator\Psychologists.cshtml" />
     <Content Include="Views\Administrator\Students.cshtml" />
     <Content Include="Views\Administrator\Resources.cshtml" />
+    <Content Include="Views\Login\RecuperarContrasena.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

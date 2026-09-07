@@ -51,14 +51,42 @@ namespace Presentation.Controllers
 
             if (!string.IsNullOrWhiteSpace(search))
             {
-                search = search.ToLower();
+                search = search.Trim();
+
+                // Permite buscar utilizando varias palabras.
+                // Ejemplo: "Juan Pérez"
+                var searchTerms = search
+                    .ToLower()
+                    .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
                 psychologists = psychologists
                     .Where(p =>
-                        p.Id.ToLower().Contains(search) ||
-                        p.Nombre.ToLower().Contains(search) ||
-                        p.Apellido.ToLower().Contains(search) ||
-                        p.Correo.ToLower().Contains(search))
+                    {
+                        string id = (p.Id ?? "").ToLower();
+                        string nombre = (p.Nombre ?? "").ToLower();
+                        string apellido = (p.Apellido ?? "").ToLower();
+                        string correo = (p.Correo ?? "").ToLower();
+                        string telefono = (p.Telefono ?? "").ToLower();
+                        string formacion = (p.Formacion ?? "").ToLower();
+                        string horario = (p.Horario ?? "").ToLower();
+
+                        // Nombre completo
+                        string nombreCompleto =
+                            (nombre + " " + apellido).Trim();
+
+                        // Todas las palabras escritas deben
+                        // coincidir con alguno de los datos.
+                        return searchTerms.All(term =>
+                            id.Contains(term) ||
+                            nombre.Contains(term) ||
+                            apellido.Contains(term) ||
+                            correo.Contains(term) ||
+                            telefono.Contains(term) ||
+                            formacion.Contains(term) ||
+                            horario.Contains(term) ||
+                            nombreCompleto.Contains(term)
+                        );
+                    })
                     .ToList();
             }
 
@@ -138,14 +166,36 @@ namespace Presentation.Controllers
 
             if (!string.IsNullOrWhiteSpace(search))
             {
-                search = search.ToLower();
+                search = search.Trim();
+
+                // Permite buscar por varias palabras
+                // Ejemplo: "Juan Pérez"
+                var searchTerms = search
+                    .ToLower()
+                    .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
                 students = students
                     .Where(s =>
-                        s.Id.ToLower().Contains(search) ||
-                        s.Nombre.ToLower().Contains(search) ||
-                        s.Apellido.ToLower().Contains(search) ||
-                        s.Usuario.ToLower().Contains(search))
+                    {
+                        string id = (s.Id ?? "").ToLower();
+                        string usuario = (s.Usuario ?? "").ToLower();
+                        string nombre = (s.Nombre ?? "").ToLower();
+                        string apellido = (s.Apellido ?? "").ToLower();
+
+                        // Nombre completo
+                        string nombreCompleto =
+                            (nombre + " " + apellido).Trim();
+
+                        // Todas las palabras deben encontrarse
+                        // en alguno de los datos del estudiante.
+                        return searchTerms.All(term =>
+                            id.Contains(term) ||
+                            usuario.Contains(term) ||
+                            nombre.Contains(term) ||
+                            apellido.Contains(term) ||
+                            nombreCompleto.Contains(term)
+                        );
+                    })
                     .ToList();
             }
 
@@ -272,6 +322,7 @@ namespace Presentation.Controllers
             bool usuarioCreado = userLog.RegisterUser(
                 model.Id,
                 model.Usuario,
+                model.Correo,
                 model.Password,
                 "PSICOLOGO"
             );

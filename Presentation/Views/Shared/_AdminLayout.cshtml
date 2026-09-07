@@ -16,6 +16,7 @@
 
     <script src="~/Scripts/site.js"></script>
     <script src="~/Scripts/resources.js"></script>
+    <script src="~/Scripts/admin.js"></script>
 
 
     <script>
@@ -82,18 +83,16 @@
                    class="hover:text-secondary dark:hover:text-secondary transition-colors">
                     Recursos
                 </a>
-
-                <a href="@Url.Action("Reports","Administrator")"
-                   class="hover:text-secondary dark:hover:text-secondary transition-colors">
-                    Reportes
-                </a>
-
             </nav>
 
             <!-- Actions -->
             <div class="flex items-center gap-4">
 
-                <button id="themeToggle" class="text-xl">
+                <button id="themeToggle"
+                        type="button"
+                        class="text-xl"
+                        title="Cambiar tema"
+                        aria-label="Cambiar tema">
                     🌓
                 </button>
 

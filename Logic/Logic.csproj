@@ -124,6 +124,7 @@
   <ItemGroup>
     <Compile Include="CommentLog.cs" />
     <Compile Include="DassLogic.cs" />
+    <Compile Include="EmailService.cs" />
     <Compile Include="Models\EmotionResult.cs" />
     <Compile Include="Models\Estrategia.cs" />
     <Compile Include="ProfileLog.cs" />
