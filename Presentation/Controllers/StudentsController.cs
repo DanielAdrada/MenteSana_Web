@@ -20,11 +20,17 @@ namespace Presentation.Controllers
 
             ProfileLog profileLogic = new ProfileLog();
             CommentLog commentLog = new CommentLog();
+            ResourceLog resourcesLog = new ResourceLog();
 
             var model = new StudentHomeViewModel
             {
                 Perfil = profileLogic.GetProfile(id),
-                Comentarios = commentLog.ObtenerComentariosPositivos()
+                Comentarios = commentLog.ObtenerComentariosPositivos(),
+                Recursos = resourcesLog.ObtenerRecursos()
+                           .OrderByDescending(r => r.Fecha)
+                           .Take(3)
+                           .ToList()
+
             };
 
 
