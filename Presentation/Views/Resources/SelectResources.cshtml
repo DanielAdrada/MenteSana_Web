@@ -41,120 +41,150 @@
     </div>
 
 
-    <!-- Barra superior -->
-    <div class="bg-white rounded-2xl shadow-sm p-5 mb-8">
-        <div class="flex flex-col lg:flex-row gap-5 justify-between items-center">
-            <div class="flex flex-wrap gap-3">
-                <button class="filtro-btn active" onclick="filtrarRecursos('Todos', this)">
-                    📚 Todos
-                </button>
-
-                <button class="filtro-btn" onclick="filtrarRecursos('Video', this)">
-                    🎬 Videos
-                </button>
-
-                <button class="filtro-btn" onclick="filtrarRecursos('Documento', this)">
-                    📄 Documentos
-                </button>
-
-                <button class="filtro-btn" onclick="filtrarRecursos('Imagen', this)">
-                    🖼 Imágenes
-                </button>
-
-                <button class="filtro-btn" onclick="filtrarRecursos('URL', this)">
-                    🔗 Enlaces
-                </button>
-            </div>
-
-            <input type="text"
-                   id="buscarRecurso"
-                   placeholder="🔍 Buscar recurso..."
-                   onkeyup="buscarRecursos()"
-                   class="w-80 rounded-xl border px-4 py-3" />
-        </div>
-    </div>
-
-
     <!-- Tarjetas -->
-    <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
-        @foreach (var item in Model.ListaRecursos)
-        {
-            <div class="recurso-card bg-white rounded-3xl shadow-sm hover:shadow-xl transition duration-300 p-6 flex flex-col justify-between"
-                 data-tipo="@item.Tipo"
-                 data-titulo="@item.Titulo"
-                 data-descripcion="@item.Descripcion">
-                <div>
-                    <div class="flex justify-between items-center mb-4">
-                        <div class="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center text-3xl">
-                            @if (item.Tipo == "Video")
-                            {<i class="bi bi-play-circle-fill text-red-500"></i>}
-                            else if (item.Tipo == "Documento")
-                            {<i class="bi bi-file-earmark-text-fill text-blue-600"></i>}
-                            else if (item.Tipo == "Imagen")
-                            {<i class="bi bi-image-fill text-emerald-500"></i>}
-                            else if (item.Tipo == "URL")
-                            {<i class="bi bi-link-45deg text-cyan-500"></i>}
+    @if (Model.ListaRecursos != null && Model.ListaRecursos.Any())
+    {
+        <!-- Barra superior -->
+        <div class="bg-white rounded-2xl shadow-sm p-5 mb-8">
+            <div class="flex flex-col lg:flex-row gap-5 justify-between items-center">
+                <div class="flex flex-wrap gap-3">
+                    <button class="filtro-btn active" onclick="filtrarRecursos('Todos', this)">
+                        📚 Todos
+                    </button>
+
+                    <button class="filtro-btn" onclick="filtrarRecursos('Video', this)">
+                        🎬 Videos
+                    </button>
+
+                    <button class="filtro-btn" onclick="filtrarRecursos('Documento', this)">
+                        📄 Documentos
+                    </button>
+
+                    <button class="filtro-btn" onclick="filtrarRecursos('Imagen', this)">
+                        🖼 Imágenes
+                    </button>
+
+                    <button class="filtro-btn" onclick="filtrarRecursos('URL', this)">
+                        🔗 Enlaces
+                    </button>
+                </div>
+
+                <input type="text"
+                       id="buscarRecurso"
+                       placeholder="🔍 Buscar recurso..."
+                       onkeyup="buscarRecursos()"
+                       class="w-80 rounded-xl border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-cyan-300" />
+            </div>
+        </div>
+
+
+        <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+            @foreach (var item in Model.ListaRecursos)
+            {
+                <div class="recurso-card bg-white rounded-3xl shadow-sm hover:shadow-xl transition duration-300 p-6 flex flex-col justify-between"
+                     data-tipo="@item.Tipo"
+                     data-titulo="@item.Titulo"
+                     data-descripcion="@item.Descripcion">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center text-3xl">
+                                @if (item.Tipo == "Video")
+                                {<i class="bi bi-play-circle-fill text-red-500"></i>}
+                                else if (item.Tipo == "Documento")
+                                {<i class="bi bi-file-earmark-text-fill text-blue-600"></i>}
+                                else if (item.Tipo == "Imagen")
+                                {<i class="bi bi-image-fill text-emerald-500"></i>}
+                                else if (item.Tipo == "URL")
+                                {<i class="bi bi-link-45deg text-cyan-500"></i>}
+                            </div>
+
+                            @{
+                                string colorTipo = "bg-slate-100 text-slate-600";
+
+                                if (item.Tipo == "Video")
+                                {
+                                    colorTipo = "bg-transparent border border-red-500 text-red-600";
+                                }
+                                else if (item.Tipo == "Documento")
+                                {
+                                    colorTipo = "bg-transparent border border-blue-500 text-blue-600";
+                                }
+                                else if (item.Tipo == "Imagen")
+                                {
+                                    colorTipo = "bg-transparent border border-emerald-500 text-emerald-600";
+                                }
+                                else if (item.Tipo == "URL")
+                                {
+                                    colorTipo = "bg-transparent border border-cyan-500 text-cyan-600";
+                                }
+                            }
+
+                            <span class="@colorTipo text-sm px-4 py-2 rounded-full fw-semibold">
+                                @item.Tipo
+                            </span>
+
                         </div>
 
-                        @{
-                            string colorTipo = "bg-slate-100 text-slate-600";
-
-                            if (item.Tipo == "Video")
-                            {
-                                colorTipo = "bg-transparent border border-red-500 text-red-600";
-                            }
-                            else if (item.Tipo == "Documento")
-                            {
-                                colorTipo = "bg-transparent border border-blue-500 text-blue-600";
-                            }
-                            else if (item.Tipo == "Imagen")
-                            {
-                                colorTipo = "bg-transparent border border-emerald-500 text-emerald-600";
-                            }
-                            else if (item.Tipo == "URL")
-                            {
-                                colorTipo = "bg-transparent border border-cyan-500 text-cyan-600";
-                            }
-                        }
-
-                    <span class="@colorTipo text-sm px-4 py-2 rounded-full fw-semibold">
-                        @item.Tipo
-                    </span>
-
+                        <h3 class="font-bold text-xl text-slate-800 mb-3">@item.Titulo</h3>
+                        <p class="text-slate-500 text-sm mb-5">@item.Descripcion</p>
                     </div>
 
-                    <h3 class="font-bold text-xl text-slate-800 mb-3">@item.Titulo</h3>
-                    <p class="text-slate-500 text-sm mb-5">@item.Descripcion</p>
+                    <div class="space-y-3">
+                        @if (!string.IsNullOrEmpty(item.Archivo))
+                        {
+                            <a href="@Url.Content("~/Uploads/" + item.Archivo)"
+                               target="_blank"
+                               class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white py-2.5 rounded-xl font-medium transition">
+
+                                <i class="bi bi-download me-2"></i>
+                                Abrir archivo
+
+                            </a>
+                        }
+                        @if (!string.IsNullOrEmpty(item.Url))
+                        {
+                            <a href="@item.Url"
+                               target="_blank"
+                               class="block w-full text-center border border-sky-400 text-sky-600 hover:bg-sky-50 py-2.5 rounded-xl font-medium transition">
+
+                                <i class="bi bi-box-arrow-up-right me-2"></i>
+                                Visitar enlace
+
+                            </a>
+                        }
+                    </div>
                 </div>
+            }
 
-                <div class="space-y-3">
-                    @if (!string.IsNullOrEmpty(item.Archivo))
-                    {
-                        <a href="@Url.Content("~/Uploads/" + item.Archivo)"
-                           target="_blank"
-                           class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white py-2.5 rounded-xl font-medium transition">
+        </div>
+    }
 
-                            <i class="bi bi-download me-2"></i>
-                            Abrir archivo
+    else
 
-                        </a>
-                    }
-                    @if (!string.IsNullOrEmpty(item.Url))
-                    {
-                        <a href="@item.Url"
-                           target="_blank"
-                           class="block w-full text-center border border-sky-400 text-sky-600 hover:bg-sky-50 py-2.5 rounded-xl font-medium transition">
+    {
+        <div class="col-span-full flex flex-col items-center justify-center
+                      py-10 px-6 rounded-2xl
+                      bg-gradient-to-br from-blue-50 via-white to-emerald-50
+                      dark:from-slate-700 dark:via-slate-800 dark:to-slate-700
+                      border border-blue-100 dark:border-slate-600">
 
-                            <i class="bi bi-box-arrow-up-right me-2"></i>
-                            Visitar enlace
-
-                        </a>
-                    }
-                </div>
+            <div class="text-5xl mb-5">
+                📚
             </div>
-        }
 
-    </div>
+            <h3 class="text-xl font-bold text-slate-700">
+                No hay recursos publicados
+            </h3>
+
+            <p class="text-sm text-slate-500 mt-2 max-w-md">
+                En este momento no hay recursos disponibles.
+                Vuelve pronto para descubrir nuevo contenido para tu bienestar.
+            </p>
+
+        </div>
+    }
+
 
     <div id="sinResultados" class="hidden text-center py-10">
 

@@ -78,9 +78,28 @@
         <!-- RECURSOS -->
         <section class="bg-card dark:bg-slate-800 rounded-xl2 shadow-soft p-[18px]">
 
-            <h3 class="text-secondary dark:text-secondary font-semibold mb-4">
-                🎯 Recursos para ti hoy
-            </h3>
+            <div class="flex items-center justify-between mb-5">
+
+                <div class="flex items-center gap-3">
+
+                    <div class="w-11 h-11 rounded-2xl bg-blue-100 dark:bg-blue-900/40
+                    flex items-center justify-center text-xl shadow-sm">
+                        🎯
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-deep dark:text-white">
+                            Recursos para ti hoy
+                        </h3>
+
+                        <p class="text-sm text-muted dark:text-gray-300 mt-0.5">
+                            Contenido para acompañarte en tu bienestar emocional.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
 
             <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-4">
 
@@ -107,21 +126,33 @@
                                 @if (recurso.Tipo != null &&
                                      recurso.Tipo.ToLower() == "video")
                                 {
-                                    <span class="text-4xl">🎥</span>
+                                    <div class="w-14 h-14 mx-auto rounded-2xl bg-red-100 dark:bg-red-900/30
+                                               flex items-center justify-center text-3xl shadow-sm">
+                                        🎥
+                                    </div>
                                 }
                                 else if (recurso.Tipo != null &&
                                          recurso.Tipo.ToLower() == "documento")
                                 {
-                                    <span class="text-4xl">📄</span>
+                                    <div class="w-14 h-14 mx-auto rounded-2xl bg-blue-100 dark:bg-blue-900/30
+                                                flex items-center justify-center text-3xl shadow-sm">
+                                        📄
+                                    </div>
                                 }
                                 else if (recurso.Tipo != null &&
                                          recurso.Tipo.ToLower() == "imagen")
                                 {
-                                    <span class="text-4xl">🖼️</span>
+                                    <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-100 dark:bg-purple-900/30
+                                                flex items-center justify-center text-3xl shadow-sm">
+                                        🖼️
+                                    </div>
                                 }
                                 else
                                 {
-                                    <span class="text-4xl">🔗</span>
+                                    <div class="w-14 h-14 mx-auto rounded-2xl bg-emerald-100 dark:bg-emerald-900/30
+                                                flex items-center justify-center text-3xl shadow-sm">
+                                        🔗
+                                    </div>
                                 }
 
                                 <strong class="block text-deep dark:text-white text-lg mt-2">
@@ -165,9 +196,31 @@
                 }
                 else
                 {
-                    <p class="text-sm text-muted dark:text-gray-300">
-                        No hay recursos publicados actualmente.
-                    </p>
+                    <div class="col-span-full flex flex-col items-center justify-center
+                      py-10 px-6 rounded-2xl
+                      bg-gradient-to-br from-blue-50 via-white to-emerald-50
+                      dark:from-slate-700 dark:via-slate-800 dark:to-slate-700
+                      border border-blue-100 dark:border-slate-600">
+
+                        <div class="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900/40
+                         flex items-center justify-center text-3xl shadow-sm mb-4">
+                            📚
+                        </div>
+
+                        <h4 class="text-lg font-bold text-deep dark:text-white">
+                            Aún no hay recursos disponibles
+                        </h4>
+
+                        <p class="text-sm text-muted dark:text-gray-300 text-center
+                         max-w-md mt-2">
+                            Muy pronto podrás descubrir contenido para aprender sobre tus emociones y cuidar de tu bienestar.
+                        </p>
+
+                        <span class="mt-4 text-xs text-gray-400 dark:text-gray-400">
+                            💙 Vuelve pronto
+                        </span>
+
+                    </div>
                 }
 
             </div>
@@ -175,44 +228,97 @@
         </section>
         <!-- COMUNIDAD -->
         <aside class="bg-card dark:bg-slate-800 rounded-xl2 shadow-soft p-[18px]">
-            <h3 class="text-secondary dark:text-secondary font-semibold mb-2">
-                💬 Comunidad segura
-            </h3>
+            <div class="flex items-center gap-3 mb-5">
 
-            <p class="text-sm text-muted dark:text-gray-300 mb-4">
-                Lo que otros estudiantes han compartido 💙
-            </p>
+                <div class="w-11 h-11 rounded-2xl bg-emerald-100 dark:bg-emerald-900/40
+                flex items-center justify-center text-xl shadow-sm">
+                    💬
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold text-deep dark:text-white">
+                        Comunidad segura
+                    </h3>
+
+                    <p class="text-sm text-muted dark:text-gray-300 mt-0.5">
+                        Un espacio para compartir y sentirse acompañado.
+                    </p>
+                </div>
+
+            </div>
 
             <div class="space-y-3">
+
                 @if (Model.Comentarios != null && Model.Comentarios.Any())
                 {
-                    foreach (var item in Model.Comentarios.Take(3))
+                    foreach (var item in Model.Comentarios.Take(2))
 
                     {
                         <div class="bg-gradient-to-br from-gray-50 to-white
-            dark:from-slate-700 dark:to-slate-800
-            rounded-2xl p-4 border border-gray-200 dark:border-slate-600
-            hover:shadow-md transition">
-                            <strong class="text-deep dark:text-white">
-                                @item.Usuario
-                            </strong>
+                                    dark:from-slate-700 dark:to-slate-800
+                                    rounded-2xl p-4
+                                    border border-gray-200 dark:border-slate-600
+                                    hover:shadow-md hover:-translate-y-0.5
+                                    transition-all duration-300">
 
-                            <p class="text-sm text-gray-700 dark:text-gray-200 mt-1">
-                                @item.Contenido
-                            </p>
+                            <div class="flex items-start gap-3">
 
-                            <span class="text-xs text-gray-400 dark:text-gray-300">
-                                @item.Fecha.ToString("dd/MM/yyyy")
-                            </span>
+                                <div class="w-9 h-9 flex-shrink-0 rounded-full
+                                            bg-blue-100 dark:bg-blue-900/40
+                                            flex items-center justify-center
+                                            text-sm font-bold text-blue-600 dark:text-blue-300">
+                                            💙
+                                </div>
+
+                                <div class="min-w-0 flex-1">
+
+                                    <strong class="block text-deep dark:text-white text-sm">
+                                        @item.Usuario
+                                    </strong>
+
+                                    <p class="text-sm text-gray-700 dark:text-gray-200 mt-1 leading-relaxed">
+                                        @item.Contenido
+                                    </p>
+
+                                    <span class="block text-xs text-gray-400 dark:text-gray-300 mt-2">
+                                        📅 @item.Fecha.ToString("dd/MM/yyyy")
+                                    </span>
+
+                                </div>
+
+                            </div>
+
                         </div>
                     }
                 }
+
                 else
                 {
-                    <p class="text-sm text-gray-400 dark:text-gray-300">
-                        Aún no hay mensajes positivos.
-                    </p>
+                    <div class="col-span-full flex flex-col items-center justify-center
+                      py-10 px-6 rounded-2xl
+                      bg-gradient-to-br from-blue-50 via-white to-emerald-50
+                      dark:from-slate-700 dark:via-slate-800 dark:to-slate-700
+                      border border-blue-100 dark:border-slate-600">
+
+                        <div class="w-14 h-14 mx-auto rounded-full
+                                    bg-emerald-100 dark:bg-emerald-900/40
+                                    flex items-center justify-center
+                                    text-2xl shadow-sm mb-3">  💙
+                        </div>
+
+                        <h4 class="text-base font-bold text-deep dark:text-white">
+                            Comparte algo positivo
+                        </h4>
+
+                        <p class="text-sm text-muted dark:text-gray-300 text-center
+                         max-w-md mt-2">
+                            Este espacio está abierto para ti.
+                            Puedes compartir algo que te haya ayudado o hecho sentir bien.
+                        </p>
+
+                    </div>
                 }
+
             </div>
 
             <a href="@Url.Action("Index", "Community")"
@@ -222,7 +328,6 @@
         </aside>
 
     </main>
-
 
 </section>
 
