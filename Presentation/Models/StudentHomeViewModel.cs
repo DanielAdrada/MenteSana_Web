@@ -10,5 +10,6 @@ namespace Presentation.Models
     {
         public ProfileDTO Perfil { get; set; }
         public List<CommentDTO> Comentarios { get; set; }
+        public List<ResourcesDTO> Recursos { get; set; }
     }
 }
