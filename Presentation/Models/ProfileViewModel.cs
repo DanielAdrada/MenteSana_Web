@@ -18,6 +18,18 @@ namespace Presentation.Models
         [Display(Name = "Apellido")]
         public string Apellido { get; set; }
 
+        [Required]
+        [Display(Name = "Grado")]
+        public string Grado { get; set; }
+
+        [Required]
+        [Display(Name = "Curso")]
+        public string Curso { get; set; }
+
+        [Required]
+        [Display(Name = "FechaNacimiento")]
+        public DateTime? FechaNacimiento { get; set; }
+
         [Display(Name = "Usuario")]
         public string Usuario { get; set; }
 

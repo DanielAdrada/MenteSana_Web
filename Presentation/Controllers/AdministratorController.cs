@@ -207,6 +207,9 @@ namespace Presentation.Controllers
                     Usuario = s.Usuario,
                     Nombre = s.Nombre,
                     Apellido = s.Apellido,
+                    Grado = s.Grado,
+                    Curso = s.Curso,
+                    FechaNacimiento = s.FechaNacimiento,
                     Estado = s.Estado
                 });
             }
@@ -229,6 +232,9 @@ namespace Presentation.Controllers
             model.Usuario = dto.Usuario;
             model.Nombre = dto.Nombre;
             model.Apellido = dto.Apellido;
+            model.Grado = dto.Grado;
+            model.Curso = dto.Curso;
+            model.FechaNacimiento = dto.FechaNacimiento;
             model.Estado = dto.Estado;
 
             model.IsEditing = true;
@@ -399,7 +405,10 @@ namespace Presentation.Controllers
                 bool actualizado = studentLog.UpdateStudent(
                     model.Id,
                     model.Nombre,
-                    model.Apellido);
+                    model.Apellido,
+                    model.Grado,
+                    model.Curso,
+                    model.FechaNacimiento);
 
                 if (actualizado)
                     TempData["Success"] = "Estudiante actualizado correctamente.";

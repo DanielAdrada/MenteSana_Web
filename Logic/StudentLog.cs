@@ -31,7 +31,10 @@ namespace Logic
         public bool UpdateStudent(
             string id,
             string nombre,
-            string apellido)
+            string apellido,
+            string grado, 
+            string curso, 
+            DateTime? fechaNacimiento)
         {
             if (string.IsNullOrWhiteSpace(id))
                 return false;
@@ -41,11 +44,18 @@ namespace Logic
 
             if (string.IsNullOrWhiteSpace(apellido))
                 return false;
+            if (string.IsNullOrWhiteSpace(grado))
+                return false; 
+            if (string.IsNullOrWhiteSpace(curso)) 
+                return false;
 
             return studentDat.UpdateStudent(
                 id.Trim(),
                 nombre.Trim(),
-                apellido.Trim());
+                apellido.Trim(),
+                grado.Trim(), 
+                curso.Trim(), 
+                fechaNacimiento); 
         }
 
         // ================= CAMBIAR ESTADO =================

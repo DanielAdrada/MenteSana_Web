@@ -29,7 +29,10 @@ namespace Presentation.Controllers
                     model.Correo,
                     model.Password,       // Contraseña elegida
                     model.Nombre,
-                    model.Apellido
+                    model.Apellido,
+                    model.Grado.ToString(),
+                    model.Curso,
+                    model.FechaNacimiento
                 );
 
 

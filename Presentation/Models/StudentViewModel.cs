@@ -26,6 +26,17 @@ namespace Presentation.Models
         [Required(ErrorMessage = "El apellido es obligatorio.")]
         public string Apellido { get; set; }
 
+        // ===== INFORMACIÓN ACADÉMICA =====
+        [Required(ErrorMessage = "El grado es obligatorio.")] 
+        public string Grado { get; set; } 
+
+        [Required(ErrorMessage = "El curso es obligatorio.")] 
+        public string Curso { get; set; } 
+        // ===== FECHA DE NACIMIENTO =====
+        [DataType(DataType.Date)] 
+        [Display(Name = "Fecha de nacimiento")] 
+        public DateTime? FechaNacimiento { get; set; }
+
         // ===== ESTADO =====
 
         public string Estado { get; set; }

@@ -12,6 +12,10 @@ namespace Data.Models
         public string Nombre { get; set; }
         public string Apellido { get; set; }
 
+        public string Grado { get; set; }
+        public string Curso { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
+
         public string FotoRuta { get; set; }
     }
 }

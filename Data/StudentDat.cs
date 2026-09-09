@@ -10,7 +10,7 @@ namespace Data
 {
     public class StudentDat
     {
-        public bool InsertStudent(string id, string nombre, string apellido)
+        public bool InsertStudent(string id, string nombre, string apellido, string grado, string curso, DateTime? fechaNacimiento)
         {
             Persistence db = new Persistence();
 
@@ -22,6 +22,14 @@ namespace Data
                     cmd.Parameters.AddWithValue("v_id", id);
                     cmd.Parameters.AddWithValue("v_nombre", nombre);
                     cmd.Parameters.AddWithValue("v_apellido", apellido);
+                    cmd.Parameters.AddWithValue("v_grado", grado);
+                    cmd.Parameters.AddWithValue("v_curso", curso);
+                    cmd.Parameters.AddWithValue(
+                        "v_fecha_nacimiento",
+                        fechaNacimiento.HasValue
+                            ? (object)fechaNacimiento.Value
+                            : DBNull.Value
+                    );
 
                     return cmd.ExecuteNonQuery() > 0;
                 }
@@ -47,15 +55,23 @@ namespace Data
                         {
                             Id = reader["est_id"].ToString(),
                             Usuario = reader["usu_nombre_usuario"].ToString(),
+
                             Nombre = reader["est_nombre"].ToString(),
-                            Apellido = reader["est_apellido"].ToString()
+                            Apellido = reader["est_apellido"].ToString(),
+
+                            Grado = reader["est_grado"].ToString(),
+                            Curso = reader["est_curso"].ToString(),
+
+                            FechaNacimiento = reader["est_fecha_nacimiento"] == DBNull.Value
+                                ? (DateTime?)null
+                                : Convert.ToDateTime(reader["est_fecha_nacimiento"])
                         };
                     }
                 }
             }
         }
 
-        public bool UpdateStudent(string id, string nombre, string apellido)
+        public bool UpdateStudent(string id, string nombre, string apellido, string grado, string curso, DateTime? fechaNacimiento)
         {
             Persistence db = new Persistence();
 
@@ -67,6 +83,14 @@ namespace Data
                     cmd.Parameters.AddWithValue("v_id", id);
                     cmd.Parameters.AddWithValue("v_nombre", nombre);
                     cmd.Parameters.AddWithValue("v_apellido", apellido);
+                    cmd.Parameters.AddWithValue("v_grado", grado);
+                    cmd.Parameters.AddWithValue("v_curso", curso);
+                    cmd.Parameters.AddWithValue(
+                        "v_fecha_nacimiento",
+                        fechaNacimiento.HasValue
+                            ? (object)fechaNacimiento.Value
+                            : DBNull.Value
+                    );
 
                     return cmd.ExecuteNonQuery() > 0;
                 }
@@ -108,10 +132,16 @@ namespace Data
                                 Usuario = reader["usu_nombre_usuario"].ToString(),
                                 Nombre = reader["est_nombre"].ToString(),
                                 Apellido = reader["est_apellido"].ToString(),
-                                Estado = reader["est_estado"].ToString()
+                                Estado = reader["est_estado"].ToString(),
+                                Grado = reader["est_grado"].ToString(),
+                                Curso = reader["est_curso"].ToString(),
+                                FechaNacimiento = reader["est_fecha_nacimiento"] == DBNull.Value
+                                    ? (DateTime?)null
+                                    : Convert.ToDateTime(reader["est_fecha_nacimiento"]),
                             });
                         }
                     }
+
                 }
             }
 
@@ -138,7 +168,12 @@ namespace Data
                                 Usuario = reader["usu_nombre_usuario"].ToString(),
                                 Nombre = reader["est_nombre"].ToString(),
                                 Apellido = reader["est_apellido"].ToString(),
-                                Estado = reader["est_estado"].ToString()
+                                Estado = reader["est_estado"].ToString(),
+                                Grado = reader["est_grado"].ToString(),
+                                Curso = reader["est_curso"].ToString(),
+                                FechaNacimiento = reader["est_fecha_nacimiento"] == DBNull.Value
+                                    ? (DateTime?)null
+                                    : Convert.ToDateTime(reader["est_fecha_nacimiento"])
                             };
                         }
                     }

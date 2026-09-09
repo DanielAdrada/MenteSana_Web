@@ -126,6 +126,46 @@
                             })
 
                         @Html.ValidationMessageFor(m => m.Apellido, "", new { @class = "text-red-500 text-sm" })
+
+                    </div>
+
+                    <div>
+                        @Html.LabelFor(m => m.Grado)
+
+                        @Html.TextBoxFor(m => m.Grado,
+                            new
+                            {
+                                @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full"
+                            })
+
+                        @Html.ValidationMessageFor(m => m.Grado, "", new { @class = "text-red-500 text-sm" })
+                    </div>
+
+                    <div>
+                        @Html.LabelFor(m => m.Curso)
+
+                        @Html.TextBoxFor(m => m.Curso,
+                            new
+                            {
+                                @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full",
+                                maxlength = "5"
+                            })
+
+                        @Html.ValidationMessageFor(m => m.Curso, "", new { @class = "text-red-500 text-sm" })
+                    </div>
+
+                    <div>
+                        @Html.LabelFor(m => m.FechaNacimiento)
+
+                        @Html.TextBoxFor(m => m.FechaNacimiento,
+                            "{0:yyyy-MM-dd}",
+                            new
+                            {
+                                @class = "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl p-3 w-full",
+                                type = "date"
+                            })
+
+                        @Html.ValidationMessageFor(m => m.FechaNacimiento, "", new { @class = "text-red-500 text-sm" })
                     </div>
 
                 </div>
@@ -154,7 +194,7 @@
     }
 
     <!-- Tabla -->
-    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-md p-8">
+    <div class="mt-8 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-md p-8">
 
         <div class="flex justify-between items-center mb-6">
 
@@ -187,133 +227,152 @@
 
         </div>
 
-        <table class="w-full">
+        <div class="overflow-x-auto">
+            <table class="w-full min-w-[1000px]">
 
-            <thead class="border-b">
+                <thead class="border-b">
 
-                <tr class="text-left">
+                    <tr class="text-left">
 
-                    <th class="py-3">Identificación</th>
-                    <th>Usuario</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Estado</th>
-                    <th class="text-center">Acciones</th>
+                        <th class="py-3">Identificación</th>
+                        <th>Usuario</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Grado</th>
+                        <th>Curso</th>
+                        <th>Fecha de nacimiento</th>
+                        <th>Estado</th>
+                        <th class="text-center">Acciones</th>
 
-                </tr>
+                    </tr>
 
-            </thead>
+                </thead>
 
-            <tbody>
+                <tbody>
 
-                @if (Model.Students != null && Model.Students.Count > 0)
-                {
-                    foreach (var estudiante in Model.Students)
+                    @if (Model.Students != null && Model.Students.Count > 0)
                     {
-                        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                        foreach (var estudiante in Model.Students)
+                        {
+                            <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
 
-                            <td class="py-4">
-                                @estudiante.Id
-                            </td>
+                                <td class="py-4">
+                                    @estudiante.Id
+                                </td>
 
-                            <td>
-                                @estudiante.Usuario
-                            </td>
+                                <td>
+                                    @estudiante.Usuario
+                                </td>
 
-                            <td>
-                                @estudiante.Nombre
-                            </td>
+                                <td>
+                                    @estudiante.Nombre
+                                </td>
 
-                            <td>
-                                @estudiante.Apellido
-                            </td>
+                                <td>
+                                    @estudiante.Apellido
+                                </td>
 
-                            <td>
+                                <td>
+                                    @estudiante.Grado
+                                </td>
 
-                                @if (estudiante.Estado == "ACTIVO")
-                                {
-                                    <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-medium">
-                                        Activo
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-sm font-medium">
-                                        Inactivo
-                                    </span>
-                                }
+                                <td>
+                                    @estudiante.Curso
+                                </td>
 
-                            </td>
+                                <td>
+                                    @(estudiante.FechaNacimiento.HasValue
+                                    ? estudiante.FechaNacimiento.Value.ToString("dd/MM/yyyy")
+                                    : "No registrada")
+                                </td>
 
-                            <td class="text-center">
-
-                                <div class="flex justify-center gap-3">
-
-                                    <a href="@Url.Action("EditStudent","Administrator",
-                                        new { id = estudiante.Id })"
-                                       class="text-blue-600 hover:text-blue-800 text-lg"
-                                       title="Editar">
-
-                                        <i class="bi bi-pencil-square"></i>
-
-                                    </a>
+                                <td>
 
                                     @if (estudiante.Estado == "ACTIVO")
                                     {
-                                        <a href="@Url.Action("ChangeStudentStatus","Administrator",
+                                        <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-medium">
+                                            Activo
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-sm font-medium">
+                                            Inactivo
+                                        </span>
+                                    }
+
+                                </td>
+
+                                <td class="text-center">
+
+                                    <div class="flex justify-center gap-3">
+
+                                        <a href="@Url.Action("EditStudent","Administrator",
+                                        new { id = estudiante.Id })"
+                                           class="text-blue-600 hover:text-blue-800 text-lg"
+                                           title="Editar">
+
+                                            <i class="bi bi-pencil-square"></i>
+
+                                        </a>
+
+                                        @if (estudiante.Estado == "ACTIVO")
+                                        {
+                                            <a href="@Url.Action("ChangeStudentStatus","Administrator",
                                             new
                                             {
                                                 id = estudiante.Id,
                                                 estado = "INACTIVO"
                                             })"
-                                           class="text-red-600 hover:text-red-800 text-lg"
-                                           title="Desactivar">
+                                               class="text-red-600 hover:text-red-800 text-lg"
+                                               title="Desactivar">
 
-                                            <i class="bi bi-person-x-fill"></i>
+                                                <i class="bi bi-person-x-fill"></i>
 
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <a href="@Url.Action("ChangeStudentStatus","Administrator",
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("ChangeStudentStatus","Administrator",
                                             new
                                             {
                                                 id = estudiante.Id,
                                                 estado = "ACTIVO"
                                             })"
-                                           class="text-green-600 hover:text-green-800 text-lg"
-                                           title="Activar">
+                                               class="text-green-600 hover:text-green-800 text-lg"
+                                               title="Activar">
 
-                                            <i class="bi bi-person-check-fill"></i>
+                                                <i class="bi bi-person-check-fill"></i>
 
-                                        </a>
-                                    }
+                                            </a>
+                                        }
 
-                                </div>
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+
+                            <td colspan="9"
+                                class="text-center py-8 text-gray-500">
+
+                                No hay estudiantes registrados.
 
                             </td>
 
                         </tr>
                     }
-                }
-                else
-                {
-                    <tr>
 
-                        <td colspan="6"
-                            class="text-center py-8 text-gray-500">
+                </tbody>
 
-                            No hay estudiantes registrados.
+            </table>
 
-                        </td>
-
-                    </tr>
-                }
-
-            </tbody>
-
-        </table>
-
+        </div>
     </div>
 
 </section>
