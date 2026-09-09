@@ -33,13 +33,25 @@ namespace Logic
         }
 
 
-        public bool SaveProfile(string id, string nombre, string apellido)
+        public bool SaveProfile(
+            string id,
+            string nombre,
+            string apellido,
+            string grado,
+            string curso,
+            DateTime? fechaNacimiento)
         {
-            // SOLO actualiza datos personales
+            // Actualiza los datos del estudiante
             if (!studentDat.ExistsStudent(id))
                 return false;
 
-            return studentDat.UpdateStudent(id, nombre, apellido);
+            return studentDat.UpdateStudent(
+                id,
+                nombre,
+                apellido,
+                grado,
+                curso,
+                fechaNacimiento);
         }
 
         public bool SaveProfilePhoto(string userId, string rutaFoto)

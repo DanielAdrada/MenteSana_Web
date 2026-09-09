@@ -37,6 +37,9 @@ namespace Presentation.Controllers
                 Usuario = perfil.Usuario,
                 Nombre = perfil.Nombre,
                 Apellido = perfil.Apellido,
+                Grado = perfil.Grado,
+                Curso = perfil.Curso,
+                FechaNacimiento = perfil.FechaNacimiento,
                 FotoRuta = perfil.FotoRuta
             };
 
@@ -61,8 +64,8 @@ namespace Presentation.Controllers
             bool actualizoUsuario = false;
 
 
-            // Guardar nombre y apellido
-            if (profileLogic.SaveProfile(model.Id, model.Nombre, model.Apellido))
+            // Guardar datos del estudiante
+            if (profileLogic.SaveProfile(model.Id, model.Nombre, model.Apellido, model.Grado, model.Curso, model.FechaNacimiento))
             {
                 actualizoPerfil = true;
             }

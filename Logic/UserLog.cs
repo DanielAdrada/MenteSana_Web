@@ -122,7 +122,10 @@ namespace Logic
             string correo,
             string password,
             string nombre,
-            string apellido)
+            string apellido,
+            string grado,
+            string curso,
+            DateTime? fechaNacimiento)
         {
             string salt = GenerateSalt();
             string hash = HashPassword(password + salt);
@@ -145,7 +148,10 @@ namespace Logic
             bool creadoEstudiante = studentDat.InsertStudent(
                 id,
                 nombre,
-                apellido
+                apellido,
+                grado.ToString(),
+                curso,
+                fechaNacimiento
             );
 
             if (!creadoEstudiante)

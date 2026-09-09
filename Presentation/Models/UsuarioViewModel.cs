@@ -45,5 +45,22 @@ namespace Presentation.Models
         [Required]
         [Display(Name = "Apellido")]
         public string Apellido { get; set; }
+
+        // INFORMACIÓN ACADÉMICA
+        [Required(ErrorMessage = "El grado es obligatorio.")]
+        [Range(6, 11, ErrorMessage = "El grado debe estar entre 6 y 11.")]
+        [Display(Name = "Grado")]
+        public int Grado { get; set; }
+
+        [Required(ErrorMessage = "El curso es obligatorio.")]
+        [StringLength(5, ErrorMessage = "El curso no puede tener más de 5 caracteres.")]
+        [Display(Name = "Curso")]
+        public string Curso { get; set; }
+
+        // FECHA DE NACIMIENTO
+        [Required(ErrorMessage = "La fecha de nacimiento es obligatoria.")]
+        [DataType(DataType.Date)]
+        [Display(Name = "Fecha de nacimiento")]
+        public DateTime FechaNacimiento { get; set; }
     }
 }

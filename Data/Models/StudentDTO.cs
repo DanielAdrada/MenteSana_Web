@@ -18,6 +18,12 @@ namespace Data.Models
 
         public string Estado { get; set; }
 
+        public string Grado { get; set; }
+
+        public string Curso { get; set; }
+
+        public DateTime? FechaNacimiento { get; set; }
+
         public DateTime FechaCreacion { get; set; }
     }
 }
