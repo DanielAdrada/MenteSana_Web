@@ -11,8 +11,6 @@ namespace Presentation.Models
 
         public string Dimension { get; set; }
 
-        public string Area { get; set; }
-
         public string Nivel { get; set; }
 
         public string Titulo { get; set; }

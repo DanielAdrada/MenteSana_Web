@@ -64,7 +64,6 @@ namespace Presentation.Controllers
 
                 int resultado = strategiesLogic.GuardarEstrategia(
                     dimension,
-                    area,
                     nivel,
                     titulo,
                     descripcion,
@@ -112,7 +111,6 @@ namespace Presentation.Controllers
                     strategiesLogic.ActualizarEstrategia(
                         estrategiaId,
                         dimension,
-                        area,
                         nivel,
                         titulo,
                         descripcion
@@ -201,12 +199,6 @@ namespace Presentation.Controllers
             {
                 modelo.Dimension =
                     item["estrategia_dimension"]?.ToString();
-            }
-
-            if (item.ContainsKey("estrategia_area"))
-            {
-                modelo.Area =
-                    item["estrategia_area"]?.ToString();
             }
 
             if (item.ContainsKey("estrategia_nivel"))

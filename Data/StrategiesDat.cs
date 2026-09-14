@@ -10,7 +10,7 @@ namespace Data
     public class StrategiesDat
     {
         // Agrega una estrategia
-        public int SaveEstrategia(string _dimension, string _area, string _nivel, string _titulo, string _descripcion, string _usuId)
+        public int SaveEstrategia(string _dimension, string _nivel, string _titulo, string _descripcion, string _usuId)
         {
             Persistence db = new Persistence();
             using (MySqlConnection conn = db.OpenConnection())
@@ -20,7 +20,6 @@ namespace Data
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("p_dimension", MySqlDbType.VarChar).Value = _dimension;
-                    cmd.Parameters.Add("p_area", MySqlDbType.VarChar).Value = _area;
                     cmd.Parameters.Add("p_nivel", MySqlDbType.VarChar).Value = _nivel;
                     cmd.Parameters.Add("p_titulo", MySqlDbType.VarChar).Value = _titulo;
                     cmd.Parameters.Add("p_descripcion", MySqlDbType.Text).Value = _descripcion;
@@ -85,7 +84,7 @@ namespace Data
 
 
         // Actualiza una estrategia
-        public bool UpdateEstrategia( int _estrategiaId, string _dimension, string _area, string _nivel, string _titulo, string _descripcion)
+        public bool UpdateEstrategia( int _estrategiaId, string _dimension, string _nivel, string _titulo, string _descripcion)
         {
             Persistence db = new Persistence();
 
@@ -97,7 +96,6 @@ namespace Data
 
                     cmd.Parameters.Add("p_estrategia_id", MySqlDbType.Int32).Value = _estrategiaId;
                     cmd.Parameters.Add("p_dimension", MySqlDbType.VarChar).Value = _dimension;
-                    cmd.Parameters.Add("p_area", MySqlDbType.VarChar).Value = _area;
                     cmd.Parameters.Add("p_nivel", MySqlDbType.VarChar).Value = _nivel;
                     cmd.Parameters.Add("p_titulo", MySqlDbType.VarChar).Value = _titulo;
                     cmd.Parameters.Add("p_descripcion", MySqlDbType.Text).Value = _descripcion;
@@ -278,7 +276,6 @@ namespace Data
         // Obtiene las estrategias activas que corresponden al resultado del DASS-42
         public List<Dictionary<string, object>> GetEstrategiasPorResultado(
             string _dimension,
-            string _area,
             string _nivel)
         {
             Persistence db = new Persistence();
@@ -295,9 +292,6 @@ namespace Data
 
                     cmd.Parameters.Add("p_dimension", MySqlDbType.VarChar).Value =
                         _dimension;
-
-                    cmd.Parameters.Add("p_area", MySqlDbType.VarChar).Value =
-                        _area;
 
                     cmd.Parameters.Add("p_nivel", MySqlDbType.VarChar).Value =
                         _nivel;
