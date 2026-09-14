@@ -171,6 +171,18 @@ namespace Presentation.Controllers
                     return RedirectToAction("Survey");
                 }
 
+                // GUARDAR LAS ESTRATEGIAS RECOMENDADAS PARA ESTE TEST
+                foreach (var estrategia in resultado.estrategias)
+                {
+                    if (estrategia != null && estrategia.EstrategiaId > 0)
+                    {
+                        _estrategiaService.GuardarTestEstrategia(
+                            testId,
+                            estrategia.EstrategiaId
+                        );
+                    }
+                }
+
                 // GUARDAR LAS 42 RESPUESTAS
                 bool respuestasGuardadas =
                     _dassLog.GuardarRespuestas(

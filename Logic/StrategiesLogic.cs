@@ -14,7 +14,6 @@ namespace Logic
         // Guarda una estrategia
         public int GuardarEstrategia(
             string dimension,
-            string area,
             string nivel,
             string titulo,
             string descripcion,
@@ -22,9 +21,6 @@ namespace Logic
         {
             // Validar datos
             if (string.IsNullOrWhiteSpace(dimension))
-                return 0;
-
-            if (string.IsNullOrWhiteSpace(area))
                 return 0;
 
             if (string.IsNullOrWhiteSpace(nivel))
@@ -41,7 +37,6 @@ namespace Logic
 
             return strategiesDat.SaveEstrategia(
                 dimension.Trim(),
-                area.Trim(),
                 nivel.Trim(),
                 titulo.Trim(),
                 descripcion.Trim(),
@@ -61,7 +56,6 @@ namespace Logic
         public bool ActualizarEstrategia(
             int estrategiaId,
             string dimension,
-            string area,
             string nivel,
             string titulo,
             string descripcion)
@@ -70,9 +64,6 @@ namespace Logic
                 return false;
 
             if (string.IsNullOrWhiteSpace(dimension))
-                return false;
-
-            if (string.IsNullOrWhiteSpace(area))
                 return false;
 
             if (string.IsNullOrWhiteSpace(nivel))
@@ -87,7 +78,6 @@ namespace Logic
             return strategiesDat.UpdateEstrategia(
                 estrategiaId,
                 dimension.Trim(),
-                area.Trim(),
                 nivel.Trim(),
                 titulo.Trim(),
                 descripcion.Trim()
@@ -157,21 +147,17 @@ namespace Logic
         // Obtiene estrategias activas según el resultado del DASS-42
         public List<Dictionary<string, object>> ObtenerEstrategiasPorResultado(
             string dimension,
-            string area,
             string nivel)
         {
             if (string.IsNullOrWhiteSpace(dimension))
                 return new List<Dictionary<string, object>>();
 
-            if (string.IsNullOrWhiteSpace(area))
-                return new List<Dictionary<string, object>>();
 
             if (string.IsNullOrWhiteSpace(nivel))
                 return new List<Dictionary<string, object>>();
 
             return strategiesDat.GetEstrategiasPorResultado(
                 dimension.Trim().ToUpper(),
-                area.Trim(),
                 nivel.Trim()
             );
         }

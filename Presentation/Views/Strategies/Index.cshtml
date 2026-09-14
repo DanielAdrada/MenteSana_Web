@@ -210,10 +210,6 @@
                                 </td>
 
                                 <td class="p-4">
-                                    @estrategia.Area
-                                </td>
-
-                                <td class="p-4">
                                     @estrategia.Nivel
                                 </td>
 
@@ -247,7 +243,6 @@
                                                 onclick="editarEstrategia(
                                                     @estrategia.EstrategiaId,
                                                     '@Html.Raw(HttpUtility.JavaScriptStringEncode(estrategia.Dimension ?? ""))',
-                                                    '@Html.Raw(HttpUtility.JavaScriptStringEncode(estrategia.Area ?? ""))',
                                                     '@Html.Raw(HttpUtility.JavaScriptStringEncode(estrategia.Nivel ?? ""))',
                                                     '@Html.Raw(HttpUtility.JavaScriptStringEncode(estrategia.Titulo ?? ""))',
                                                     '@Html.Raw(HttpUtility.JavaScriptStringEncode(estrategia.Descripcion ?? ""))'

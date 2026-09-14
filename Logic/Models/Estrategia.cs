@@ -7,10 +7,9 @@ namespace Logic.Models
 {
     public class Estrategia
     {
+        public int EstrategiaId { get; set; }
         public string Titulo { get; set; }
-
         public string Descripcion { get; set; }
 
-        public string Area { get; set; }
     }
 }
