@@ -39,6 +39,7 @@ namespace Presentation.Controllers
                 if (registrado)
                 {
                     TempData["RegSuccess"] = "Cuenta creada exitosamente. Ya puedes iniciar sesión.";
+                    TempData["OpenRegisterModal"] = true;
                     return RedirectToAction("Index", "Login");
                 }
 

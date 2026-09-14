@@ -18,6 +18,7 @@ namespace Presentation.Controllers
         {
             ViewBag.RegSuccess = TempData["RegSuccess"];
             ViewBag.RegError = TempData["RegError"];
+            ViewBag.OpenRegisterModal = TempData["OpenRegisterModal"];
 
             ViewBag.Error = TempData["LoginError"];
             ViewBag.Success = TempData["LoginSuccess"];
