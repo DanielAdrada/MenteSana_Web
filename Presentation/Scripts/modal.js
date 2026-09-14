@@ -1,4 +1,4 @@
-﻿console.log("🚨🚨🚨 MODAL JS NUEVO - PRUEBA 2026 🚨🚨🚨");
+﻿console.log("🚨🚨🚨 MODAL JS NUEVO - PRUEBA 2026");
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("✅ DOM cargado");
@@ -208,5 +208,13 @@ document.addEventListener("DOMContentLoaded", () => {
         openModal(recoveryModal);
     }
 
+    // Mantener abierto el modal de registro cuando hay un resultado
+    // del intento de creación de la cuenta
+    const registerError = document.getElementById("registerError");
+    const registerSuccess = document.getElementById("registerSuccess");
+
+    if (registerError || registerSuccess) {
+        openModal(registerModal);
+    }
 });
 

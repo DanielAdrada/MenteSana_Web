@@ -18,7 +18,7 @@ namespace Presentation
             var psi = new ProcessStartInfo
             {
                 FileName = "python",
-                Arguments = "ML_prediccion.py",
+                Arguments = "GE_API2.py",
                 WorkingDirectory = @"C:\GestionEmocional",
                 UseShellExecute = false,
                 CreateNoWindow = true

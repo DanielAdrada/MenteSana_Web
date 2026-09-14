@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -25,12 +26,22 @@ namespace Logic.Services
             };
 
             string json = JsonConvert.SerializeObject(payload);
+            Debug.WriteLine("=================================");
+            Debug.WriteLine("ENVIANDO DASS-42 A FLASK");
+            Debug.WriteLine("Cantidad de respuestas: " + respuestas.Count);
+            Debug.WriteLine("JSON enviado: " + json);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response =
                 await client.PostAsync("predecir_dass42", content);
 
             string resultJson = await response.Content.ReadAsStringAsync();
+
+            Debug.WriteLine("=================================");
+            Debug.WriteLine("RESPUESTA DE FLASK");
+            Debug.WriteLine("HTTP: " + (int)response.StatusCode);
+            Debug.WriteLine("JSON recibido: " + resultJson);
+            Debug.WriteLine("=================================");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -40,6 +51,12 @@ namespace Logic.Services
             EmotionResult resultado =
                 JsonConvert.DeserializeObject<EmotionResult>(resultJson);
 
+            if (resultado == null)
+            {
+                throw new Exception(
+                    "Flask respondió correctamente, pero no fue posible convertir la respuesta."
+                );
+            }
             return resultado;
 
 

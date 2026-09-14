@@ -7,11 +7,13 @@
 <!-- HERO -->
 <section class="hero hero-soft">
     <div class="hero-content">
-        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
-            Tu mente importa.<br />
-            <span class="text-menteYellow">Y aquí la escuchamos.</span>
-        </h1>
 
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+            Tu mente importa, y aquí,
+            <br />
+            <span class="text-menteYellow">en Mente Sana, la escuchamos.</span>
+        </h1>
+            
         <p class="mt-6 text-lg md:text-xl opacity-90 max-w-xl mx-auto">
             Un espacio seguro para entender lo que sientes,
             expresarte sin miedo y crecer emocionalmente.
@@ -398,6 +400,10 @@
     </script>
 }
 
+@if (ViewBag.OpenRegisterModal != null && ViewBag.OpenRegisterModal == true)
+{
+    <div id="openRegisterModalAuto"></div>
+}
 <!-- ================= REGISTER MODAL ================= -->
 <div id="registerModal"
      class="fixed inset-0 z-50 flex items-center justify-center
@@ -435,7 +441,8 @@
 
             @if (ViewBag.RegSuccess != null)
             {
-                <div class="rounded-lg bg-green-100 px-4 py-3 text-sm text-green-700">
+                <div id="registerSuccess"
+                     class="mb-4 rounded-lg bg-green-100 px-4 py-3 text-sm text-green-700">
                     ✅ @ViewBag.RegSuccess
                 </div>
             }
