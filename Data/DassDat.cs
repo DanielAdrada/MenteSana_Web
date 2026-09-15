@@ -71,5 +71,109 @@ namespace Data
                 }
             }
         }
+
+        public int GetTotalStudentsEvaluated()
+        {
+            Persistence db = new Persistence();
+
+            using (MySqlConnection conn = db.OpenConnection())
+            {
+                using (MySqlCommand cmd = new MySqlCommand(
+                    @"SELECT COUNT(DISTINCT test_est_id)
+              FROM tbl_tests_dass", conn))
+                {
+                    try
+                    {
+                        return Convert.ToInt32(cmd.ExecuteScalar());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Error al obtener estudiantes evaluados: " + e.Message);
+                        return 0;
+                    }
+                }
+            }
+        }
+
+
+        public int GetTotalTests()
+        {
+            Persistence db = new Persistence();
+
+            using (MySqlConnection conn = db.OpenConnection())
+            {
+                using (MySqlCommand cmd = new MySqlCommand(
+                    @"SELECT COUNT(test_id)
+              FROM tbl_tests_dass", conn))
+                {
+                    try
+                    {
+                        return Convert.ToInt32(cmd.ExecuteScalar());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Error al obtener total de evaluaciones: " + e.Message);
+                        return 0;
+                    }
+                }
+            }
+        }
+
+
+        public DateTime? GetLastTestDate()
+        {
+            Persistence db = new Persistence();
+
+            using (MySqlConnection conn = db.OpenConnection())
+            {
+                using (MySqlCommand cmd = new MySqlCommand(
+                    @"SELECT MAX(test_fecha)
+              FROM tbl_tests_dass", conn))
+                {
+                    try
+                    {
+                        object resultado = cmd.ExecuteScalar();
+
+                        if (resultado == null || resultado == DBNull.Value)
+                            return null;
+
+                        return Convert.ToDateTime(resultado);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Error al obtener última evaluación: " + e.Message);
+                        return null;
+                    }
+                }
+            }
+        }
+
+        public int GetStudentsFollowUp()
+        {
+            Persistence db = new Persistence();
+
+            using (MySqlConnection conn = db.OpenConnection())
+            {
+                using (MySqlCommand cmd = new MySqlCommand(
+                    @"SELECT COUNT(DISTINCT test_est_id)
+                    FROM tbl_tests_dass
+                 WHERE test_nivel_depresion IN ('Moderado', 'Severo', 'Extremadamente_Severo')
+                 OR test_nivel_ansiedad IN ('Moderado', 'Severo', 'Extremadamente_Severo')
+                 OR test_nivel_estres IN ('Moderado', 'Severo', 'Extremadamente_Severo')",
+                    conn))
+                {
+                    try
+                    {
+                        return Convert.ToInt32(cmd.ExecuteScalar());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Error al obtener estudiantes en seguimiento: " + e.Message);
+                        return 0;
+                    }
+                }
+            }
+        }
+
     }
 }

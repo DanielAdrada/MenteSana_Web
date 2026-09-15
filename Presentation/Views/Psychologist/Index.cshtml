@@ -4,136 +4,365 @@
 }
 
 <!-- HEADER -->
-<section class="bg-gradient-to-br from-secondary to-primary text-white">
-    <div class="max-w-[1100px] mx-auto px-5 py-12">
-        <span class="inline-block bg-white/20 px-4 py-1 rounded-full text-sm mb-3">
-            🧠 Panel profesional
-        </span>
+<section class="max-w-7xl mx-auto px-5 mt-6 mb-8">
 
-        <h1 class="text-[clamp(28px,5vw,42px)] font-bold leading-tight">
-            Panel del Psicólogo
-        </h1>
+    <div class="relative overflow-hidden rounded-3xl shadow-2xl border border-white/20
+                bg-gradient-to-r from-emerald-400 via-cyan-500 to-blue-600">
 
-        <p class="text-white/90 mt-3 max-w-[600px]">
-            Visualiza patrones emocionales, gestiona recursos
-            y acompaña a los estudiantes desde un enfoque preventivo.
-        </p>
+        <!-- Decoraciones -->
+        <div class="absolute top-0 left-0 w-40 h-40 bg-white/10 rounded-full -translate-x-16 -translate-y-16"></div>
+        <div class="absolute bottom-0 right-1/3 w-60 h-60 bg-white/5 rounded-full translate-y-24"></div>
+
+        <!-- Estrellitas -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-10 right-[48%] text-white/40 text-xl">✦</div>
+            <div class="absolute top-20 right-[35%] text-white/50 text-2xl">✦</div>
+            <div class="absolute top-32 right-[28%] text-white/40 text-sm">✦</div>
+            <div class="absolute top-44 right-[18%] text-white/60 text-3xl">✦</div>
+            <div class="absolute bottom-24 right-[30%] text-white/40 text-xl">✦</div>
+            <div class="absolute bottom-16 right-20 text-white/50 text-2xl">✦</div>
+            <div class="absolute top-56 right-[40%] text-white/30 text-lg">✦</div>
+            <div class="absolute top-16 right-60 text-white/60 text-sm">✦</div>
+        </div>
+
+        <div class="grid md:grid-cols-2 items-center min-h-[270px]">
+
+            <div class="px-8 md:px-12 py-10 z-10">
+
+                <span class="inline-flex items-center gap-2 bg-white/35 backdrop-blur-sm text-green-700 border border-green-200 px-4 py-1.5 rounded-full text-xs md:text-sm  font-medium">
+                    🧠 Panel profesional
+                </span>
+
+                <h1 class="mt-4 text-3xl md:text-5xl font-extrabold text-white drop-shadow-lg whitespace-nowrap">
+                    Panel del Psicólogo
+
+                </h1>
+
+                <p class="text-white/90 mt-3 max-w-[600px]">
+                    Visualiza patrones emocionales, gestiona recursos
+                    y acompaña a los estudiantes desde un enfoque preventivo.
+                </p>
+
+            </div>
+        </div>
     </div>
-</section>
 
-<!-- MAIN -->
-<main class="max-w-[1100px] mx-auto px-5 my-6 space-y-6">
 
-    <!-- MÉTRICAS -->
-    <section class="grid md:grid-cols-3 gap-5">
-        <div class="bg-card rounded-xl2 shadow-soft p-5">
-            <p class="text-sm text-muted">Estudiantes evaluados</p>
-            <h3 class="text-3xl font-bold text-secondary mt-1">128</h3>
-        </div>
 
-        <div class="bg-card rounded-xl2 shadow-soft p-5">
-            <p class="text-sm text-muted">Emoción predominante</p>
-            <h3 class="text-xl font-semibold text-primary mt-1">
-                Ansiedad
+    <!-- MAIN -->
+    <main class="max-w-7xl mx-auto px-5 mt-8 mb-12 space-y-8">
+
+        <!-- MÉTRICAS DEL SISTEMA -->
+        <section class="grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
+
+            <!-- ESTUDIANTES EVALUADOS -->
+            <div class="group relative overflow-hidden bg-card rounded-2xl shadow-soft
+                border border-slate-100 dark:border-slate-700
+                p-6 transition-all duration-300
+                hover:-translate-y-2 hover:shadow-2xl">
+
+                <!-- Decoración -->
+                <div class="absolute -right-8 -top-8 w-24 h-24
+                    bg-emerald-400/10 rounded-full
+                    transition-transform duration-500
+                    group-hover:scale-150">
+                </div>
+
+                <div class="relative z-10">
+
+                    <div class="flex items-center justify-between">
+
+                        <div class="w-12 h-12 rounded-xl
+                            bg-emerald-100 dark:bg-emerald-900/30
+                            flex items-center justify-center
+                            text-2xl
+                            transition-transform duration-300
+                            group-hover:scale-110 group-hover:rotate-3">
+                            👥
+                        </div>
+
+                        <span class="text-xs font-medium
+                             text-emerald-600 dark:text-emerald-400
+                             bg-emerald-50 dark:bg-emerald-900/20
+                             px-3 py-1 rounded-full">
+                            DASS-42
+                        </span>
+
+                    </div>
+
+                    <p class="mt-5 text-sm font-medium text-muted">
+                        Estudiantes evaluados
+                    </p>
+
+                    <h3 class="mt-1 text-3xl font-extrabold text-secondary
+                       dark:text-white">
+                        @Model.EstudiantesEvaluados
+                    </h3>
+
+                    <p class="mt-2 text-xs text-muted">
+                        Estudiantes con al menos una evaluación
+                    </p>
+
+                </div>
+            </div>
+
+
+            <!-- EVALUACIONES REALIZADAS -->
+            <div class="group relative overflow-hidden bg-card rounded-2xl shadow-soft
+                border border-slate-100 dark:border-slate-700
+                p-6 transition-all duration-300
+                hover:-translate-y-2 hover:shadow-2xl">
+
+                <div class="absolute -right-8 -top-8 w-24 h-24
+                    bg-cyan-400/10 rounded-full
+                    transition-transform duration-500
+                    group-hover:scale-150">
+                </div>
+
+                <div class="relative z-10">
+
+                    <div class="flex items-center justify-between">
+
+                        <div class="w-12 h-12 rounded-xl
+                            bg-cyan-100 dark:bg-cyan-900/30
+                            flex items-center justify-center
+                            text-2xl
+                            transition-transform duration-300
+                            group-hover:scale-110 group-hover:rotate-3">
+                            📝
+                        </div>
+
+                        <span class="text-xs font-medium
+                             text-cyan-600 dark:text-cyan-400
+                             bg-cyan-50 dark:bg-cyan-900/20
+                             px-3 py-1 rounded-full">
+                            Total
+                        </span>
+
+                    </div>
+
+                    <p class="mt-5 text-sm font-medium text-muted">
+                        Evaluaciones realizadas
+                    </p>
+
+                    <h3 class="mt-1 text-3xl font-extrabold text-secondary
+                       dark:text-white">
+                        @Model.EvaluacionesRealizadas
+                    </h3>
+
+                    <p class="mt-2 text-xs text-muted">
+                        Tests DASS-42 registrados
+                    </p>
+
+                </div>
+            </div>
+
+
+            <!-- SEGUIMIENTO -->
+            <div class="group relative overflow-hidden bg-card rounded-2xl shadow-soft
+                border border-slate-100 dark:border-slate-700
+                p-6 transition-all duration-300
+                hover:-translate-y-2 hover:shadow-2xl">
+
+                <div class="absolute -right-8 -top-8 w-24 h-24
+                    bg-amber-400/10 rounded-full
+                    transition-transform duration-500
+                    group-hover:scale-150">
+                </div>
+
+                <div class="relative z-10">
+
+                    <div class="flex items-center justify-between">
+
+                        <div class="w-12 h-12 rounded-xl
+                            bg-amber-100 dark:bg-amber-900/30
+                            flex items-center justify-center
+                            text-2xl
+                            transition-transform duration-300
+                            group-hover:scale-110 group-hover:rotate-3">
+                            ⚠️
+                        </div>
+
+                        <span class="text-xs font-medium
+                             text-amber-600 dark:text-amber-400
+                             bg-amber-50 dark:bg-amber-900/20
+                             px-3 py-1 rounded-full">
+                            Atención
+                        </span>
+
+                    </div>
+
+                    <p class="mt-5 text-sm font-medium text-muted">
+                        Requieren seguimiento
+                    </p>
+
+                    <h3 class="mt-1 text-3xl font-extrabold text-secondary
+                       dark:text-white">
+                        @Model.RequierenSeguimiento
+                    </h3>
+
+                    <p class="mt-2 text-xs text-muted">
+                        Con algún nivel desde moderado
+                    </p>
+
+                </div>
+            </div>
+
+
+            <!-- ÚLTIMA EVALUACIÓN -->
+            <div class="group relative overflow-hidden bg-card rounded-2xl shadow-soft
+                border border-slate-100 dark:border-slate-700
+                p-6 transition-all duration-300
+                hover:-translate-y-2 hover:shadow-2xl">
+
+                <div class="absolute -right-8 -top-8 w-24 h-24
+                    bg-blue-400/10 rounded-full
+                    transition-transform duration-500
+                    group-hover:scale-150">
+                </div>
+
+                <div class="relative z-10">
+
+                    <div class="flex items-center justify-between">
+
+                        <div class="w-12 h-12 rounded-xl
+                            bg-blue-100 dark:bg-blue-900/30
+                            flex items-center justify-center
+                            text-2xl
+                            transition-transform duration-300
+                            group-hover:scale-110 group-hover:rotate-3">
+                            📅
+                        </div>
+
+                        <span class="text-xs font-medium
+                             text-blue-600 dark:text-blue-400
+                             bg-blue-50 dark:bg-blue-900/20
+                             px-3 py-1 rounded-full">
+                            Reciente
+                        </span>
+
+                    </div>
+
+                    <p class="mt-5 text-sm font-medium text-muted">
+                        Última evaluación
+                    </p>
+
+                    <h3 class="mt-1 text-2xl font-extrabold text-secondary
+                       dark:text-white">
+
+                        @if (Model.UltimaEvaluacion != null)
+                        {
+                            @Model.UltimaEvaluacion.ToString("dd/MM/yyyy")
+                        }
+                        else
+                        {
+                            <span>Sin datos</span>
+                        }
+
+                    </h3>
+
+                    <p class="mt-2 text-xs text-muted">
+                        Fecha del último DASS-42
+                    </p>
+
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- RECURSOS -->
+        <section class="bg-card rounded-xl2 shadow-soft p-6">
+
+            <!-- ANÁLISIS EMOCIONAL -->
+            <h3 class="text-secondary font-semibold mb-4">
+                📊 Distribución emocional (simulada)
             </h3>
-        </div>
 
-        <div class="bg-card rounded-xl2 shadow-soft p-5">
-            <p class="text-sm text-muted">Alertas activas</p>
-            <h3 class="text-3xl font-bold text-red-500 mt-1">5</h3>
-        </div>
-    </section>
+            <div class="space-y-4">
+                <div>
+                    <p class="text-sm">Ansiedad</p>
+                    <div class="h-3 bg-gray-200 rounded">
+                        <div class="h-3 bg-primary rounded w-[60%]"></div>
+                    </div>
+                </div>
 
-    <!-- ANÁLISIS EMOCIONAL -->
-    <section class="bg-card rounded-xl2 shadow-soft p-6">
-        <h3 class="text-secondary font-semibold mb-4">
-            📊 Distribución emocional (simulada)
-        </h3>
+                <div>
+                    <p class="text-sm">Estrés</p>
+                    <div class="h-3 bg-gray-200 rounded">
+                        <div class="h-3 bg-secondary rounded w-[45%]"></div>
+                    </div>
+                </div>
 
-        <div class="space-y-4">
-            <div>
-                <p class="text-sm">Ansiedad</p>
-                <div class="h-3 bg-gray-200 rounded">
-                    <div class="h-3 bg-primary rounded w-[60%]"></div>
+                <div>
+                    <p class="text-sm">Tristeza</p>
+                    <div class="h-3 bg-gray-200 rounded">
+                        <div class="h-3 bg-yellow-400 rounded w-[30%]"></div>
+                    </div>
                 </div>
             </div>
 
-            <div>
-                <p class="text-sm">Estrés</p>
-                <div class="h-3 bg-gray-200 rounded">
-                    <div class="h-3 bg-secondary rounded w-[45%]"></div>
-                </div>
-            </div>
 
-            <div>
-                <p class="text-sm">Tristeza</p>
-                <div class="h-3 bg-gray-200 rounded">
-                    <div class="h-3 bg-yellow-400 rounded w-[30%]"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- RECURSOS -->
-    <section class="bg-card rounded-xl2 shadow-soft p-6">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-secondary font-semibold">
-                📁 Recursos para estudiantes
-            </h3>
-
-            <button class="bg-primary text-black px-4 py-2 rounded-xl font-semibold hover:opacity-90 transition">
-                + Nuevo recurso
-            </button>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-4">
-            <div class="bg-gray-50 rounded-xl p-4">
-                🧘 Guía de respiración para ansiedad
-            </div>
-            <div class="bg-gray-50 rounded-xl p-4">
-                📄 Manejo del estrés académico
-            </div>
-            <div class="bg-gray-50 rounded-xl p-4">
-                🎧 Audio de relajación guiada
-            </div>
-        </div>
-    </section>
-
-    <!-- GESTIÓN DE ESTRATEGIAS -->
-    <section class="bg-card rounded-xl2 shadow-soft p-6">
-
-        <div class="flex justify-between items-center mb-4">
-
-            <div>
+            <div class="flex justify-between items-center mb-4">
                 <h3 class="text-secondary font-semibold">
-                    🧠 Gestión de estrategias
+                    📁 Recursos para estudiantes
                 </h3>
 
-                <p class="text-sm text-muted mt-1">
-                    Crea, edita y administra las estrategias disponibles
-                    para los estudiantes.
-                </p>
+                <button class="bg-primary text-black px-4 py-2 rounded-xl font-semibold hover:opacity-90 transition">
+                    + Nuevo recurso
+                </button>
             </div>
 
-            <a href="@Url.Action("Index", "Strategies")"
-               class="bg-primary text-black px-4 py-2 rounded-xl font-semibold hover:opacity-90 transition">
-                Gestionar estrategias
-            </a>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-gray-50 rounded-xl p-4">
+                    🧘 Guía de respiración para ansiedad
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4">
+                    📄 Manejo del estrés académico
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4">
+                    🎧 Audio de relajación guiada
+                </div>
+            </div>
+        </section>
 
-        </div>
+        <!-- GESTIÓN DE ESTRATEGIAS -->
+        <section class="bg-card rounded-xl2 shadow-soft p-6">
 
-    </section>
+            <div class="flex justify-between items-center mb-4">
 
-    <!-- ML PLACEHOLDER -->
-    <section class="bg-gradient-to-br from-blue-50 to-transparent rounded-xl2 p-6 border border-blue-200">
-        <h3 class="font-semibold text-secondary mb-2">
-            🤖 Análisis con Machine Learning (próximamente)
-        </h3>
-        <p class="text-sm text-muted max-w-[600px]">
-            Aquí se mostrarán los resultados automáticos
-            del análisis emocional basado en respuestas abiertas
-            de los estudiantes.
-        </p>
-    </section>
+                <div>
+                    <h3 class="text-secondary font-semibold">
+                        🧠 Gestión de estrategias
+                    </h3>
 
-</main>
+                    <p class="text-sm text-muted mt-1">
+                        Crea, edita y administra las estrategias disponibles
+                        para los estudiantes.
+                    </p>
+                </div>
+
+                <a href="@Url.Action("Index", "Strategies")"
+                   class="bg-primary text-black px-4 py-2 rounded-xl font-semibold hover:opacity-90 transition">
+                    Gestionar estrategias
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- ML PLACEHOLDER -->
+        <section class="bg-gradient-to-br from-blue-50 to-transparent rounded-xl2 p-6 border border-blue-200">
+            <h3 class="font-semibold text-secondary mb-2">
+                🤖 Análisis con Machine Learning (próximamente)
+            </h3>
+            <p class="text-sm text-muted max-w-[600px]">
+                Aquí se mostrarán los resultados automáticos
+                del análisis emocional basado en respuestas abiertas
+                de los estudiantes.
+            </p>
+        </section>
+
+    </main>
+
+</section>
