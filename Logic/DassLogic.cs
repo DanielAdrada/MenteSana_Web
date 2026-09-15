@@ -69,5 +69,27 @@ namespace Logic
             }
             return true;
         }
+
+
+        // DATOS PARA EL DASHBOARD
+        public int ObtenerEstudiantesEvaluados()
+        {
+            return dassDat.GetTotalStudentsEvaluated();
+        }
+
+        public int ObtenerEvaluacionesRealizadas()
+        {
+            return dassDat.GetTotalTests();
+        }
+
+        public int ObtenerEstudiantesSeguimiento()
+        {
+            return dassDat.GetStudentsFollowUp();
+        }
+
+        public DateTime? ObtenerUltimaEvaluacion()
+        {
+            return dassDat.GetLastTestDate();
+        }
     }
 }

@@ -1,0 +1,386 @@
+﻿@model Presentation.Models.ProfilePsychologistViewModel
+
+@{
+    Layout = "~/Views/Shared/_PsychologistLayout.cshtml";
+    ViewBag.Title = "Mi Perfil";
+}
+
+<!-- HERO PERFIL -->
+<section class="relative overflow-hidden bg-gradient-to-br from-primary via-secondary to-primary text-white">
+    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_white,_transparent_70%)]"></div>
+
+    <div class="relative max-w-[1000px] mx-auto px-6 py-16 flex flex-col items-center text-center gap-5">
+
+        <!-- AVATAR -->
+        <div class="relative group">
+            <div class="w-32 h-32 rounded-full bg-white/30 flex items-center justify-center
+                        text-5xl font-bold text-white shadow-2xl overflow-hidden
+                        ring-4 ring-white/40 transition group-hover:scale-105">
+
+                @if (!string.IsNullOrEmpty(Model.FotoRuta))
+                {
+                    <img src="@Model.FotoRuta?@DateTime.Now.Ticks" class="w-full h-full object-cover" />
+                }
+                else
+                {
+                    <span>
+                        @(Model.Nombre?.Substring(0, 1))@(Model.Apellido?.Substring(0, 1))
+                    </span>
+                }
+            </div>
+
+            <span class="absolute bottom-1 right-1 bg-green-400 text-xs px-2 py-1 rounded-full text-black font-semibold">
+                Activo
+            </span>
+        </div>
+
+        <h1 class="text-3xl font-extrabold tracking-tight">
+            ¡Hola, @Model.Nombre! 👋
+        </h1>
+
+        <p class="text-white/85 max-w-[480px] text-sm sm:text-base">
+            Este es tu perfil personal. Aquí puedes actualizar tu información,
+            personalizar tu experiencia y sentirte cómodo usando la plataforma.
+        </p>
+
+    </div>
+</section>
+
+<!-- MENSAJES -->
+@if (ViewBag.Mensaje != null || ViewBag.Error != null)
+{
+    <div id="toast"
+         class="fixed top-24 left-1/2 -translate-x-1/2 z-50
+                max-w-sm w-full
+                px-5 py-4 rounded-2xl shadow-xl
+                font-medium flex items-center gap-3
+                transition-all duration-500 ease-in-out
+                @(ViewBag.Mensaje != null
+                    ? "bg-green-100 text-green-800"
+                    : "bg-red-100 text-red-800")">
+
+        <span class="text-xl">
+            @(ViewBag.Mensaje != null ? "✅" : "⚠️")
+        </span>
+
+        <span>
+            @(ViewBag.Mensaje ?? ViewBag.Error)
+        </span>
+    </div>
+}
+
+
+<main class="relative z-10 max-w-[1000px] mx-auto px-6 -mt-10 space-y-8 pb-16">
+    <!-- INFORMACIÓN -->
+    <div class="mt-8 bg-card dark:bg-slate-800
+                rounded-2xl shadow-soft p-7">
+
+        <div class="flex items-center gap-3 mb-6">
+
+            <span class="text-2xl">👨‍⚕️</span>
+
+            <div>
+                <h2 class="text-lg font-bold text-secondary">
+                    Información profesional
+                </h2>
+
+                <p class="text-sm text-muted">
+                    Información registrada en tu perfil
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="grid md:grid-cols-2 gap-4">
+
+            <!-- CORREO -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700">
+
+                <p class="text-xs text-muted uppercase">
+                    Correo
+                </p>
+
+                <p class="mt-1 font-semibold text-deep dark:text-white break-all">
+                    @Model.Correo
+                </p>
+
+            </div>
+
+
+            <!-- TELÉFONO -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700">
+
+                <p class="text-xs text-muted uppercase">
+                    Teléfono
+                </p>
+
+                <p class="mt-1 font-semibold text-deep dark:text-white">
+                    @(string.IsNullOrEmpty(Model.Telefono)
+                        ? "No registrado"
+                        : Model.Telefono)
+                </p>
+
+            </div>
+
+
+            <!-- FORMACIÓN -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700">
+
+                <p class="text-xs text-muted uppercase">
+                    Formación
+                </p>
+
+                <p class="mt-1 font-semibold text-deep dark:text-white">
+                    @(string.IsNullOrEmpty(Model.Formacion)
+                        ? "No registrada"
+                        : Model.Formacion)
+                </p>
+
+            </div>
+
+
+            <!-- HORARIO -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700">
+
+                <p class="text-xs text-muted uppercase">
+                    Horario
+                </p>
+
+                <p class="mt-1 font-semibold text-deep dark:text-white">
+                    @(string.IsNullOrEmpty(Model.Horario)
+                        ? "No registrado"
+                        : Model.Horario)
+                </p>
+
+            </div>
+
+
+            <!-- USUARIO -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700">
+
+                <p class="text-xs text-muted uppercase">
+                    Usuario
+                </p>
+
+                <p class="mt-1 font-semibold text-deep dark:text-white break-all">
+                    @Model.Usuario
+                </p>
+
+            </div>
+
+
+            <!-- ESTADO -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700">
+
+                <p class="text-xs text-muted uppercase">
+                    Estado
+                </p>
+
+                <p class="mt-1 font-semibold text-green-600">
+                    @Model.Estado
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- EDITAR -->
+    <div class="mt-8 bg-card dark:bg-slate-800
+                rounded-2xl shadow-soft p-7">
+
+        <div class="flex items-center gap-3 mb-6">
+
+            <span class="text-2xl">⚙️</span>
+
+            <div>
+                <h2 class="text-lg font-bold text-secondary">
+                    Editar perfil
+                </h2>
+
+                <p class="text-sm text-muted">
+                    Actualiza tu información profesional
+                </p>
+            </div>
+
+        </div>
+
+
+        @using (Html.BeginForm(
+            "Index_Psychologist",
+            "Profile",
+            FormMethod.Post,
+            new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(m => m.Id)
+
+
+            <div class="grid md:grid-cols-2 gap-5">
+
+                <!-- NOMBRE -->
+                <div>
+                    <label class="text-sm text-muted">
+                        Nombre
+                    </label>
+
+                    @Html.TextBoxFor(m => m.Nombre, new
+                    {
+                        @class = "w-full mt-1 px-4 py-3 rounded-xl " +
+                                 "bg-gray-50 dark:bg-gray-700 " +
+                                 "border border-gray-200 dark:border-gray-600 " +
+                                 "outline-none focus:ring-2 focus:ring-primary"
+                    })
+                </div>
+
+
+                <!-- APELLIDO -->
+                <div>
+                    <label class="text-sm text-muted">
+                        Apellido
+                    </label>
+
+                    @Html.TextBoxFor(m => m.Apellido, new
+                    {
+                        @class = "w-full mt-1 px-4 py-3 rounded-xl " +
+                                 "bg-gray-50 dark:bg-gray-700 " +
+                                 "border border-gray-200 dark:border-gray-600 " +
+                                 "outline-none focus:ring-2 focus:ring-primary"
+                    })
+                </div>
+
+
+                <!-- CORREO -->
+                <div>
+                    <label class="text-sm text-muted">
+                        Correo
+                    </label>
+
+                    @Html.TextBoxFor(m => m.Correo, new
+                    {
+                        type = "email",
+                        @class = "w-full mt-1 px-4 py-3 rounded-xl " +
+                                 "bg-gray-50 dark:bg-gray-700 " +
+                                 "border border-gray-200 dark:border-gray-600 " +
+                                 "outline-none focus:ring-2 focus:ring-primary"
+                    })
+                </div>
+
+
+                <!-- TELÉFONO -->
+                <div>
+                    <label class="text-sm text-muted">
+                        Teléfono
+                    </label>
+
+                    @Html.TextBoxFor(m => m.Telefono, new
+                    {
+                        @class = "w-full mt-1 px-4 py-3 rounded-xl " +
+                                 "bg-gray-50 dark:bg-gray-700 " +
+                                 "border border-gray-200 dark:border-gray-600 " +
+                                 "outline-none focus:ring-2 focus:ring-primary"
+                    })
+                </div>
+
+
+                <!-- FORMACIÓN -->
+                <div>
+                    <label class="text-sm text-muted">
+                        Formación profesional
+                    </label>
+
+                    @Html.TextBoxFor(m => m.Formacion, new
+                    {
+                        @class = "w-full mt-1 px-4 py-3 rounded-xl " +
+                                 "bg-gray-50 dark:bg-gray-700 " +
+                                 "border border-gray-200 dark:border-gray-600 " +
+                                 "outline-none focus:ring-2 focus:ring-primary"
+                    })
+                </div>
+
+
+                <!-- HORARIO -->
+                <div>
+                    <label class="text-sm text-muted">
+                        Horario de atención
+                    </label>
+
+                    @Html.TextBoxFor(m => m.Horario, new
+                    {
+                        @class = "w-full mt-1 px-4 py-3 rounded-xl " +
+                                 "bg-gray-50 dark:bg-gray-700 " +
+                                 "border border-gray-200 dark:border-gray-600 " +
+                                 "outline-none focus:ring-2 focus:ring-primary"
+                    })
+                </div>
+
+
+                <!-- USUARIO -->
+                <div>
+                    <label class="text-sm text-muted">
+                        Usuario
+                    </label>
+
+                    @Html.TextBoxFor(m => m.Usuario, new
+                    {
+                        @class = "w-full mt-1 px-4 py-3 rounded-xl " +
+                                 "bg-gray-50 dark:bg-gray-700 " +
+                                 "border border-gray-200 dark:border-gray-600 " +
+                                 "outline-none focus:ring-2 focus:ring-primary"
+                    })
+                </div>
+
+
+                <!-- FOTO -->
+                <div>
+                    <label class="text-sm text-muted">
+                        Foto de perfil
+                    </label>
+
+                    <input type="file"
+                           name="Foto"
+                           accept=".jpg,.jpeg,.png"
+                           class="w-full mt-1 px-4 py-2.5 rounded-xl
+                                  bg-gray-50 dark:bg-gray-700
+                                  border border-gray-200 dark:border-gray-600
+                                  text-sm" />
+                </div>
+
+
+                <!-- BOTÓN -->
+                <div class="md:col-span-2 flex justify-end pt-2">
+
+                    <button type="submit"
+                            class="bg-primary hover:bg-primary-600
+                                   text-black dark:text-white
+                                   px-7 py-3 rounded-xl
+                                   font-bold shadow-lg
+                                   transition">
+
+                        💾 Guardar cambios
+
+                    </button>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</main>
+
+    @section Scripts {
+        <script src="~/Scripts/profile.js"></script>
+    }
