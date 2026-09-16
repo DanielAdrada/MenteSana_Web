@@ -70,8 +70,508 @@
 
     </div>
 
+    <!-- PSICOLOGOS DISPONIBLES -->
+    <section class="max-w-7xl mx-auto px-5 mt-8 mb-8">
+
+        <div class="bg-card dark:bg-slate-800
+                    rounded-xl2
+                    shadow-soft
+                    overflow-hidden">
+
+            <!-- ENCABEZADO -->
+            <div class="relative overflow-hidden
+                    bg-gradient-to-r
+                    from-emerald-50
+                    via-cyan-50
+                    to-blue-50
+                    dark:from-slate-800
+                    dark:via-slate-800
+                    dark:to-slate-700
+                    px-6 md:px-8 py-7">
+
+                <!-- Decoración -->
+                <div class="absolute -right-10 -top-16
+                        w-40 h-40
+                        rounded-full
+                        bg-emerald-200/30
+                        dark:bg-emerald-500/10">
+                </div>
+
+                <div class="relative flex flex-col md:flex-row
+                        md:items-center
+                        md:justify-between
+                        gap-5">
+
+                    <div class="flex items-start gap-4">
+
+                        <div class="w-12 h-12
+                                flex-shrink-0
+                                rounded-2xl
+                                bg-gradient-to-br
+                                from-emerald-400
+                                to-cyan-500
+                                flex items-center justify-center
+                                text-2xl
+                                shadow-md">
+                            🧠
+                        </div>
+
+                        <div>
+
+                            <h2 class="text-xl md:text-2xl
+                                   font-extrabold
+                                   text-deep
+                                   dark:text-white">
+
+                                ¿Necesitas hablar con un profesional?
+
+                            </h2>
+
+                            <p class="mt-1
+                                  text-sm md:text-base
+                                  text-muted
+                                  dark:text-gray-300
+                                  max-w-2xl">
+
+                                Si necesitas orientación o apoyo,
+                                puedes comunicarte con uno de nuestros
+                                psicólogos.
+
+                            </p>
+
+                        </div>
+
+                    </div>
 
 
+                    <div class="hidden md:flex
+                            items-center gap-2
+                            px-4 py-2
+                            rounded-xl
+                            bg-white/70
+                            dark:bg-slate-700/70
+                            text-sm font-semibold
+                            text-emerald-700
+                            dark:text-emerald-300">
+
+                        <span>💙</span>
+
+                        <span>
+                            Estamos para acompañarte
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- LISTADO DE PSICÓLOGOS -->
+            <div class="p-6 md:p-8">
+
+                @if (Model.Psicologos != null && Model.Psicologos.Any())
+                {
+                    <!-- CONTENEDOR DEL CARRUSEL -->
+                    <div class="relative">
+
+                        <!-- FLECHA IZQUIERDA -->
+                        <button type="button"
+                                onclick="moverPsicologos(-1)"
+                                class="absolute left-0 top-1/2 -translate-y-1/2 z-20
+                           w-11 h-11
+                           rounded-full
+                           bg-white
+                           dark:bg-slate-700
+                           border border-gray-200
+                           dark:border-slate-600
+                           shadow-lg
+                           flex items-center justify-center
+                           text-xl
+                           text-gray-700
+                           dark:text-white
+                           hover:scale-110
+                           hover:shadow-xl
+                           transition-all">
+
+                            ‹
+
+                        </button>
+
+
+                        <!-- ÁREA DESLIZABLE -->
+                        <div id="carruselPsicologos"
+                             class="flex gap-5
+                        overflow-x-auto
+                        scroll-smooth
+                        snap-x snap-mandatory
+                        px-8
+                        pb-3
+                        scrollbar-hide">
+
+                            @foreach (var psicologo in Model.Psicologos)
+                            {
+                                <article class="group
+                                    relative
+                                    flex-shrink-0
+                                    w-[85%]
+                                    sm:w-[48%]
+                                    lg:w-[31.5%]
+                                    snap-start
+                                    rounded-2xl
+                                    border
+                                    border-gray-100
+                                    dark:border-slate-600
+                                    bg-white
+                                    dark:bg-slate-700/50
+                                    p-5
+                                    shadow-sm
+                                    hover:shadow-xl
+                                    hover:-translate-y-1
+                                    transition-all
+                                    duration-300">
+
+
+                                    <!-- FOTO / INICIALES -->
+                                    <!-- FOTO / INICIALES -->
+                                    <div class="flex justify-center pt-3">
+
+                                        <div class="w-24 h-24 rounded-full
+                                                     p-1
+                                                     bg-blue-200
+                                                     shadow-md">
+
+                                             <div class="w-full h-full
+                                                          rounded-full
+                                                          bg-gradient-to-br
+                                                         from-blue-50
+                                                          to-emerald-50
+                                                         flex items-center
+                                                         justify-center">
+
+                                                <span class="text-2xl
+                                                            font-bold
+                                                           text-blue-500">
+
+                                                    @(string.IsNullOrEmpty(psicologo.Nombre)
+                                                          ? ""
+                                                          : psicologo.Nombre.Substring(0, 1).ToUpper())
+                                                    @(string.IsNullOrEmpty(psicologo.Apellido)
+                                                          ? ""
+                                                          : psicologo.Apellido.Substring(0, 1).ToUpper())
+
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- NOMBRE -->
+                                    <div class="text-center mt-4">
+
+                                        <h3 class="font-bold
+                                       text-lg
+                                       text-deep
+                                       dark:text-white">
+
+                                            @psicologo.Nombre
+                                            @psicologo.Apellido
+
+                                        </h3>
+
+                                        <p class="text-sm
+                                      text-muted
+                                      dark:text-gray-300
+                                      mt-1">
+
+                                            Psicólogo profesional
+
+                                        </p>
+
+                                    </div>
+
+
+                                    <!-- DATOS -->
+                                    <div class="mt-5 space-y-2.5">
+
+                                        <!-- CORREO -->
+                                        <div class="flex items-center gap-3
+                                        text-sm
+                                        text-gray-600
+                                        dark:text-gray-300">
+
+                                            <span class="w-8 h-8
+                                                            rounded-lg
+                                                            bg-blue-100
+                                                            dark:bg-blue-900/30
+                                                            flex items-center
+                                                            justify-center">
+                                                ✉️
+                                            </span>
+
+                                            <span class="truncate">
+
+                                                @psicologo.Correo
+
+                                            </span>
+
+                                        </div>
+
+
+                                        <!-- TELÉFONO -->
+                                        <div class="flex items-center gap-3
+                                        text-sm
+                                        text-gray-600
+                                        dark:text-gray-300">
+
+                                            <span class="w-8 h-8
+                                             rounded-lg
+                                             bg-emerald-50
+                                             dark:bg-emerald-900/30
+                                             flex items-center
+                                             justify-center">
+
+                                                📱
+                                            </span>
+
+                                            <span>
+
+                                                @(string.IsNullOrEmpty(psicologo.Telefono)
+                                        ? "Teléfono no registrado"
+                                        : psicologo.Telefono)
+
+                                            </span>
+
+                                        </div>
+
+
+                                        <!-- FORMACIÓN -->
+                                        <div class="flex items-center gap-3
+                                        text-sm
+                                        text-gray-600
+                                        dark:text-gray-300">
+
+                                            <span class="w-8 h-8
+                                             rounded-lg
+                                             bg-purple-50
+                                             dark:bg-purple-900/30
+                                             flex items-center
+                                             justify-center">
+
+                                                🎓
+
+                                            </span>
+
+                                            <span class="truncate">
+
+                                                @(string.IsNullOrEmpty(psicologo.Formacion)
+                                        ? "Formación no registrada"
+                                        : psicologo.Formacion)
+
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- BOTONES -->
+                                    <div class="mt-5 grid grid-cols-2 gap-3">
+
+                                        <!-- CORREO -->
+                                        @if (!string.IsNullOrWhiteSpace(psicologo.Correo))
+                                        {
+                                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=@psicologo.Correo"
+                                               target="_blank"
+                                               class="flex items-center justify-center gap-2
+                                                    bg-emerald-100
+                                                    hover:bg-emerald-200
+                                                   text-emerald-700
+                                                  font-semibold
+                                                   py-2.5
+                                                   px-3
+                                                   rounded-xl
+                                                  shadow-md
+                                                  hover:shadow-lg
+                                                  hover:-translate-y-0.5
+                                                   transition-all
+                                                   text-sm">
+
+                                                ✉️ Correo
+
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="flex items-center justify-center gap-2
+                                             bg-gray-200
+                                             dark:bg-slate-600
+                                             text-gray-500
+                                             dark:text-gray-300
+                                             font-semibold
+                                             py-2.5
+                                             px-3
+                                             rounded-xl
+                                             text-sm">
+
+                                                ✉️ Sin correo
+
+                                            </span>
+                                        }
+
+
+                                        <!-- LLAMAR -->
+                                        @if (!string.IsNullOrWhiteSpace(psicologo.Telefono))
+                                        {
+                                            <a href="tel:@psicologo.Telefono"
+                                               class="flex items-center justify-center gap-2
+                                                      bg-blue-100
+                                                      hover:bg-blue-200
+                                                      text-blue-700
+                                                  font-semibold
+                                                   py-2.5
+                                                   px-3
+                                                   rounded-xl
+                                                  shadow-md
+                                                  hover:shadow-lg
+                                                  hover:-translate-y-0.5
+                                                  transition-all
+                                                  text-sm">
+                                                📞 Llamar
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="flex items-center justify-center gap-2
+                                             bg-gray-200
+                                             dark:bg-slate-600
+                                             text-gray-500
+                                             dark:text-gray-300
+                                             font-semibold
+                                             py-2.5
+                                             px-3
+                                             rounded-xl
+                                             text-sm">
+                                                📞 Sin teléfono
+                                            </span>
+                                        }
+
+                                    </div>
+
+                                </article>
+                            }
+
+                        </div>
+
+                        <!-- FLECHA DERECHA -->
+                        <button type="button"
+                                onclick="moverPsicologos(1)"
+                                class="absolute right-0 top-1/2 -translate-y-1/2 z-20
+                           w-11 h-11
+                           rounded-full
+                           bg-white
+                           dark:bg-slate-700
+                           border border-gray-200
+                           dark:border-slate-600
+                           shadow-lg
+                           flex items-center justify-center
+                           text-xl
+                           text-gray-700
+                           dark:text-white
+                           hover:scale-110
+                           hover:shadow-xl
+                           transition-all">
+
+                            ›
+
+                        </button>
+
+                    </div>
+                }
+                else
+                {
+                    <!-- SIN PSICÓLOGOS -->
+                    <div class="flex flex-col
+                    items-center
+                    justify-center
+                    py-10
+                    px-6
+                    rounded-2xl
+                    bg-gradient-to-br
+                    from-emerald-50
+                    via-white
+                    to-cyan-50
+                    dark:from-slate-700
+                    dark:via-slate-800
+                    dark:to-slate-700
+                    border
+                    border-emerald-100
+                    dark:border-slate-600">
+
+                        <div class="w-16 h-16
+                        rounded-full
+                        bg-emerald-100
+                        dark:bg-emerald-900/40
+                        flex items-center justify-center
+                        text-3xl
+                        mb-4">
+
+                            🧠
+
+                        </div>
+
+                        <h3 class="text-lg
+                       font-bold
+                       text-deep
+                       dark:text-white">
+
+                            Psicólogos no disponibles
+
+                        </h3>
+
+                        <p class="text-sm
+                      text-muted
+                      dark:text-gray-300
+                      text-center
+                      max-w-md
+                      mt-2">
+
+                            Actualmente no hay profesionales
+                            disponibles para mostrar.
+
+                        </p>
+
+                    </div>
+                }
+
+            </div>
+
+       </div>
+ 
+    </section>
+
+    <script>
+        function moverPsicologos(direccion) {
+
+            const carrusel = document.getElementById("carruselPsicologos");
+
+            if (!carrusel) return;
+
+            const tarjeta = carrusel.querySelector("article");
+
+            if (!tarjeta) return;
+
+            const anchoTarjeta = tarjeta.offsetWidth;
+            const espacio = 20;
+
+            carrusel.scrollBy({
+                left: direccion * (anchoTarjeta + espacio),
+                behavior: "smooth"
+            });
+        }
+    </script>
 
     <!-- MAIN -->
     <main class="max-w-7xl mx-auto px-5 my-6 grid md:grid-cols-[2fr_1fr] gap-5">
@@ -267,7 +767,7 @@
                                             bg-blue-100 dark:bg-blue-900/40
                                             flex items-center justify-center
                                             text-sm font-bold text-blue-600 dark:text-blue-300">
-                                            💙
+                                    💙
                                 </div>
 
                                 <div class="min-w-0 flex-1">
@@ -303,7 +803,8 @@
                         <div class="w-14 h-14 mx-auto rounded-full
                                     bg-emerald-100 dark:bg-emerald-900/40
                                     flex items-center justify-center
-                                    text-2xl shadow-sm mb-3">  💙
+                                    text-2xl shadow-sm mb-3">
+                            💙
                         </div>
 
                         <h4 class="text-base font-bold text-deep dark:text-white">

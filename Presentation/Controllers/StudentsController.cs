@@ -1,4 +1,5 @@
 ﻿using Logic;
+using Data;
 using Data.Models;
 using Presentation.Models;
 using System;
@@ -21,6 +22,7 @@ namespace Presentation.Controllers
             ProfileLog profileLogic = new ProfileLog();
             CommentLog commentLog = new CommentLog();
             ResourceLog resourcesLog = new ResourceLog();
+            PsychologistDat psychologistDat = new PsychologistDat();
 
             var model = new StudentHomeViewModel
             {
@@ -29,7 +31,8 @@ namespace Presentation.Controllers
                 Recursos = resourcesLog.ObtenerRecursos()
                            .OrderByDescending(r => r.Fecha)
                            .Take(3)
-                           .ToList()
+                           .ToList(),
+                Psicologos = psychologistDat.ListPsychologists()
 
             };
 
