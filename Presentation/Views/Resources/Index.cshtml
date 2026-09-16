@@ -1,18 +1,18 @@
 ﻿@model Presentation.Models.ResourcesViewModel
+
 @{
     Layout = "~/Views/Shared/_PsychologistLayout.cshtml";
-    ViewBag.Title = "";
+    ViewBag.Title = "Recursos Educativos";
 }
 
-<section class="max-w-7xl mx-auto px-5 mt-6 mb-8">
+<div class="max-w-7xl mx-auto px-5 py-6">
 
-    <div class="relative overflow-hidden rounded-3xl shadow-2xl border border-white/20
-                bg-gradient-to-r from-emerald-400 via-cyan-500 to-blue-600">
-
-        <!-- Decoraciones -->
-        <div class="absolute top-0 left-0 w-40 h-40 bg-white/10 rounded-full -translate-x-16 -translate-y-16"></div>
-        <div class="absolute bottom-0 right-1/3 w-60 h-60 bg-white/5 rounded-full translate-y-24"></div>
-
+    <!-- =========================================================
+         HEADER PRINCIPAL
+         ========================================================= -->
+    <section class="relative overflow-hidden rounded-2xl
+                    bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-600
+                    shadow-xl mb-8">
         <!-- Estrellitas -->
         <div class="absolute inset-0 pointer-events-none">
             <div class="absolute top-10 right-[48%] text-white/40 text-xl">✦</div>
@@ -25,280 +25,1012 @@
             <div class="absolute top-16 right-60 text-white/60 text-sm">✦</div>
         </div>
 
-        <div class="grid md:grid-cols-2 items-center min-h-[270px]">
+        <!-- Decoraciones sutiles -->
+        <div class="absolute -right-16 -top-20
+                    w-64 h-64 rounded-full
+                    bg-white/10"></div>
+
+        <div class="absolute -left-20 -bottom-24
+                    w-72 h-72 rounded-full
+                    bg-white/5"></div>
+
+        <div class="relative grid md:grid-cols-[1fr_auto]
+                    items-center gap-8
+                    px-8 md:px-12 py-10 md:py-12">
 
             <!-- TEXTO -->
-            <div class="px-8 md:px-12 py-10 z-10">
+            <div class="text-white">
 
-                <span class="inline-flex items-center gap-2 bg-white/35 backdrop-blur-sm text-green-700 border border-green-200 px-4 py-1.5 rounded-full text-xs md:text-sm  font-medium">
+                <!-- Etiqueta -->
+                <div class="inline-flex items-center gap-2
+                            px-3 py-1.5 mb-4
+                            rounded-full
+                            bg-white/15
+                            border border-white/20
+                            backdrop-blur-sm">
 
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="w-5 h-5"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7l7-4z" />
-                    </svg>
-                    Espacio seguro
-                </span>
+                    <span class="w-2 h-2 rounded-full bg-white"></span>
 
-                <h1 class="mt-4 text-3xl md:text-5xl font-extrabold text-white drop-shadow-lg whitespace-nowrap">
-                    Recursos Educativos 📚
+                    <span class="text-sm font-medium tracking-wide">
+                        Bienestar estudiantil
+                    </span>
+                </div>
+
+                <!-- Título -->
+                <h1 class="text-3xl md:text-4xl lg:text-5xl
+                           font-bold tracking-tight">
+                    Recursos Educativos
                 </h1>
 
-                <p class="mt-3 text-lg md:text-2xl text-white/95 max-w-xl leading-relaxed">
-                    Administra y comparte recursos educativos para apoyar el bienestar emocional de los estudiantes.
-                </p>
-
-                <p class="mt-1 text-lg md:text-1xl text-white/95">
-                    Cada recurso puede marcar la diferencia 💙
+                <!-- Descripción -->
+                <p class="mt-4 max-w-2xl
+                          text-base md:text-lg
+                          text-white/90
+                          leading-relaxed">
+                    Administra y comparte recursos educativos que contribuyan
+                    al bienestar emocional y desarrollo de los estudiantes.
                 </p>
 
             </div>
-
         </div>
+    </section>
 
-    </div>
 
+    <!-- =========================================================
+         MENSAJE
+         ========================================================= -->
     @if (TempData["Mensaje"] != null)
     {
-        <div id="contenedor-alerta">
-            <div class="alert alert-success alerta-animada" role="alert">
-                <i class="bi bi-check-circle-fill me-2"></i>
-                @TempData["Mensaje"]
+        <div id="contenedor-alerta"
+             class="mb-6">
+
+            <div class="flex items-center gap-3
+                        px-5 py-4
+                        rounded-xl
+                        border border-emerald-200
+                        bg-emerald-50
+                        text-emerald-800
+                        shadow-sm"
+                 role="alert">
+
+                <div class="flex items-center justify-center
+                            w-9 h-9 rounded-full
+                            bg-emerald-100">
+
+                    <i class="bi bi-check-circle-fill
+                              text-emerald-600"></i>
+                </div>
+
+                <span class="font-medium">
+                    @TempData["Mensaje"]
+                </span>
+
             </div>
         </div>
     }
 
-    <hr class="separador" />
+    <!-- =========================================================
+         PUBLICAR RECURSO
+         ========================================================= -->
+    <section class="bg-white
+                    rounded-2xl
+                    border border-slate-200
+                    shadow-sm
+                    overflow-hidden
+                    mb-8">
 
-    @using (Html.BeginForm("Create", "Resources", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(m => m.Id, new { id = "ResourceId" })
-        @Html.HiddenFor(m => m.ArchivoActual, new { id = "ArchivoActual" })
+        <!-- Título de sección -->
+        <div class="flex items-center gap-4
+                    px-6 md:px-8 py-5
+                    border-b border-slate-200
+                    bg-slate-50">
 
+            <div class="flex items-center justify-center
+            w-11 h-11
+            rounded-xl
+            bg-gradient-to-r
+            from-emerald-500
+            to-cyan-500
+            text-white
+            shadow-sm">
 
-            <section class="banner-content encabezado-gradiente">
-                <div class="text-center">
-                    <h2 class="text-white text-5 font-bold text-deep mb-0">Publicar Recursos Educativos</h2>
-                </div>
-            </section>
+                <i class="bi bi-plus-lg text-xl"></i>
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </div>
+      
 
-            <div class="row">
-                <div class="col-md-6 form-group">
-                    @Html.LabelFor(m => m.Titulo)
-                    @Html.EditorFor(m => m.Titulo, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingrese el título" } })
-                    @Html.ValidationMessageFor(m => m.Titulo, "", new { @class = "text-danger" })
-                </div>
+            <div>
+                <h2 class="text-xl md:text-2xl
+                           font-bold text-slate-800">
+                    Publicar recurso educativo
+                </h2>
 
-                <div class="col-md-6 form-group">
-                    @Html.LabelFor(m => m.Tipo, "Tipo de Recurso")
-                    @Html.DropDownListFor(
-                        m => m.Tipo,
-                        new SelectList(new[] { "Video", "Documento", "Imagen", "URL" }),
-                        "Seleccione un tipo",
-                        new { @class = "form-control" }
-                    )
-                    @Html.ValidationMessageFor(m => m.Tipo, "", new { @class = "text-danger" })
-                </div>
+                <p class="text-sm text-slate-500 mt-1">
+                    Agrega material para apoyar el bienestar de los estudiantes.
+                </p>
             </div>
 
-            <div class="row">
-                <div class="col-md-12 form-group">
-                    @Html.LabelFor(m => m.Descripcion)
-                    @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control", rows = "3", placeholder = "Ingrese la descripción" })
-                    @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 form-group">
-                    <label>Subir Archivo</label>
-                    <input type="file" name="Archivo" class="form-control" />
-                </div>
-
-                <div class="col-md-6 form-group">
-                    @Html.LabelFor(m => m.Url, "Ingresar URL (opcional)")
-                    @Html.EditorFor(m => m.Url, new { htmlAttributes = new { @class = "form-control", placeholder = "https://ejemplo.com" } })
-                    @Html.ValidationMessageFor(m => m.Url, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="row mb-4">
-                <div class="col-md-12 d-flex justify-content-end gap-3">
-                    <button type="button" id="btnCancelar" class="btn btn-cancelar" onclick="limpiarFormulario()">
-                        Cancelar
-                    </button>
-                    <button type="submit" id="btnGuardar" class="btn btn-success">
-                        Guardar
-                    </button>
-                </div>
-            </div>  
-     }
-
-
-        <div class="banner-content text-center py-3 ">
-            <h2 style="color: #1e3a8a;">⚙️ Gestión de Recursos Educativos Publicados</h2>
         </div>
 
-        <div class="row">
-            <div class="col-12 px-0">
-                <div class="table-responsive">
-                    <table class="table  align-middle text-center tabla-recursos  mb-0">
 
-                        <thead class="encabezado-gradiente">
-                            <tr>
-                                <th>Título</th>
-                                <th>Descripción</th>
-                                <th>Tipo</th>
-                                <th>Archivo</th>
-                                <th>Enlace</th>
-                                <th>Fecha</th>
-                                <th>Acción</th>
-                            </tr>
-                        </thead>
+        @using (Html.BeginForm(
+            "Create",
+            "Resources",
+            FormMethod.Post,
+            new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
 
-                        <tbody>
-                            @if (Model.ListaRecursos != null)
+            @Html.HiddenFor(m => m.Id, new { id = "ResourceId" })
+            @Html.HiddenFor(m => m.ArchivoActual, new { id = "ArchivoActual" })
+
+
+            <div class="p-6 md:p-8">
+
+                @Html.ValidationSummary(
+                    true,
+                    "",
+                    new { @class = "text-red-600 text-sm mb-5" })
+
+
+                <!-- TÍTULO + TIPO -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+
+                    <!-- Título -->
+                    <div>
+
+                        @Html.LabelFor(
+                            m => m.Titulo,
+                            new
                             {
-                                foreach (var item in Model.ListaRecursos)
+                                @class = "block text-sm font-semibold text-slate-700 mb-2"
+                            })
+
+                        @Html.EditorFor(
+                            m => m.Titulo,
+                            new
+                            {
+                                htmlAttributes = new
                                 {
-                                    <tr>
-                                        <td class="text-start">@item.Titulo</td>
-                                        <td>
-                                            <div class="text-dark small descripcion-corta">
-                                                @item.Descripcion
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center justify-content-center text-dark">
-                                                @switch (item.Tipo?.ToLower())
-                                                {
-                                                    case "imagen":<i class="bi bi-image text-primary me-2"></i> break;
-                                                    case "documento": <i class="bi bi-file-earmark-text text-danger me-2"></i> break;
-                                                    case "video": <i class="bi bi-play-btn-fill text-success me-2"></i> break;
-                                                    case "url": <i class="bi bi-link-45deg text-info me-2"></i>break;
-                                                }
-                                                <span>@item.Tipo</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            @if (!string.IsNullOrEmpty(item.Archivo))
-                                            {
-                                                <a href="@Url.Content("~/Uploads/" + item.Archivo)" target="_blank" class="btn-sm text-dark text-decoration-none">
-                                                    <i class="bi bi-eye-fill text-info"></i> Ver Archivo
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <span class="text-secondary ">
-                                                    <i class=" bi bi-file-earmark-x me-1"></i> Sin archivo
-                                                </span>
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (!string.IsNullOrEmpty(item.Url))
-                                            {
-                                                <a href="@item.Url" target="_blank" class="btn-sm text-dark text-decoration-none">
-                                                    <i class="bi bi-box-arrow-up-right text-info"></i> Visitar Sitio
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <span class=" text-secondary ">
-                                                    <i class="bi bi-link-45deg me-1"></i> No disponible
-                                                </span>
-                                            }
-                                        </td>
-                                        <td class="align-middle text-nowrap text-secondary">
-                                            <i class="bi bi-calendar3 me-2 text-primary " style="opacity: 0.7;"></i>
-                                            @item.Fecha.ToString("dd MMM yyyy")
-                                        </td>
-                                        <td>
-                                            <div class="d-flex justify-content-center gap-2">
-                                                <button class="btn btn-editar btn-sm" onclick="cargarParaEditar('@item.Id','@item.Titulo','@item.Descripcion','@item.Tipo','@item.Archivo','@item.Url')">
-                                                    <i class="bi bi-pencil-square me-1"></i>
-                                                    Editar
-                                                </button>
-                                                @using (Html.BeginForm("Delete", "Resources", new { id = item.Id }, FormMethod.Post, new { onsubmit = "return confirm('¿Desea eliminar?');" }))
-                                                {
-                                                    @Html.AntiForgeryToken()
-                                                    <button type="submit" class="btn btn-danger btn-sm"> <i class="bi bi-x-circle me-1"></i> Eliminar</button>
-                                                }
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @class = "w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition",
+                                    placeholder = "Ingrese el título del recurso"
                                 }
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                            })
 
+                        @Html.ValidationMessageFor(
+                            m => m.Titulo,
+                            "",
+                            new { @class = "text-red-600 text-sm mt-1 block" })
 
-    <div class="w-full" style="background: transparent; box-shadow: none;">
-        <h2 style="color: #1e3a8a;"> 📚 Biblioteca de Recursos Educativos</h2>
-        <div class="filtros-container">
-            <div class="filtros">
-                <button class="filtro-btn active" onclick="filtrarRecursos('Todos', this)">
-                    <i class="bi bi-grid-fill"></i> Todos
-                </button>
-                <button class="filtro-btn" onclick="filtrarRecursos('Video', this)">
-                    <i class="bi bi-play-circle-fill"></i> Videos
-                </button>
-                <button class="filtro-btn" onclick="filtrarRecursos('Documento', this)">
-                    <i class="bi bi-file-earmark-text-fill"></i> Documentos
-                </button>
-                <button class="filtro-btn" onclick="filtrarRecursos('Imagen', this)">
-                    <i class="bi bi-image-fill"></i> Imágenes
-                </button>
-                <button class="filtro-btn" onclick="filtrarRecursos('URL', this)">
-                    <i class="bi bi-link-45deg"></i> Enlaces
-                </button>
-            </div>
-        </div>
+                    </div>
 
-        <div class="contenedor-recursos" id="contenedorRecursos">
-            @foreach (var item in Model.ListaRecursos)
-            {
-                <div class="recurso-card" data-tipo="@item.Tipo">
-                    <div class="recurso-card-inner">
-                        <div class="icono-recurso">
-                            @if (item.Tipo == "Video")
-                            {<i class="bi bi-play-circle-fill"></i> }
-                            else if (item.Tipo == "Documento")
-                            { <i class="bi bi-file-earmark-text-fill"></i> }
-                            else if (item.Tipo == "Imagen")
-                            { <i class="bi bi-image-fill"></i>}
-                            else if (item.Tipo == "URL")
-                            { <i class="bi bi-link-45deg"></i>}
-                        </div>
-                        <div class="contenido-recurso">
-                            <h5>@item.Titulo</h5>
-                            <p>@item.Descripcion</p>
-                            <span class="tipo-recurso">@item.Tipo</span>
-                        </div>
-                        <div class="acciones-recurso">
-                            @if (!string.IsNullOrEmpty(item.Archivo))
-                            {<a href="@Url.Content("~/Uploads/" + item.Archivo)" target="_blank" class="btn-secundario">Ver Archivo</a>}
-                            @if (!string.IsNullOrEmpty(item.Url))
-                            {<a href="@item.Url" target="_blank" class="btn-primario">Visitar Enlace</a>}
-                        </div>
+                    <!-- Tipo -->
+                    <div>
+
+                        @Html.LabelFor(
+                            m => m.Tipo,
+                            "Tipo de recurso",
+                            new
+                            {
+                                @class = "block text-sm font-semibold text-slate-700 mb-2"
+                            })
+
+                        @Html.DropDownListFor(
+                            m => m.Tipo,
+                            new SelectList(
+                                new[] { "Video", "Documento", "Imagen", "URL" }),
+                            "Seleccione un tipo",
+                            new
+                            {
+                                @class = "w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition"
+                            })
+
+                        @Html.ValidationMessageFor(
+                            m => m.Tipo,
+                            "",
+                            new { @class = "text-red-600 text-sm mt-1 block" })
+
                     </div>
                 </div>
-            }
+
+                <!-- DESCRIPCIÓN -->
+                <div class="mb-6">
+
+                    @Html.LabelFor(
+                        m => m.Descripcion,
+                        new
+                        { @class = "block text-sm font-semibold text-slate-700 mb-2"})
+
+                    @Html.TextAreaFor(
+                        m => m.Descripcion,
+                        new
+                        {
+                            @class = "w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition resize-none",
+                            rows = "4",
+                            placeholder = "Ingrese una descripción del recurso"
+                        })
+
+                    @Html.ValidationMessageFor(
+                        m => m.Descripcion,
+                        "",
+                        new { @class = "text-red-600 text-sm mt-1 block" })
+
+                </div>
+
+                <!-- ARCHIVO + URL -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+                    <!-- Archivo -->
+                    <div>
+
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">
+                            Archivo
+                        </label>
+
+                        <div class="relative">
+
+                            <input type="file"
+                                   name="Archivo"
+                                   class="w-full px-4 py-3
+                                          rounded-xl
+                                          border border-slate-300
+                                          bg-slate-50
+                                          text-sm text-slate-600
+                                          cursor-pointer
+                                          focus:outline-none
+                                          focus:ring-2
+                                          focus:ring-cyan-400
+                                          focus:border-cyan-400" />
+
+                        </div>
+
+                        <p class="mt-2 text-xs text-slate-400">
+                            Seleccione un archivo para adjuntarlo al recurso.
+                        </p>
+
+                    </div>
+
+                    <!-- URL -->
+                    <div>
+
+                        @Html.LabelFor(
+                            m => m.Url,
+                            "Enlace externo",
+                            new
+                            {
+                                @class = "block text-sm font-semibold text-slate-700 mb-2"})
+
+                        @Html.EditorFor(
+                            m => m.Url,
+                            new
+                            {
+                                htmlAttributes = new
+                                {
+                                    @class = "w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition",
+                                    placeholder = "https://ejemplo.com"
+                                }
+                            })
+
+                        @Html.ValidationMessageFor(
+                            m => m.Url,
+                            "",
+                            new { @class = "text-red-600 text-sm mt-1 block" })
+
+                    </div>
+                </div>
+
+                <!-- BOTONES -->
+                <div class="flex flex-col-reverse sm:flex-row
+                            justify-end gap-3
+                            pt-5
+                            border-t border-slate-200">
+
+                    <button type="button"
+                            id="btnCancelar"
+                            onclick="limpiarFormulario()"
+                            class="inline-flex items-center justify-center gap-2
+                                   px-5 py-2.5
+                                   rounded-xl
+                                   border border-slate-300
+                                   bg-white
+                                   text-slate-600
+                                   font-medium
+                                   hover:bg-slate-50
+                                   transition">
+
+                        <i class="bi bi-x-lg"></i>
+                        Cancelar
+
+                    </button>
+
+                    <button type="submit"
+                            id="btnGuardar"
+                            class="inline-flex items-center justify-center gap-2
+               px-6 py-2.5
+               rounded-xl
+               bg-gradient-to-r
+               from-emerald-500
+               to-cyan-500
+               text-white
+               font-semibold
+               shadow-sm
+               hover:from-emerald-600
+               hover:to-cyan-600
+               transition">
+
+                        <i class="bi bi-check-lg"></i>
+                        Guardar recurso
+
+                    </button>
+
+
+                </div>
+            </div>
+        }
+    </section>
+
+    <!-- =========================================================
+         GESTIÓN DE RECURSOS PUBLICADOS
+         ========================================================= -->
+    <section class="bg-white
+                    rounded-2xl
+                    border border-slate-200
+                    shadow-sm
+                    overflow-hidden
+                    mb-8">
+
+        <!-- Encabezado -->
+        <div class="flex items-center gap-4
+                    px-6 md:px-8 py-5
+                    border-b border-slate-200
+                    bg-slate-50">
+
+            <div class="flex items-center justify-center
+                        w-11 h-11
+                        rounded-xl
+                        bg-blue-100
+                        text-blue-600">
+
+                <i class="bi bi-gear-fill text-xl"></i>
+
+            </div>
+
+            <div>
+                <h2 class="text-xl md:text-2xl
+                           font-bold text-slate-800">
+                    Recursos publicados
+                </h2>
+
+                <p class="text-sm text-slate-500 mt-1">
+                    Consulta y administra los recursos disponibles.
+                </p>
+            </div>
         </div>
-    </div>
 
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/resources.css" rel="stylesheet" />
-    <link href="~/Content/Site.css" rel="stylesheet" />
+        <!-- TABLA -->
+        <div class="overflow-x-auto">
 
-</section>
+            <table class="w-full text-sm text-left">
+
+                <thead class="bg-gradient-to-r
+                              from-emerald-500
+                              via-cyan-500
+                              to-blue-600
+                              text-white">
+                    <tr>
+
+                        <th class="px-5 py-4 font-semibold">
+                            Título
+                        </th>
+
+                        <th class="px-5 py-4 font-semibold">
+                            Descripción
+                        </th>
+
+                        <th class="px-5 py-4 font-semibold text-center">
+                            Tipo
+                        </th>
+
+                        <th class="px-5 py-4 font-semibold text-center">
+                            Archivo
+                        </th>
+
+                        <th class="px-5 py-4 font-semibold text-center">
+                            Enlace
+                        </th>
+
+                        <th class="px-5 py-4 font-semibold text-center">
+                            Fecha
+                        </th>
+
+                        <th class="px-5 py-4 font-semibold text-center">
+                            Acciones
+                        </th>
+
+                    </tr>
+                </thead>
+
+
+                <tbody class="divide-y divide-slate-100">
+
+                    @if (Model.ListaRecursos != null &&
+                         Model.ListaRecursos.Any())
+                    {
+                        foreach (var item in Model.ListaRecursos)
+                        {
+                            <tr class="hover:bg-slate-50 transition">
+
+                                <!-- TÍTULO -->
+                                <td class="px-5 py-4">
+
+                                    <div class="font-semibold text-slate-800">
+                                        @item.Titulo
+                                    </div>
+
+                                </td>
+
+
+                                <!-- DESCRIPCIÓN -->
+                                <td class="px-5 py-4 max-w-xs">
+
+                                    <div class="text-slate-500 text-sm">
+                                        @item.Descripcion
+                                    </div>
+
+                                </td>
+
+
+                                <!-- TIPO -->
+                                <td class="px-5 py-4 text-center">
+
+                                    <span class="inline-flex items-center gap-2
+                                                 px-3 py-1.5
+                                                 rounded-full
+                                                 bg-slate-100
+                                                 text-slate-700
+                                                 text-xs
+                                                 font-semibold">
+
+                                        @switch (item.Tipo?.ToLower())
+                                        {
+                                            case "imagen":
+                                                <i class="bi bi-image text-blue-500"></i>
+                                                break;
+
+                                            case "documento":
+                                                <i class="bi bi-file-earmark-text text-red-500"></i>
+                                                break;
+
+                                            case "video":
+                                                <i class="bi bi-play-btn-fill text-emerald-500"></i>
+                                                break;
+
+                                            case "url":
+                                                <i class="bi bi-link-45deg text-cyan-500"></i>
+                                                break;
+                                        }
+
+                                        @item.Tipo
+
+                                    </span>
+
+                                </td>
+
+                                <!-- ARCHIVO -->
+                                <td class="px-5 py-4 text-center">
+
+                                    @if (!string.IsNullOrEmpty(item.Archivo))
+                                    {
+                                        <a href="@Url.Content("~/Uploads/" + item.Archivo)"
+                                           target="_blank"
+                                           class="inline-flex items-center gap-1.5
+                                                  text-cyan-600
+                                                  font-medium
+                                                  hover:text-cyan-800
+                                                  transition">
+
+                                            <i class="bi bi-eye-fill"></i>
+                                            Ver archivo
+
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="inline-flex items-center gap-1.5
+                                                     text-slate-400">
+
+                                            <i class="bi bi-file-earmark-x"></i>
+                                            Sin archivo
+
+                                        </span>
+                                    }
+
+                                </td>
+
+                                <!-- ENLACE -->
+                                <td class="px-5 py-4 text-center">
+
+                                    @if (!string.IsNullOrEmpty(item.Url))
+                                    {
+                                        <a href="@item.Url"
+                                           target="_blank"
+                                           class="inline-flex items-center gap-1.5
+                                                  text-blue-600
+                                                  font-medium
+                                                  hover:text-blue-800
+                                                  transition">
+
+                                            <i class="bi bi-box-arrow-up-right"></i>
+                                            Visitar
+
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-slate-400">
+                                            No disponible
+                                        </span>
+                                    }
+
+                                </td>
+
+
+                                <!-- FECHA -->
+                                <td class="px-5 py-4
+                                           text-center
+                                           text-slate-500
+                                           whitespace-nowrap">
+
+                                    <i class="bi bi-calendar3
+                                              text-cyan-500 mr-1"></i>
+
+                                    @item.Fecha.ToString("dd MMM yyyy")
+
+                                </td>
+
+
+                                <!-- ACCIONES -->
+                                <td class="px-5 py-4">
+
+                                    <div class="flex items-center
+                                                justify-center gap-2">
+
+                                        <!-- EDITAR -->
+                                        <button type="button"
+                                                class="inline-flex items-center gap-1.5
+                                                       px-3 py-2
+                                                       rounded-lg
+                                                       bg-cyan-50
+                                                       text-cyan-700
+                                                       font-medium
+                                                       hover:bg-cyan-100
+                                                       transition"
+                                                onclick="cargarParaEditar('@item.Id','@item.Titulo','@item.Descripcion','@item.Tipo','@item.Archivo','@item.Url')">
+
+                                            <i class="bi bi-pencil-square"></i>
+                                            Editar
+
+                                        </button>
+
+
+                                        <!-- ELIMINAR -->
+                                        @using (Html.BeginForm(
+                                            "Delete",
+                                            "Resources",
+                                            new { id = item.Id },
+                                            FormMethod.Post,
+                                            new
+                                            {
+                                                onsubmit = "return confirm('¿Desea eliminar este recurso?');"
+                                            }))
+                                        {
+                                            @Html.AntiForgeryToken()
+
+                                            <button type="submit"
+                                                    class="inline-flex items-center gap-1.5
+                                                           px-3 py-2
+                                                           rounded-lg
+                                                           bg-red-50
+                                                           text-red-600
+                                                           font-medium
+                                                           hover:bg-red-100
+                                                           transition">
+
+                                                <i class="bi bi-trash3"></i>
+                                                Eliminar
+
+                                            </button>
+                                        }
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <!-- SIN RECURSOS -->
+                        <tr>
+
+                            <td colspan="7"
+                                class="px-6 py-12 text-center">
+
+                                <div class="flex flex-col
+                                            items-center
+                                            justify-center">
+
+                                    <div class="flex items-center justify-center
+                                                w-16 h-16
+                                                rounded-full
+                                                bg-slate-100
+                                                text-slate-400
+                                                mb-4">
+
+                                        <i class="bi bi-folder2-open text-3xl"></i>
+
+                                    </div>
+
+                                    <h3 class="text-lg
+                                               font-semibold
+                                               text-slate-700">
+
+                                        No hay recursos publicados
+
+                                    </h3>
+
+                                    <p class="mt-1 text-sm text-slate-400">
+                                        Los recursos que publiques aparecerán aquí.
+                                    </p>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         BIBLIOTECA
+         ========================================================= -->
+    <section>
+
+        <!-- Encabezado -->
+        <div class="flex flex-col md:flex-row
+                    md:items-center
+                    md:justify-between
+                    gap-4
+                    mb-5">
+
+            <div>
+
+                <h2 class="text-2xl md:text-3xl
+                           font-bold text-slate-800">
+
+                    Biblioteca de recursos
+
+                </h2>
+
+                <p class="mt-1 text-sm text-slate-500">
+                    Explora los recursos educativos disponibles.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- FILTROS -->
+        <div class="flex flex-wrap gap-2 mb-6">
+
+            <button type="button"
+                    class="filtro-btn active
+                           inline-flex items-center gap-2
+                           px-4 py-2
+                           rounded-xl
+                           bg-gradient-to-r
+                           from-emerald-500
+                           to-cyan-500
+                           text-white
+                           font-medium
+                           shadow-sm
+                           transition"
+                    onclick="filtrarRecursos('Todos', this)">
+
+                <i class="bi bi-grid-fill"></i>
+                Todos
+
+            </button>
+
+
+            <button type="button"
+                    class="filtro-btn
+                           inline-flex items-center gap-2
+                           px-4 py-2
+                           rounded-xl
+                           bg-white
+                           border border-slate-200
+                           text-slate-600
+                           font-medium
+                           hover:border-cyan-300
+                           hover:text-cyan-600
+                           transition"
+                    onclick="filtrarRecursos('Video', this)">
+
+                <i class="bi bi-play-circle-fill"></i>
+                Videos
+
+            </button>
+
+
+            <button type="button"
+                    class="filtro-btn
+                           inline-flex items-center gap-2
+                           px-4 py-2
+                           rounded-xl
+                           bg-white
+                           border border-slate-200
+                           text-slate-600
+                           font-medium
+                           hover:border-cyan-300
+                           hover:text-cyan-600
+                           transition"
+                    onclick="filtrarRecursos('Documento', this)">
+
+                <i class="bi bi-file-earmark-text-fill"></i>
+                Documentos
+
+            </button>
+
+
+            <button type="button"
+                    class="filtro-btn
+                           inline-flex items-center gap-2
+                           px-4 py-2
+                           rounded-xl
+                           bg-white
+                           border border-slate-200
+                           text-slate-600
+                           font-medium
+                           hover:border-cyan-300
+                           hover:text-cyan-600
+                           transition"
+                    onclick="filtrarRecursos('Imagen', this)">
+
+                <i class="bi bi-image-fill"></i>
+                Imágenes
+
+            </button>
+
+
+            <button type="button"
+                    class="filtro-btn
+                           inline-flex items-center gap-2
+                           px-4 py-2
+                           rounded-xl
+                           bg-white
+                           border border-slate-200
+                           text-slate-600
+                           font-medium
+                           hover:border-cyan-300
+                           hover:text-cyan-600
+                           transition"
+                    onclick="filtrarRecursos('URL', this)">
+
+                <i class="bi bi-link-45deg"></i>
+                Enlaces
+
+            </button>
+
+        </div>
+
+
+        <!-- CONTENEDOR -->
+        <div id="contenedorRecursos"
+             class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3
+                    gap-5">
+
+            @if (Model.ListaRecursos != null &&
+                 Model.ListaRecursos.Any())
+            {
+                foreach (var item in Model.ListaRecursos)
+                {
+                    <div class="recurso-card"
+                         data-tipo="@item.Tipo">
+
+                        <div class="h-full
+                                    bg-white
+                                    rounded-2xl
+                                    border border-slate-200
+                                    shadow-sm
+                                    hover:shadow-lg
+                                    hover:-translate-y-1
+                                    transition-all
+                                    duration-200
+                                    overflow-hidden">
+
+                            <!-- PARTE SUPERIOR -->
+                            <div class="p-6">
+
+                                <!-- ICONO -->
+                                <div class="flex items-center justify-between mb-5">
+
+                                    <div class="flex items-center justify-center
+                                                w-12 h-12
+                                                rounded-xl
+                                                bg-gradient-to-br
+                                                from-emerald-50
+                                                to-cyan-50">
+
+                                        @if (item.Tipo == "Video")
+                                        {
+                                            <i class="bi bi-play-circle-fill
+                                                      text-2xl text-emerald-500"></i>
+                                        }
+                                        else if (item.Tipo == "Documento")
+                                        {
+                                            <i class="bi bi-file-earmark-text-fill
+                                                      text-2xl text-blue-500"></i>
+                                        }
+                                        else if (item.Tipo == "Imagen")
+                                        {
+                                            <i class="bi bi-image-fill
+                                                      text-2xl text-cyan-500"></i>
+                                        }
+                                        else if (item.Tipo == "URL")
+                                        {
+                                            <i class="bi bi-link-45deg
+                                                      text-2xl text-indigo-500"></i>
+                                        }
+
+                                    </div>
+
+
+                                    <!-- TIPO -->
+                                    <span class="px-3 py-1
+                                                 rounded-full
+                                                 bg-slate-100
+                                                 text-slate-600
+                                                 text-xs
+                                                 font-semibold">
+
+                                        @item.Tipo
+
+                                    </span>
+
+                                </div>
+
+
+                                <!-- CONTENIDO -->
+                                <h3 class="text-lg
+                                           font-bold
+                                           text-slate-800
+                                           leading-snug">
+
+                                    @item.Titulo
+
+                                </h3>
+
+
+                                <p class="mt-3
+                                          text-sm
+                                          text-slate-500
+                                          leading-relaxed">
+
+                                    @item.Descripcion
+
+                                </p>
+
+                            </div>
+
+
+                            <!-- ACCIONES -->
+                            <div class="px-6 py-4
+                                        border-t border-slate-100
+                                        bg-slate-50">
+
+                                <div class="flex flex-wrap gap-2">
+
+                                    @if (!string.IsNullOrEmpty(item.Archivo))
+                                    {
+                                        <a href="@Url.Content("~/Uploads/" + item.Archivo)"
+                                           target="_blank"
+                                           class="inline-flex items-center gap-2
+                                                  px-4 py-2
+                                                  rounded-lg
+                                                  bg-white
+                                                  border border-slate-200
+                                                  text-slate-700
+                                                  text-sm
+                                                  font-medium
+                                                  hover:border-cyan-300
+                                                  hover:text-cyan-600
+                                                  transition">
+
+                                            <i class="bi bi-eye"></i>
+                                            Ver archivo
+
+                                        </a>
+                                    }
+
+
+                                    @if (!string.IsNullOrEmpty(item.Url))
+                                    {
+                                        <a href="@item.Url"
+                                           target="_blank"
+                                           class="inline-flex items-center gap-2
+                                                  px-4 py-2
+                                                  rounded-lg
+                                                  bg-gradient-to-r
+                                                  from-emerald-500
+                                                  to-cyan-500
+                                                  text-white
+                                                  text-sm
+                                                  font-medium
+                                                  hover:from-emerald-600
+                                                  hover:to-cyan-600
+                                                  transition">
+
+                                            <i class="bi bi-box-arrow-up-right"></i>
+                                            Visitar enlace
+
+                                        </a>
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+            }
+            else
+            {
+                <!-- BIBLIOTECA VACÍA -->
+                <div class="col-span-full
+                            bg-white
+                            rounded-2xl
+                            border border-slate-200
+                            p-10
+                            text-center">
+
+                    <div class="flex items-center justify-center
+                                w-16 h-16
+                                mx-auto
+                                rounded-full
+                                bg-slate-100
+                                text-slate-400
+                                mb-4">
+
+                        <i class="bi bi-collection text-3xl"></i>
+
+                    </div>
+
+                    <h3 class="text-lg font-semibold text-slate-700">
+                        No hay recursos disponibles
+                    </h3>
+
+                    <p class="mt-1 text-sm text-slate-400">
+                        Cuando publiques recursos aparecerán en esta biblioteca.
+                    </p>
+
+                </div>
+            }
+
+        </div>
+
+    </section>
+
+</div>
