@@ -288,6 +288,111 @@
 
         </section>
 
+        <!-- NOTIFICACIONES DASS -->
+        <div class="mt-8">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        🔔 Notificaciones
+                    </h2>
+                    <p class="text-sm text-gray-500">
+                        Evaluaciones que requieren revisión profesional
+                    </p>
+                </div>
+
+                <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-semibold">
+                    @(Model.Notificaciones != null ? Model.Notificaciones.Count : 0)
+                </span>
+            </div>
+
+            @if (Model.Notificaciones != null && Model.Notificaciones.Any())
+            {
+                <div class="space-y-4">
+
+                    @foreach (var notificacion in Model.Notificaciones)
+                    {
+                        <div class="bg-white border border-red-100 rounded-2xl shadow-sm p-5
+                            hover:shadow-md transition">
+
+                            <div class="flex items-start gap-4">
+
+                                <div class="w-12 h-12 rounded-full bg-red-100
+                                    flex items-center justify-center
+                                    text-xl flex-shrink-0">
+                                    ⚠️
+                                </div>
+
+                                <div class="flex-1">
+
+                                    <div class="flex items-center justify-between gap-3">
+
+                                        <h3 class="font-bold text-gray-800">
+                                            Nueva evaluación DASS-42
+                                        </h3>
+
+                                        <span class="text-xs text-gray-400 whitespace-nowrap">
+                                            @notificacion.Fecha.ToString("dd/MM/yyyy HH:mm")
+                                        </span>
+
+                                    </div>
+
+                                    <p class="text-gray-600 mt-1">
+                                        @notificacion.Mensaje
+                                    </p>
+
+                                    <p class="text-sm text-gray-500 mt-2">
+                                        <strong>Estudiante:</strong>
+                                        @notificacion.EstudianteId
+                                    </p>
+
+                                    <div class="mt-4">
+
+                                        <a href="@Url.Action(
+                                    "DetalleDASS",
+                                    "Psychologist",
+                                    new { id = notificacion.TestId })"
+                                           class="inline-flex items-center gap-2
+                                          bg-emerald-500
+                                          hover:bg-emerald-600
+                                          text-white
+                                          font-semibold
+                                          px-4 py-2
+                                          rounded-xl
+                                          transition">
+                                            👁️ Ver resultado
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div class="bg-white rounded-2xl border border-gray-100
+                    shadow-sm p-8 text-center">
+
+                    <div class="text-4xl mb-3">
+                        🔔
+                    </div>
+
+                    <h3 class="font-semibold text-gray-700">
+                        No hay notificaciones pendientes
+                    </h3>
+
+                    <p class="text-sm text-gray-500 mt-1">
+                        Las nuevas alertas DASS-42 aparecerán aquí.
+                    </p>
+
+                </div>
+            }
+        </div>
 
         <!-- ESTADÍSTICAS DASS-42 -->
         <section class="bg-card rounded-xl2 shadow-soft p-6">

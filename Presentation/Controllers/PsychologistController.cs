@@ -11,6 +11,7 @@ namespace Presentation.Controllers
     public class PsychologistController : Controller
     {
         private readonly DassLogic dassLogic = new DassLogic();
+        private readonly NotificacionLog notificacionLogic = new NotificacionLog();
 
         [HttpGet]
         public ActionResult Index()
@@ -35,6 +36,8 @@ namespace Presentation.Controllers
 
             model.UltimaEvaluacion =
                 dassLogic.ObtenerUltimaEvaluacion();
+
+            model.Notificaciones =    notificacionLogic.ObtenerNotificaciones();
 
             // Obtener estadísticas de Depresión, Ansiedad y Estrés
             model.EstadisticasDASS =

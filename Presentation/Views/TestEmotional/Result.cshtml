@@ -5,6 +5,38 @@
     ViewBag.Title = "Resultado DASS-42";
 }
 
+@functions {
+
+    public string MensajeNivel(string nivel)
+    {
+        if (string.IsNullOrWhiteSpace(nivel))
+            return "Puedes seguir cuidando tu bienestar.";
+
+        switch (nivel.Trim().ToLower())
+        {
+            case "normal":
+                return "Tus respuestas reflejan un estado emocional que puedes seguir cuidando.";
+
+            case "leve":
+                return "Hay algunos aspectos de tu bienestar a los que puedes prestar un poco de atención.";
+
+            case "moderado":
+                return "Hay algunos aspectos de tu bienestar que pueden beneficiarse de mayor atención y autocuidado.";
+
+            case "severo":
+                return "Tus respuestas sugieren que sería importante prestar mayor atención a cómo te has estado sintiendo.";
+
+            case "extremadamente severo":
+            case "extremadamente_severo":
+                return "Tus respuestas sugieren que sería importante prestar especial atención a cómo te has estado sintiendo y considerar hablar con alguien de confianza.";
+
+            default:
+                return "Puedes prestar atención a tu bienestar y explorar las estrategias recomendadas.";
+        }
+    }
+
+}
+
 <section class="max-w-4xl mx-auto mt-10 px-5">
 
     <div class="bg-white rounded-3xl shadow-xl p-8">
@@ -28,52 +60,88 @@
         <div class="grid md:grid-cols-3 gap-6">
 
             <!-- DEPRESIÓN -->
-            <div class="border rounded-2xl p-6 text-center shadow-sm">
+            <div class="rounded-2xl p-6 text-center
+            bg-rose-50
+            border border-rose-100
+            shadow-sm
+            hover:shadow-md
+            transition">
 
-                <div class="text-5xl mb-3">
+                <div class="w-16 h-16 mx-auto mb-4
+                rounded-full
+                bg-rose-100
+                flex items-center
+                justify-center
+                text-3xl">
+
                     🌧️
+
                 </div>
 
-                <h3 class="font-bold text-xl">
+                <h3 class="font-bold text-xl text-slate-700">
                     Depresión
                 </h3>
 
-                <p class="text-2xl font-bold text-red-600 mt-3">
-                    @Model.depresion
+                <p class="text-sm font-medium text-slate-600 mt-3 leading-relaxed">
+                    @MensajeNivel(Model.depresion)
                 </p>
 
             </div>
 
             <!-- ANSIEDAD -->
-            <div class="border rounded-2xl p-6 text-center shadow-sm">
+            <div class="rounded-2xl p-6 text-center
+            bg-amber-50
+            border border-amber-100
+            shadow-sm
+            hover:shadow-md
+            transition">
 
-                <div class="text-5xl mb-3">
+                <div class="w-16 h-16 mx-auto mb-4
+                rounded-full
+                bg-amber-100
+                flex items-center
+                justify-center
+                text-3xl">
+
                     😰
+
                 </div>
 
-                <h3 class="font-bold text-xl">
+                <h3 class="font-bold text-xl text-slate-700">
                     Ansiedad
                 </h3>
 
-                <p class="text-2xl font-bold text-yellow-600 mt-3">
-                    @Model.ansiedad
+                <p class="text-sm font-medium text-slate-600 mt-3 leading-relaxed">
+                    @MensajeNivel(Model.ansiedad)
                 </p>
 
             </div>
 
             <!-- ESTRÉS -->
-            <div class="border rounded-2xl p-6 text-center shadow-sm">
+            <div class="rounded-2xl p-6 text-center
+            bg-blue-50
+            border border-blue-100
+            shadow-sm
+            hover:shadow-md
+            transition">
 
-                <div class="text-5xl mb-3">
+                <div class="w-16 h-16 mx-auto mb-4
+                rounded-full
+                bg-blue-100
+                flex items-center
+                justify-center
+                text-3xl">
+
                     ⚡
+
                 </div>
 
-                <h3 class="font-bold text-xl">
+                <h3 class="font-bold text-xl text-slate-700">
                     Estrés
                 </h3>
 
-                <p class="text-2xl font-bold text-blue-600 mt-3">
-                    @Model.estres
+                <p class="text-sm font-medium text-slate-600 mt-3 leading-relaxed">
+                    @MensajeNivel(Model.estres)
                 </p>
 
             </div>
@@ -87,14 +155,30 @@
 
                 <div class="text-center mb-6">
 
-                    <h3 class="text-2xl font-bold">
-                        💡 Estrategias recomendadas para ti
-                    </h3>
+                    <div class="text-center mb-7">
 
-                    <p class="text-gray-600 mt-2">
-                        Estas estrategias fueron seleccionadas de acuerdo con las
-                        áreas que presentaron mayor puntuación en tu evaluación.
-                    </p>
+                        <div class="w-14 h-14 mx-auto mb-3
+                rounded-full
+                bg-emerald-100
+                flex items-center
+                justify-center
+                text-2xl">
+
+                            💚
+
+                        </div>
+
+                        <h3 class="text-2xl font-bold text-slate-700">
+                            Estrategias para ti
+                        </h3>
+
+                        <p class="text-gray-600 mt-2 max-w-2xl mx-auto leading-relaxed">
+                            Hemos seleccionado estas estrategias teniendo en cuenta
+                            tus respuestas en la evaluación.
+                        </p>
+
+                    </div>
+
 
                 </div>
 
@@ -102,15 +186,43 @@
 
                     @foreach (var estrategia in Model.estrategias)
                     {
-                        <div class="border rounded-2xl p-5 shadow-sm">
+                        <div class="rounded-2xl
+            bg-gradient-to-br
+            from-emerald-50
+            via-white
+            to-blue-50
+            border border-emerald-100
+            p-6
+            shadow-sm
+            hover:shadow-md
+            transition">
 
-                            <h4 class="font-bold text-lg">
-                                @estrategia.Titulo
-                            </h4>
+                            <div class="flex items-start gap-4">
 
-                            <p class="text-gray-700 mt-3">
-                                @estrategia.Descripcion
-                            </p>
+                                <div class="w-11 h-11 flex-shrink-0
+                    rounded-xl
+                    bg-emerald-100
+                    flex items-center
+                    justify-center
+                    text-xl">
+
+                                    🌱
+
+                                </div>
+
+                                <div>
+
+                                    <h4 class="font-bold text-lg text-slate-700">
+                                        @estrategia.Titulo
+                                    </h4>
+
+                                    <p class="text-gray-600 mt-2 leading-relaxed">
+                                        @estrategia.Descripcion
+                                    </p>
+
+                                </div>
+
+                            </div>
 
                         </div>
                     }
@@ -118,7 +230,7 @@
                 </div>
 
             </div>
-         }
+        }
 
         <div class="text-center mt-10">
 
