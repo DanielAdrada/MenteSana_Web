@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Data.Models;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -174,6 +175,238 @@ namespace Data
                 }
             }
         }
+        public List<DassTestDTO> ListLatestTests()
+        {
+            Persistence db = new Persistence();
+            List<DassTestDTO> lista = new List<DassTestDTO>();
 
+            try
+            {
+                using (MySqlConnection conn = db.OpenConnection())
+                {
+                    using (MySqlCommand cmd = new MySqlCommand("proListUltimosTestsDASS", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                lista.Add(new DassTestDTO
+                                {
+                                    TestId = Convert.ToInt32(reader["test_id"]),
+                                    EstudianteId = reader["test_est_id"].ToString(),
+                                    Estudiante = reader["estudiante"].ToString(),
+                                    GradoCurso = reader["grado_curso"].ToString(),
+                                    NivelDepresion = reader["test_nivel_depresion"].ToString(),
+                                    NivelAnsiedad = reader["test_nivel_ansiedad"].ToString(),
+                                    NivelEstres = reader["test_nivel_estres"].ToString(),
+                                    Fecha = Convert.ToDateTime(reader["test_fecha"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error al listar últimos tests DASS: " + e.Message);
+            }
+
+            return lista;
+        }
+
+        public List<DassTestDTO> GetTestHistory(string estudianteId)
+        {
+            Persistence db = new Persistence();
+            List<DassTestDTO> lista = new List<DassTestDTO>();
+
+            try
+            {
+                using (MySqlConnection conn = db.OpenConnection())
+                {
+                    using (MySqlCommand cmd = new MySqlCommand("proGetHistorialTestsDASS", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("p_est_id", MySqlDbType.VarChar).Value = estudianteId;
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                lista.Add(new DassTestDTO
+                                {
+                                    TestId = Convert.ToInt32(reader["test_id"]),
+                                    EstudianteId = reader["test_est_id"].ToString(),
+                                    Estudiante = reader["estudiante"].ToString(),
+                                    GradoCurso = reader["grado_curso"].ToString(),
+                                    NivelDepresion = reader["test_nivel_depresion"].ToString(),
+                                    NivelAnsiedad = reader["test_nivel_ansiedad"].ToString(),
+                                    NivelEstres = reader["test_nivel_estres"].ToString(),
+                                    Fecha = Convert.ToDateTime(reader["test_fecha"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error al obtener historial DASS: " + e.Message);
+            }
+
+            return lista;
+        }
+
+        public List<DassAnswerDTO> GetAnswers(int testId)
+        {
+            Persistence db = new Persistence();
+            List<DassAnswerDTO> lista = new List<DassAnswerDTO>();
+
+            try
+            {
+                using (MySqlConnection conn = db.OpenConnection())
+                {
+                    using (MySqlCommand cmd = new MySqlCommand("proGetRespuestasDASS", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("p_test_id", MySqlDbType.Int32).Value = testId;
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                lista.Add(new DassAnswerDTO
+                                {
+                                    Pregunta = Convert.ToInt32(reader["respuesta_pregunta"]),
+                                    Valor = Convert.ToInt32(reader["respuesta_valor"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error al obtener respuestas DASS: " + e.Message);
+            }
+
+            return lista;
+        }
+
+        public DassDashboardSummaryDTO GetDashboardSummary()
+        {
+            Persistence db = new Persistence();
+            DassDashboardSummaryDTO resumen = new DassDashboardSummaryDTO();
+
+            try
+            {
+                using (MySqlConnection conn = db.OpenConnection())
+                {
+                    using (MySqlCommand cmd = new MySqlCommand("proGetResumenDashboardDASS", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                resumen.TotalEstudiantesEvaluados =
+                                    Convert.ToInt32(reader["total_estudiantes_evaluados"]);
+
+                                resumen.TotalTestsRealizados =
+                                    Convert.ToInt32(reader["total_tests_realizados"]);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error al obtener resumen del dashboard DASS: " + e.Message);
+            }
+
+            return resumen;
+        }
+
+        public List<DassDashboardStatisticDTO> GetDashboardStatistics()
+        {
+            Persistence db = new Persistence();
+            List<DassDashboardStatisticDTO> lista = new List<DassDashboardStatisticDTO>();
+
+            try
+            {
+                using (MySqlConnection conn = db.OpenConnection())
+                {
+                    using (MySqlCommand cmd = new MySqlCommand("proGetEstadisticasDashboardDASS", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                lista.Add(new DassDashboardStatisticDTO
+                                {
+                                    Dimension = reader["dimension"].ToString(),
+                                    Nivel = reader["nivel"].ToString(),
+                                    Cantidad = Convert.ToInt32(reader["cantidad"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error al obtener estadísticas del dashboard DASS: " + e.Message);
+            }
+
+            return lista;
+        }
+
+        public DassTestDTO GetTestById(int testId)
+        {
+            Persistence db = new Persistence();
+
+            try
+            {
+                using (MySqlConnection conn = db.OpenConnection())
+                {
+                    using (MySqlCommand cmd = new MySqlCommand("proGetTestDASSById", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("p_test_id", MySqlDbType.Int32).Value = testId;
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                return new DassTestDTO
+                                {
+                                    TestId = Convert.ToInt32(reader["test_id"]),
+                                    EstudianteId = reader["test_est_id"].ToString(),
+                                    Estudiante = reader["estudiante"].ToString(),
+                                    GradoCurso = reader["grado_curso"].ToString(),
+                                    NivelDepresion = reader["test_nivel_depresion"].ToString(),
+                                    NivelAnsiedad = reader["test_nivel_ansiedad"].ToString(),
+                                    NivelEstres = reader["test_nivel_estres"].ToString(),
+                                    Fecha = Convert.ToDateTime(reader["test_fecha"])
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error al obtener test DASS: " + e.Message);
+            }
+
+            return null;
+        }
     }
 }

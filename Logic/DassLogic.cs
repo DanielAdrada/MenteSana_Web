@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,6 +91,50 @@ namespace Logic
         public DateTime? ObtenerUltimaEvaluacion()
         {
             return dassDat.GetLastTestDate();
+        }
+
+        // RESULTADOS DASS - PANTALLA PRINCIPAL
+        public List<DassTestDTO> ObtenerUltimosTests()
+        {
+            return dassDat.ListLatestTests();
+        }
+
+        // HISTORIAL DE UN ESTUDIANTE
+        public List<DassTestDTO> ObtenerHistorial(string estudianteId)
+        {
+            if (string.IsNullOrWhiteSpace(estudianteId))
+                return new List<DassTestDTO>();
+
+            return dassDat.GetTestHistory(estudianteId.Trim());
+        }
+
+        // RESPUESTAS DE UN TEST
+        public List<DassAnswerDTO> ObtenerRespuestas(int testId)
+        {
+            if (testId <= 0)
+                return new List<DassAnswerDTO>();
+
+            return dassDat.GetAnswers(testId);
+        }
+
+        // RESUMEN DEL DASHBOARD
+        public DassDashboardSummaryDTO ObtenerResumenDashboard()
+        {
+            return dassDat.GetDashboardSummary();
+        }
+
+        // ESTADÍSTICAS DEL DASHBOARD
+        public List<DassDashboardStatisticDTO> ObtenerEstadisticasDashboard()
+        {
+            return dassDat.GetDashboardStatistics();
+        }
+
+        public DassTestDTO ObtenerTestPorId(int testId)
+        {
+            if (testId <= 0)
+                return null;
+
+            return dassDat.GetTestById(testId);
         }
     }
 }

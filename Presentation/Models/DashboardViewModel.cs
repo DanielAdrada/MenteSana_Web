@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,5 +15,7 @@ namespace Presentation.Models
         public int RequierenSeguimiento { get; set; }
 
         public DateTime? UltimaEvaluacion { get; set; }
+
+        public List<DassDashboardStatisticDTO> EstadisticasDASS { get; set; }
     }
 }

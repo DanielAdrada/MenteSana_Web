@@ -36,6 +36,72 @@ namespace Presentation.Controllers
             model.UltimaEvaluacion =
                 dassLogic.ObtenerUltimaEvaluacion();
 
+            // Obtener estadísticas de Depresión, Ansiedad y Estrés
+            model.EstadisticasDASS =
+                dassLogic.ObtenerEstadisticasDashboard();
+
+            return View(model);
+        }
+
+        public ActionResult ResultadosDASS()
+        {
+            // Seguridad básica por rol
+            if (Session["Rol"] == null || Session["Rol"].ToString() != "PSICOLOGO")
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            var resultados = dassLogic.ObtenerUltimosTests();
+
+            return View(resultados);
+        }
+
+        public ActionResult HistorialDASS(string id)
+        {
+            // Seguridad básica por rol
+            if (Session["Rol"] == null || Session["Rol"].ToString() != "PSICOLOGO")
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return RedirectToAction("ResultadosDASS");
+            }
+
+            var historial = dassLogic.ObtenerHistorial(id);
+
+            return View(historial);
+        }
+
+        public ActionResult DetalleDASS(int id)
+        {
+            // Seguridad básica por rol
+            if (Session["Rol"] == null || Session["Rol"].ToString() != "PSICOLOGO")
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            if (id <= 0)
+            {
+                return RedirectToAction("ResultadosDASS");
+            }
+
+            var test = dassLogic.ObtenerTestPorId(id);
+
+            if (test == null)
+            {
+                return RedirectToAction("ResultadosDASS");
+            }
+
+            var respuestas = dassLogic.ObtenerRespuestas(id);
+
+            var model = new DassDetailViewModel
+            {
+                Test = test,
+                Respuestas = respuestas
+            };
+
             return View(model);
         }
     }

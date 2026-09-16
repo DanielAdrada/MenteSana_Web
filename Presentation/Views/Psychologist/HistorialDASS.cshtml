@@ -1,0 +1,231 @@
+﻿@model List<Data.Models.DassTestDTO>
+
+@{
+    Layout = "~/Views/Shared/_PsychologistLayout.cshtml";
+    ViewBag.Title = "Historial DASS-42";
+
+    var estudiante = Model != null && Model.Any()
+        ? Model.First().Estudiante
+        : "Estudiante";
+
+    var gradoCurso = Model != null && Model.Any()
+        ? Model.First().GradoCurso
+        : "";
+}
+
+<section class="max-w-7xl mx-auto px-6 py-10">
+
+    <!-- Encabezado -->
+    <div class="mb-8">
+
+        <div class="flex items-center gap-3 mb-4">
+
+            <a href="@Url.Action("ResultadosDASS", "Psychologist")"
+               class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-slate-700 flex items-center justify-center text-gray-600 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors">
+                ←
+            </a>
+
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary text-white flex items-center justify-center text-2xl">
+                📋
+            </div>
+
+            <div>
+                <h1 class="text-3xl font-bold text-deep dark:text-white">
+                    Historial DASS-42
+                </h1>
+
+                <p class="text-muted dark:text-gray-400">
+                    Historial de evaluaciones del estudiante.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Información del estudiante -->
+        @if (Model != null && Model.Any())
+        {
+            <div class="bg-card dark:bg-slate-800 rounded-2xl shadow-md p-6">
+
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+                    <div>
+                        <p class="text-sm text-muted dark:text-gray-400 mb-1">
+                            Estudiante
+                        </p>
+
+                        <h2 class="text-xl font-bold text-deep dark:text-white">
+                            @estudiante
+                        </h2>
+                    </div>
+
+                    <div>
+                        <p class="text-sm text-muted dark:text-gray-400 mb-1">
+                            Grado / Curso
+                        </p>
+
+                        <span class="inline-block px-4 py-2 rounded-xl bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 font-semibold">
+                            @gradoCurso
+                        </span>
+                    </div>
+
+                    <div>
+                        <p class="text-sm text-muted dark:text-gray-400 mb-1">
+                            Evaluaciones realizadas
+                        </p>
+
+                        <span class="text-xl font-bold text-deep dark:text-white">
+                            @Model.Count
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+        }
+    </div>
+
+
+    <!-- Historial -->
+    <div class="bg-card dark:bg-slate-800 rounded-2xl shadow-lg overflow-hidden">
+
+        <div class="px-6 py-5 border-b border-gray-200 dark:border-slate-700">
+
+            <h2 class="text-xl font-semibold text-deep dark:text-white">
+                Evaluaciones DASS-42
+            </h2>
+
+            <p class="text-sm text-muted dark:text-gray-400 mt-1">
+                Consulta los resultados obtenidos en cada evaluación.
+            </p>
+
+        </div>
+
+
+        @if (Model != null && Model.Any())
+        {
+            <div class="overflow-x-auto">
+
+                <table class="w-full text-sm text-left">
+
+                    <thead class="bg-gray-50 dark:bg-slate-700">
+
+                        <tr>
+
+                            <th class="px-6 py-4 font-semibold text-gray-700 dark:text-gray-200">
+                                Fecha
+                            </th>
+
+                            <th class="px-6 py-4 font-semibold text-gray-700 dark:text-gray-200">
+                                Depresión
+                            </th>
+
+                            <th class="px-6 py-4 font-semibold text-gray-700 dark:text-gray-200">
+                                Ansiedad
+                            </th>
+
+                            <th class="px-6 py-4 font-semibold text-gray-700 dark:text-gray-200">
+                                Estrés
+                            </th>
+
+                            <th class="px-6 py-4 font-semibold text-gray-700 dark:text-gray-200 text-center">
+                                Acción
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody class="divide-y divide-gray-200 dark:divide-slate-700">
+
+                        @foreach (var resultado in Model)
+                        {
+                            <tr class="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
+
+                                <!-- Fecha -->
+                                <td class="px-6 py-4 text-gray-600 dark:text-gray-300 whitespace-nowrap">
+                                    @resultado.Fecha.ToString("dd/MM/yyyy HH:mm")
+                                </td>
+
+
+                                <!-- Depresión -->
+                                <td class="px-6 py-4">
+
+                                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">
+                                        @resultado.NivelDepresion
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Ansiedad -->
+                                <td class="px-6 py-4">
+
+                                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300">
+                                        @resultado.NivelAnsiedad
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Estrés -->
+                                <td class="px-6 py-4">
+
+                                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">
+                                        @resultado.NivelEstres
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Acción -->
+                                <td class="px-6 py-4 text-center">
+
+                                    <a href="@Url.Action("DetalleDASS", "Psychologist", new { id = resultado.TestId })"
+                                       class="inline-flex items-center gap-2 bg-secondary hover:bg-blue-600 text-white px-4 py-2 rounded-xl font-semibold transition-colors">
+
+                                        <span>🔎</span>
+                                        <span>Ver detalle</span>
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+        else
+        {
+            <!-- Sin historial -->
+            <div class="px-6 py-16 text-center">
+
+                <div class="text-5xl mb-4">
+                    📋
+                </div>
+
+                <h3 class="text-xl font-semibold text-deep dark:text-white mb-2">
+                    No hay evaluaciones
+                </h3>
+
+                <p class="text-muted dark:text-gray-400 mb-6">
+                    No se encontraron evaluaciones DASS-42 para este estudiante.
+                </p>
+
+                <a href="@Url.Action("ResultadosDASS", "Psychologist")"
+                   class="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-600 hover:text-secondary hover:border-secondary hover:bg-gray-50 px-4 py-2.5 rounded-xl font-medium transition-all duration-200 shadow-sm">
+                    <span class="text-lg">↩️</span>
+                    Volver a resultados
+                </a>
+
+            </div>
+        }
+
+    </div>
+
+</section>
