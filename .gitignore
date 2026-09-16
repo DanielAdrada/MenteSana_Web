@@ -15,3 +15,6 @@ packages/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Fotos de perfil subidas localmente
+Presentation/Content/Uploads/Profiles/

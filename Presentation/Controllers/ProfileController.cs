@@ -108,7 +108,25 @@ namespace Presentation.Controllers
 
 
             // Guardar datos del estudiante
-            if (profileLogic.SaveProfile(model.Id, model.Nombre, model.Apellido, model.Grado, model.Curso, model.FechaNacimiento))
+            // Obtener información actual del estudiante
+            ProfileDTO perfilActual = profileLogic.GetProfile(model.Id);
+
+            if (perfilActual == null)
+            {
+                TempData["Error"] = "No se encontró el perfil del estudiante.";
+                return RedirectToAction("Index");
+            }
+
+            // Guardar únicamente los datos editables del perfil.
+            // Grado, curso y fecha de nacimiento se conservan,
+            // ya que son datos administrados desde el módulo de estudiantes.
+            if (profileLogic.SaveProfile(
+                model.Id,
+                model.Nombre,
+                model.Apellido,
+                perfilActual.Grado,
+                perfilActual.Curso,
+                perfilActual.FechaNacimiento))
             {
                 actualizoPerfil = true;
             }
