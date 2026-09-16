@@ -33,7 +33,18 @@ namespace Data
                     try
                     {
                         object resultado = cmd.ExecuteScalar();
-                        return Convert.ToInt32(resultado);
+
+                        int testId = Convert.ToInt32(resultado);
+
+                        CrearNotificacionDASS(
+                            testId,
+                            _estudianteId,
+                            _nivelDepresion,
+                            _nivelAnsiedad,
+                            _nivelEstres
+                        );
+
+                        return testId;
                     }
                     catch (Exception e)
                     {
@@ -42,6 +53,54 @@ namespace Data
                     }
                 }
             } 
+        }
+
+        // Crea una notificación cuando el resultado DASS requiere seguimiento
+        public bool CrearNotificacionDASS(
+            int _testId,
+            string _estudianteId,
+            string _nivelDepresion,
+            string _nivelAnsiedad,
+            string _nivelEstres)
+        {
+            Persistence db = new Persistence();
+
+            using (MySqlConnection conn = db.OpenConnection())
+            {
+                using (MySqlCommand cmd =
+                    new MySqlCommand("proInsertNotificacionDASS", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("p_test_id", MySqlDbType.Int32)
+                        .Value = _testId;
+
+                    cmd.Parameters.Add("p_est_id", MySqlDbType.VarChar)
+                        .Value = _estudianteId;
+
+                    cmd.Parameters.Add("p_nivel_depresion", MySqlDbType.VarChar)
+                        .Value = _nivelDepresion;
+
+                    cmd.Parameters.Add("p_nivel_ansiedad", MySqlDbType.VarChar)
+                        .Value = _nivelAnsiedad;
+
+                    cmd.Parameters.Add("p_nivel_estres", MySqlDbType.VarChar)
+                        .Value = _nivelEstres;
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(
+                            "Error al crear notificación DASS: " + e.Message);
+
+                        return false;
+                    }
+                }
+            }
         }
 
         // Guarda una respuesta del test
