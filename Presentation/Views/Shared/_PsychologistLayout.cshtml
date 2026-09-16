@@ -41,7 +41,7 @@
 </head>
 
 
-<body class="bg-bg dark:bg-slate-900 text-text dark:text-slate-100 transition-colors duration-300">
+<body class="min-h-screen flex flex-col bg-bg dark:bg-slate-900 text-text dark:text-slate-100 transition-colors duration-300">
 
     <header class="bg-card dark:bg-slate-800 shadow-soft sticky top-0 z-50 transition-colors duration-300">
 
@@ -58,6 +58,9 @@
             <!-- Nav -->
             <nav class="hidden md:flex gap-6 font-medium text-gray-700 dark:text-gray-300">
                 <a href="@Url.Action("Index", "Psychologist")" class="hover:text-secondary dark:hover:text-secondary transition-colors">Inicio</a>
+                <a href="@Url.Action("ResultadosDASS", "Psychologist")" class="hover:text-secondary dark:hover:text-secondary transition-colors">
+                    Resultados DASS-42
+                </a>
                 <a href="@Url.Action("Index", "Resources")" class="hover:text-secondary dark:hover:text-secondary transition-colors">Recursos</a>
                 <a href="@Url.Action("CommentManagement","Community")" class="hover:text-secondary dark:hover:text-secondary transition-colors">Comunidad</a>
                 <a href="@Url.Action("Index_Psychologist", "Profile")" class="hover:text-secondary dark:hover:text-secondary transition-colors">Mi Perfil</a>
@@ -79,7 +82,9 @@
 
 
     <!-- CONTENIDO DE LA VISTA -->
-    @RenderBody()
+    <main class="flex-1">
+        @RenderBody()
+    </main>
 
     <footer class="text-center text-muted py-6">
         © 2025 MenteSana · Un espacio seguro para ti 💙

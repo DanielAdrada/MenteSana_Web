@@ -130,6 +130,7 @@
     <Compile Include="Models\AdminDashboardViewModel.cs" />
     <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
+    <Compile Include="Models\DassDetailViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ProfilePsychologistViewModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
@@ -253,6 +254,9 @@
     <Content Include="Views\Administrator\Resources.cshtml" />
     <Content Include="Views\Login\RecuperarContrasena.cshtml" />
     <Content Include="Views\Profile\Index_Psychologist.cshtml" />
+    <Content Include="Views\Psychologist\ResultadosDASS.cshtml" />
+    <Content Include="Views\Psychologist\HistorialDASS.cshtml" />
+    <Content Include="Views\Psychologist\DetalleDASS.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,6 +1,27 @@
-﻿@{
+﻿@model Presentation.Models.DashboardViewModel
+@using System.Linq
+
+@{
     Layout = "~/Views/Shared/_PsychologistLayout.cshtml";
     ViewBag.Title = "Panel del Psicólogo";
+
+    var estadisticas = Model.EstadisticasDASS ?? new List<Data.Models.DassDashboardStatisticDTO>();
+
+    var depresion = estadisticas
+        .Where(x => x.Dimension == "Depresión")
+        .ToList();
+
+    var ansiedad = estadisticas
+        .Where(x => x.Dimension == "Ansiedad")
+        .ToList();
+
+    var estres = estadisticas
+        .Where(x => x.Dimension == "Estrés")
+        .ToList();
+
+    var totalDepresion = depresion.Sum(x => x.Cantidad);
+    var totalAnsiedad = ansiedad.Sum(x => x.Cantidad);
+    var totalEstres = estres.Sum(x => x.Cantidad);
 }
 
 <!-- HEADER -->
@@ -29,13 +50,12 @@
 
             <div class="px-8 md:px-12 py-10 z-10">
 
-                <span class="inline-flex items-center gap-2 bg-white/35 backdrop-blur-sm text-green-700 border border-green-200 px-4 py-1.5 rounded-full text-xs md:text-sm  font-medium">
+                <span class="inline-flex items-center gap-2 bg-white/35 backdrop-blur-sm text-green-700 border border-green-200 px-4 py-1.5 rounded-full text-xs md:text-sm font-medium">
                     🧠 Panel profesional
                 </span>
 
                 <h1 class="mt-4 text-3xl md:text-5xl font-extrabold text-white drop-shadow-lg whitespace-nowrap">
                     Panel del Psicólogo
-
                 </h1>
 
                 <p class="text-white/90 mt-3 max-w-[600px]">
@@ -46,7 +66,6 @@
             </div>
         </div>
     </div>
-
 
 
     <!-- MAIN -->
@@ -61,7 +80,6 @@
                 p-6 transition-all duration-300
                 hover:-translate-y-2 hover:shadow-2xl">
 
-                <!-- Decoración -->
                 <div class="absolute -right-8 -top-8 w-24 h-24
                     bg-emerald-400/10 rounded-full
                     transition-transform duration-500
@@ -250,9 +268,9 @@
                     <h3 class="mt-1 text-2xl font-extrabold text-secondary
                        dark:text-white">
 
-                        @if (Model.UltimaEvaluacion != null)
+                        @if (Model.UltimaEvaluacion.HasValue)
                         {
-                            @Model.UltimaEvaluacion.ToString("dd/MM/yyyy")
+                            @Model.UltimaEvaluacion.Value.ToString("dd/MM/yyyy")
                         }
                         else
                         {
@@ -271,39 +289,193 @@
         </section>
 
 
-        <!-- RECURSOS -->
+        <!-- ESTADÍSTICAS DASS-42 -->
         <section class="bg-card rounded-xl2 shadow-soft p-6">
 
-            <!-- ANÁLISIS EMOCIONAL -->
-            <h3 class="text-secondary font-semibold mb-4">
-                📊 Distribución emocional (simulada)
-            </h3>
+            <div class="mb-6">
+                <h3 class="text-secondary font-semibold text-lg">
+                    📊 Distribución de resultados DASS-42
+                </h3>
 
-            <div class="space-y-4">
-                <div>
-                    <p class="text-sm">Ansiedad</p>
-                    <div class="h-3 bg-gray-200 rounded">
-                        <div class="h-3 bg-primary rounded w-[60%]"></div>
-                    </div>
-                </div>
-
-                <div>
-                    <p class="text-sm">Estrés</p>
-                    <div class="h-3 bg-gray-200 rounded">
-                        <div class="h-3 bg-secondary rounded w-[45%]"></div>
-                    </div>
-                </div>
-
-                <div>
-                    <p class="text-sm">Tristeza</p>
-                    <div class="h-3 bg-gray-200 rounded">
-                        <div class="h-3 bg-yellow-400 rounded w-[30%]"></div>
-                    </div>
-                </div>
+                <p class="text-sm text-muted mt-1">
+                    Distribución de los niveles registrados en las evaluaciones realizadas.
+                </p>
             </div>
 
 
+            <div class="grid lg:grid-cols-3 gap-8">
+
+                <!-- DEPRESIÓN -->
+                <div>
+
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-semibold text-secondary">
+                            Depresión
+                        </h4>
+
+                        <span class="text-xs text-muted">
+                            @totalDepresion evaluaciones
+                        </span>
+                    </div>
+
+                    @if (depresion.Any())
+                    {
+                        <div class="space-y-4">
+
+                            @foreach (var item in depresion)
+                            {
+                                var porcentaje = totalDepresion > 0
+                                    ? (item.Cantidad * 100 / totalDepresion)
+                                    : 0;
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">
+                                            @item.Nivel
+                                        </span>
+
+                                        <span class="text-sm font-semibold text-secondary">
+                                            @item.Cantidad
+                                        </span>
+                                    </div>
+
+                                    <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                        <div class="h-3 bg-primary rounded-full transition-all duration-500"
+                                             style="width: @porcentaje%;">
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-sm text-muted">
+                            No hay datos de depresión.
+                        </p>
+                    }
+
+                </div>
+
+
+                <!-- ANSIEDAD -->
+                <div>
+
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-semibold text-secondary">
+                            Ansiedad
+                        </h4>
+
+                        <span class="text-xs text-muted">
+                            @totalAnsiedad evaluaciones
+                        </span>
+                    </div>
+
+                    @if (ansiedad.Any())
+                    {
+                        <div class="space-y-4">
+
+                            @foreach (var item in ansiedad)
+                            {
+                                var porcentaje = totalAnsiedad > 0
+                                    ? (item.Cantidad * 100 / totalAnsiedad)
+                                    : 0;
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">
+                                            @item.Nivel
+                                        </span>
+
+                                        <span class="text-sm font-semibold text-secondary">
+                                            @item.Cantidad
+                                        </span>
+                                    </div>
+
+                                    <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                        <div class="h-3 bg-secondary rounded-full transition-all duration-500"
+                                             style="width: @porcentaje%;">
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-sm text-muted">
+                            No hay datos de ansiedad.
+                        </p>
+                    }
+
+                </div>
+
+
+                <!-- ESTRÉS -->
+                <div>
+
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-semibold text-secondary">
+                            Estrés
+                        </h4>
+
+                        <span class="text-xs text-muted">
+                            @totalEstres evaluaciones
+                        </span>
+                    </div>
+
+                    @if (estres.Any())
+                    {
+                        <div class="space-y-4">
+
+                            @foreach (var item in estres)
+                            {
+                                var porcentaje = totalEstres > 0
+                                    ? (item.Cantidad * 100 / totalEstres)
+                                    : 0;
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">
+                                            @item.Nivel
+                                        </span>
+
+                                        <span class="text-sm font-semibold text-secondary">
+                                            @item.Cantidad
+                                        </span>
+                                    </div>
+
+                                    <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                        <div class="h-3 bg-amber-400 rounded-full transition-all duration-500"
+                                             style="width: @porcentaje%;">
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-sm text-muted">
+                            No hay datos de estrés.
+                        </p>
+                    }
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RECURSOS -->
+        <section class="bg-card rounded-xl2 shadow-soft p-6">
+
             <div class="flex justify-between items-center mb-4">
+
                 <h3 class="text-secondary font-semibold">
                     📁 Recursos para estudiantes
                 </h3>
@@ -311,20 +483,27 @@
                 <button class="bg-primary text-black px-4 py-2 rounded-xl font-semibold hover:opacity-90 transition">
                     + Nuevo recurso
                 </button>
+
             </div>
 
             <div class="grid md:grid-cols-3 gap-4">
+
                 <div class="bg-gray-50 rounded-xl p-4">
                     🧘 Guía de respiración para ansiedad
                 </div>
+
                 <div class="bg-gray-50 rounded-xl p-4">
                     📄 Manejo del estrés académico
                 </div>
+
                 <div class="bg-gray-50 rounded-xl p-4">
                     🎧 Audio de relajación guiada
                 </div>
+
             </div>
+
         </section>
+
 
         <!-- GESTIÓN DE ESTRATEGIAS -->
         <section class="bg-card rounded-xl2 shadow-soft p-6">
@@ -351,16 +530,20 @@
 
         </section>
 
+
         <!-- ML PLACEHOLDER -->
         <section class="bg-gradient-to-br from-blue-50 to-transparent rounded-xl2 p-6 border border-blue-200">
+
             <h3 class="font-semibold text-secondary mb-2">
                 🤖 Análisis con Machine Learning (próximamente)
             </h3>
+
             <p class="text-sm text-muted max-w-[600px]">
                 Aquí se mostrarán los resultados automáticos
                 del análisis emocional basado en respuestas abiertas
                 de los estudiantes.
             </p>
+
         </section>
 
     </main>
