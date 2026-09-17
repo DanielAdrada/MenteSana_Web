@@ -23,5 +23,7 @@ namespace Data.Models
 
         public bool Activa { get; set; }
 
+        public string Estado { get; set; }
+
     }
 }

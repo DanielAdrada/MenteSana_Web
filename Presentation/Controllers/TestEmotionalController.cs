@@ -5,11 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Presentation.Controllers
@@ -20,61 +16,76 @@ namespace Presentation.Controllers
         private readonly DassLogic _dassLog = new DassLogic();
         private readonly EstrategiaService _estrategiaService = new EstrategiaService();
 
-        // ====== GET: SURVEY ======
+        // =========================================================
+        // GET: SURVEY
+        // =========================================================
         [HttpGet]
         public ActionResult Survey(int bloque = 1)
         {
+            // Verificar que exista una sesión de usuario
+            string estudianteId = Session["UserId"]?.ToString();
+
+            if (string.IsNullOrWhiteSpace(estudianteId))
+            {
+                TempData["Error"] =
+                    "Tu sesión ha finalizado. Inicia sesión nuevamente para continuar.";
+
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Validar bloque
             if (bloque < 1 || bloque > 3)
             {
                 bloque = 1;
             }
 
             ViewBag.Error = TempData["Error"];
+
             string[] preguntas =
             {
-                    "Me di cuenta de que me molestaba por cosas bastante insignificantes",
-                    "Noté sequedad en mi boca",
-                    "Sentía que no podía experimentar ningún sentimiento positivo",
-                    "Experimenté dificultad para respirar (por ejemplo, respiración excesivamente rápida o falta de aire sin esfuerzo físico)",
-                    "Simplemente no lograba ponerme en marcha",
-                    "Tendía a reaccionar exageradamente ante las situaciones",
-                    "Tuve sensación de temblor o inestabilidad (por ejemplo, sentir que las piernas iban a fallarme)",
-                    "Me resultaba difícil relajarme",
-                    "Me encontré en situaciones que me generaban tanta ansiedad que sentía gran alivio cuando terminaban",
-                    "Sentía que no tenía nada que esperar con ilusión",
-                    "Me molestaba con facilidad",
-                    "Sentía que utilizaba mucha energía nerviosa",
-                    "Me sentía triste y deprimido/a",
-                    "Me impacientaba cuando sufría retrasos de cualquier tipo (ejemplo: ascensores, semáforos, esperar demasiado)",
-                    "Tuve sensación de desmayo",
-                    "Sentía que había perdido interés en casi todo",
-                    "Sentía que no valía mucho como persona",
-                    "Sentía que estaba muy susceptible",
-                    "Sudaba notablemente (por ejemplo, manos sudorosas) sin calor elevado ni esfuerzo físico",
-                    "Sentía miedo sin una buena razón",
-                    "Sentía que la vida no valía la pena",
-                    "Me resultaba difícil tranquilizarme o desconectarme",
-                    "Tenía dificultad para tragar",
-                    "No lograba disfrutar de las cosas que hacía",
-                    "Era consciente del latido de mi corazón sin realizar esfuerzo físico (ejemplo: aumento del ritmo cardíaco, sensación de latidos irregulares)",
-                    "Me sentía desanimado/a y triste",
-                    "Descubrí que estaba muy irritable",
-                    "Sentía que estaba cerca del pánico",
-                    "Me costaba calmarme después de que algo me alteraba",
-                    "Temía que alguna tarea insignificante pero poco familiar me descontrolara",
-                    "Era incapaz de entusiasmarme con nada",
-                    "Me resultaba difícil tolerar interrupciones mientras hacía algo",
-                    "Estaba en un estado de tensión nerviosa",
-                    "Sentía que no valía prácticamente nada",
-                    "Era intolerante con cualquier cosa que me impidiera continuar con lo que estaba haciendo",
-                    "Me sentía aterrorizado/a",
-                    "No veía nada esperanzador en el futuro",
-                    "Sentía que la vida no tenía sentido",
-                    "Me encontraba agitado/a",
-                    "Me preocupaba las situaciones en las que pudiera entrar en pánico y hacer el ridículo",
-                    "Experimenté temblores (por ejemplo, en las manos)",
-                    "Me resultaba difícil tomar la iniciativa para hacer las cosas"
-                };
+                "Me di cuenta de que me molestaba por cosas bastante insignificantes",
+                "Noté sequedad en mi boca",
+                "Sentía que no podía experimentar ningún sentimiento positivo",
+                "Experimenté dificultad para respirar (por ejemplo, respiración excesivamente rápida o falta de aire sin esfuerzo físico)",
+                "Simplemente no lograba ponerme en marcha",
+                "Tendía a reaccionar exageradamente ante las situaciones",
+                "Tuve sensación de temblor o inestabilidad (por ejemplo, sentir que las piernas iban a fallarme)",
+                "Me resultaba difícil relajarme",
+                "Me encontré en situaciones que me generaban tanta ansiedad que sentía gran alivio cuando terminaban",
+                "Sentía que no tenía nada que esperar con ilusión",
+                "Me molestaba con facilidad",
+                "Sentía que utilizaba mucha energía nerviosa",
+                "Me sentía triste y deprimido/a",
+                "Me impacientaba cuando sufría retrasos de cualquier tipo (ejemplo: ascensores, semáforos, esperar demasiado)",
+                "Tuve sensación de desmayo",
+                "Sentía que había perdido interés en casi todo",
+                "Sentía que no valía mucho como persona",
+                "Sentía que estaba muy susceptible",
+                "Sudaba notablemente (por ejemplo, manos sudorosas) sin calor elevado ni esfuerzo físico",
+                "Sentía miedo sin una buena razón",
+                "Sentía que la vida no valía la pena",
+                "Me resultaba difícil tranquilizarme o desconectarme",
+                "Tenía dificultad para tragar",
+                "No lograba disfrutar de las cosas que hacía",
+                "Era consciente del latido de mi corazón sin realizar esfuerzo físico (ejemplo: aumento del ritmo cardíaco, sensación de latidos irregulares)",
+                "Me sentía desanimado/a y triste",
+                "Descubrí que estaba muy irritable",
+                "Sentía que estaba cerca del pánico",
+                "Me costaba calmarme después de que algo me alteraba",
+                "Temía que alguna tarea insignificante pero poco familiar me descontrolara",
+                "Era incapaz de entusiasmarme con nada",
+                "Me resultaba difícil tolerar interrupciones mientras hacía algo",
+                "Estaba en un estado de tensión nerviosa",
+                "Sentía que no valía prácticamente nada",
+                "Era intolerante con cualquier cosa que me impidiera continuar con lo que estaba haciendo",
+                "Me sentía aterrorizado/a",
+                "No veía nada esperanzador en el futuro",
+                "Sentía que la vida no tenía sentido",
+                "Me encontraba agitado/a",
+                "Me preocupaba las situaciones en las que pudiera entrar en pánico y hacer el ridículo",
+                "Experimenté temblores (por ejemplo, en las manos)",
+                "Me resultaba difícil tomar la iniciativa para hacer las cosas"
+            };
 
             int preguntasPorBloque = 14;
             int inicio = (bloque - 1) * preguntasPorBloque;
@@ -95,66 +106,171 @@ namespace Presentation.Controllers
             return View(modelo);
         }
 
-        // ====== POST: ANALIZAR ======
+
+        // =========================================================
+        // POST: ANALIZAR
+        // =========================================================
         [HttpPost]
         public async Task<ActionResult> Analizar(int bloque)
         {
-            List<int> respuestas = Session["RespuestasDASS"] as List<int>;
+            // -----------------------------------------------------
+            // 1. VALIDAR SESIÓN
+            // -----------------------------------------------------
+            string estudianteId = Session["UserId"]?.ToString();
+
+            if (string.IsNullOrWhiteSpace(estudianteId))
+            {
+                TempData["Error"] =
+                    "Tu sesión ha finalizado. Inicia sesión nuevamente para realizar la evaluación.";
+
+                return RedirectToAction("Index", "Login");
+            }
+
+
+            // -----------------------------------------------------
+            // 2. VALIDAR BLOQUE
+            // -----------------------------------------------------
+            if (bloque < 1 || bloque > 3)
+            {
+                TempData["Error"] =
+                    "El bloque de preguntas no es válido.";
+
+                return RedirectToAction("Survey", new { bloque = 1 });
+            }
+
+
+            // -----------------------------------------------------
+            // 3. RECUPERAR RESPUESTAS
+            // -----------------------------------------------------
+            List<int> respuestas =
+                Session["RespuestasDASS"] as List<int>;
 
             if (respuestas == null)
             {
                 respuestas = new List<int>();
             }
 
+
+            // -----------------------------------------------------
+            // 4. LEER LAS 14 RESPUESTAS DEL BLOQUE
+            // -----------------------------------------------------
             int inicio = (bloque - 1) * 14 + 1;
 
             for (int i = inicio; i < inicio + 14; i++)
             {
                 string valor = Request.Form["p" + i];
 
-                if (string.IsNullOrEmpty(valor))
-                {
-                    TempData["Error"] = "Debes responder todas las preguntas del bloque actual.";
-                    return RedirectToAction("Survey");
-                }
-
-                respuestas.Add(int.Parse(valor));
-            }
-
-
-            // Guardar respuestas acumuladas
-            Session["RespuestasDASS"] = respuestas;
-
-            if (bloque < 3)
-            {
-                return RedirectToAction("Survey",
-                    new { bloque = bloque + 1 });
-            }
-
-
-            if (respuestas.Count != 42)
-            {
-                TempData["Error"] = "No se completaron las 42 preguntas.";
-                return RedirectToAction("Survey");
-            }
-
-            try
-            {
-                EmotionResult resultado = await _emotionService.DetectarEmocionAsync(respuestas);
-                resultado.estrategias = _estrategiaService.ObtenerEstrategias(resultado);
-
-                string estudianteId = Session["UserId"]?.ToString();
-                if (string.IsNullOrWhiteSpace(estudianteId))
+                // Pregunta sin responder
+                if (string.IsNullOrWhiteSpace(valor))
                 {
                     TempData["Error"] =
-                        "No se pudo identificar al estudiante. " +
-                        "Debes iniciar sesión nuevamente.";
+                        "Debes responder todas las preguntas antes de continuar.";
 
-                    return RedirectToAction("Survey");
+                    return RedirectToAction(
+                        "Survey",
+                        new { bloque = bloque }
+                    );
+                }
+
+                // Validar que sea un número
+                int respuesta;
+
+                if (!int.TryParse(valor, out respuesta))
+                {
+                    TempData["Error"] =
+                        "Se encontró una respuesta no válida. Intenta nuevamente.";
+
+                    return RedirectToAction(
+                        "Survey",
+                        new { bloque = bloque }
+                    );
+                }
+
+                // Validar rango DASS
+                if (respuesta < 0 || respuesta > 3)
+                {
+                    TempData["Error"] =
+                        "Una de las respuestas no es válida. Intenta nuevamente.";
+
+                    return RedirectToAction(
+                        "Survey",
+                        new { bloque = bloque }
+                    );
+                }
+
+                respuestas.Add(respuesta);
+            }
+
+
+            // -----------------------------------------------------
+            // 5. GUARDAR RESPUESTAS EN SESSION
+            // -----------------------------------------------------
+            Session["RespuestasDASS"] = respuestas;
+
+
+            // -----------------------------------------------------
+            // 6. SI NO ES EL ÚLTIMO BLOQUE
+            // -----------------------------------------------------
+            if (bloque < 3)
+            {
+                return RedirectToAction(
+                    "Survey",
+                    new { bloque = bloque + 1 }
+                );
+            }
+
+
+            // -----------------------------------------------------
+            // 7. VERIFICAR LAS 42 RESPUESTAS
+            // -----------------------------------------------------
+            if (respuestas.Count != 42)
+            {
+                TempData["Error"] =
+                    "No fue posible completar correctamente las 42 preguntas. Intenta nuevamente.";
+
+                Session.Remove("RespuestasDASS");
+
+                return RedirectToAction(
+                    "Survey",
+                    new { bloque = 1 }
+                );
+            }
+
+
+            // -----------------------------------------------------
+            // 8. PROCESAR EL TEST
+            // -----------------------------------------------------
+            try
+            {
+                EmotionResult resultado =
+                    await _emotionService.DetectarEmocionAsync(respuestas);
+
+
+                // -------------------------------------------------
+                // 9. VALIDAR RESULTADO DE LA API
+                // -------------------------------------------------
+                if (resultado == null)
+                {
+                    TempData["Error"] =
+                        "No fue posible procesar la evaluación. Intenta nuevamente.";
+
+                    return RedirectToAction(
+                        "Survey",
+                        new { bloque = 3 }
+                    );
                 }
 
 
-                // GUARDAR EL TEST
+                // -------------------------------------------------
+                // 10. OBTENER ESTRATEGIAS PERSONALIZADAS
+                // -------------------------------------------------
+                resultado.estrategias =
+                    _estrategiaService.ObtenerEstrategias(resultado);
+
+
+                // -------------------------------------------------
+                // 11. GUARDAR EL TEST
+                // -------------------------------------------------
                 int testId = _dassLog.GuardarTest(
                     estudianteId,
                     resultado.depresion,
@@ -162,81 +278,146 @@ namespace Presentation.Controllers
                     resultado.estres
                 );
 
-                // VERIFICAR QUE SE CREÓ EL TEST
+
                 if (testId <= 0)
                 {
                     TempData["Error"] =
-                        "No fue posible guardar el resultado del test.";
+                        "No fue posible guardar el resultado de la evaluación.";
 
-                    return RedirectToAction("Survey");
+                    return RedirectToAction(
+                        "Survey",
+                        new { bloque = 3 }
+                    );
                 }
 
-                // GUARDAR LAS ESTRATEGIAS RECOMENDADAS PARA ESTE TEST
-                foreach (var estrategia in resultado.estrategias)
+
+                // -------------------------------------------------
+                // 12. GUARDAR ESTRATEGIAS
+                // -------------------------------------------------
+                if (resultado.estrategias != null)
                 {
-                    if (estrategia != null && estrategia.EstrategiaId > 0)
+                    foreach (var estrategia in resultado.estrategias)
                     {
-                        _estrategiaService.GuardarTestEstrategia(
-                            testId,
-                            estrategia.EstrategiaId
-                        );
+                        if (estrategia != null &&
+                            estrategia.EstrategiaId > 0)
+                        {
+                            _estrategiaService.GuardarTestEstrategia(
+                                testId,
+                                estrategia.EstrategiaId
+                            );
+                        }
                     }
                 }
 
-                // GUARDAR LAS 42 RESPUESTAS
+
+                // -------------------------------------------------
+                // 13. GUARDAR LAS 42 RESPUESTAS
+                // -------------------------------------------------
                 bool respuestasGuardadas =
                     _dassLog.GuardarRespuestas(
                         testId,
                         respuestas
                     );
 
-                // VERIFICAR LAS RESPUESTAS
+
                 if (!respuestasGuardadas)
                 {
                     TempData["Error"] =
-                        "El resultado se guardó, pero no fue posible " +
-                        "guardar todas las respuestas.";
+                        "La evaluación fue procesada, pero ocurrió un problema al guardar las respuestas.";
 
-                    return RedirectToAction("Survey");
+                    return RedirectToAction(
+                        "Survey",
+                        new { bloque = 3 }
+                    );
                 }
 
-                // PREPARAR RESULTADO PARA LA VISTA
+
+                // -------------------------------------------------
+                // 14. PREPARAR RESULTADO
+                // -------------------------------------------------
                 TempData["Resultado"] =
                     JsonConvert.SerializeObject(resultado);
 
 
-                // LIMPIAR RESPUESTAS DE SESSION
+                // -------------------------------------------------
+                // 15. LIMPIAR RESPUESTAS
+                // -------------------------------------------------
                 Session.Remove("RespuestasDASS");
 
 
-                // MOSTRAR RESULTADO
+                // -------------------------------------------------
+                // 16. MOSTRAR RESULTADO
+                // -------------------------------------------------
                 return RedirectToAction("Result");
             }
             catch (Exception ex)
             {
-                TempData["Error"] =
-                    "Ocurrió un error al procesar el test: " +
-                    ex.Message;
+                // Registrar el error solamente para desarrollo
+                System.Diagnostics.Debug.WriteLine(
+                    "ERROR AL PROCESAR DASS: " + ex.ToString()
+                );
 
-                return RedirectToAction("Survey");
+                // Mensaje amigable para el estudiante
+                TempData["Error"] =
+                    "No fue posible procesar tu evaluación en este momento. " +
+                    "Por favor intenta nuevamente.";
+
+                return RedirectToAction(
+                    "Survey",
+                    new { bloque = 3 }
+                );
             }
         }
 
 
-        // ====== GET: RESULT ======
+        // =========================================================
+        // GET: RESULT
+        // =========================================================
         [HttpGet]
         public ActionResult Result()
         {
             if (TempData["Resultado"] == null)
             {
-                return RedirectToAction("Survey");
+                return RedirectToAction(
+                    "Survey",
+                    new { bloque = 1 }
+                );
             }
 
-            EmotionResult resultado =
-                JsonConvert.DeserializeObject<EmotionResult>(
-                    TempData["Resultado"].ToString());
+            try
+            {
+                EmotionResult resultado =
+                    JsonConvert.DeserializeObject<EmotionResult>(
+                        TempData["Resultado"].ToString()
+                    );
 
-            return View(resultado);
+                if (resultado == null)
+                {
+                    TempData["Error"] =
+                        "No fue posible cargar el resultado de la evaluación.";
+
+                    return RedirectToAction(
+                        "Survey",
+                        new { bloque = 1 }
+                    );
+                }
+
+                return View(resultado);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "ERROR AL CARGAR RESULTADO DASS: " + ex.ToString()
+                );
+
+                TempData["Error"] =
+                    "No fue posible cargar el resultado de la evaluación.";
+
+                return RedirectToAction(
+                    "Survey",
+                    new { bloque = 1 }
+                );
+            }
         }
     }
 }

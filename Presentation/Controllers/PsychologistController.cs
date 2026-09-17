@@ -39,12 +39,36 @@ namespace Presentation.Controllers
 
             model.Notificaciones =    notificacionLogic.ObtenerNotificaciones();
 
+            model.NotificacionesPendientes =  notificacionLogic.ContarNotificacionesPendientes();
+
             // Obtener estadísticas de Depresión, Ansiedad y Estrés
             model.EstadisticasDASS =
                 dassLogic.ObtenerEstadisticasDashboard();
 
             return View(model);
         }
+
+
+
+        [HttpPost]
+        public ActionResult MarcarNotificacionAtendida(int id)
+        {
+            // Seguridad básica por rol
+            if (Session["Rol"] == null || Session["Rol"].ToString() != "PSICOLOGO")
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            if (id <= 0)
+            {
+                return RedirectToAction("Index");
+            }
+
+            notificacionLogic.MarcarComoAtendida(id);
+
+            return RedirectToAction("Index");
+        }
+
 
         public ActionResult ResultadosDASS()
         {

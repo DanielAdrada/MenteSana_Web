@@ -52,22 +52,36 @@ namespace Data
             string rol
         )
         {
-            Persistence db = new Persistence();
-
-            using (MySqlConnection conn = db.OpenConnection())
+            try
             {
-                using (MySqlCommand cmd = new MySqlCommand("proInsertUsuario", conn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("v_id", id);
-                    cmd.Parameters.AddWithValue("v_nombre_usuario", nombreUsuario);
-                    cmd.Parameters.AddWithValue("v_correo", correo);
-                    cmd.Parameters.AddWithValue("v_contrasena", hashContrasena);
-                    cmd.Parameters.AddWithValue("v_salt", salt);
-                    cmd.Parameters.AddWithValue("v_rol", rol);
+                Persistence db = new Persistence();
 
-                    return cmd.ExecuteNonQuery() > 0;
+                using (MySqlConnection conn = db.OpenConnection())
+                {
+                    using (MySqlCommand cmd = new MySqlCommand("proInsertUsuario", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("v_id", id);
+                        cmd.Parameters.AddWithValue("v_nombre_usuario", nombreUsuario);
+                        cmd.Parameters.AddWithValue("v_correo", correo);
+                        cmd.Parameters.AddWithValue("v_contrasena", hashContrasena);
+                        cmd.Parameters.AddWithValue("v_salt", salt);
+                        cmd.Parameters.AddWithValue("v_rol", rol);
+
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
                 }
+            }
+            catch (MySqlException ex)
+            {
+                // Error 1062 = dato duplicado
+                if (ex.Number == 1062)
+                {
+                    return false;
+                }
+
+                throw;
             }
         }
         public string GetSalt(string usuario)

@@ -16,5 +16,14 @@ namespace Logic
             return notificacionDat.ObtenerNotificaciones();
         }
 
+        public bool MarcarComoAtendida(int notificacionId)
+        {
+            return notificacionDat.MarcarComoAtendida(notificacionId);
+        }
+
+        public int ContarNotificacionesPendientes()
+        {
+            return notificacionDat.ContarNotificacionesPendientes();
+        }
     }
 }
