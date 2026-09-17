@@ -17,6 +17,9 @@ namespace Presentation.Models
         public DateTime? UltimaEvaluacion { get; set; }
 
         public List<DassDashboardStatisticDTO> EstadisticasDASS { get; set; }
-        public List<NotificacionDTO> Notificaciones { get; set; }   = new List<NotificacionDTO>();
+
+        public List<NotificacionDTO> Notificaciones { get; set; } = new List<NotificacionDTO>();
+
+        public int NotificacionesPendientes { get; set; }
     }
 }

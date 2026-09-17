@@ -288,40 +288,48 @@
 
         </section>
 
+
         <!-- NOTIFICACIONES DASS -->
         <div class="mt-8">
+
             <div class="flex items-center justify-between mb-4">
+
                 <div>
                     <h2 class="text-2xl font-bold text-gray-800">
                         🔔 Notificaciones
                     </h2>
+
                     <p class="text-sm text-gray-500">
                         Evaluaciones que requieren revisión profesional
                     </p>
                 </div>
 
                 <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-semibold">
-                    @(Model.Notificaciones != null ? Model.Notificaciones.Count : 0)
+                    @Model.NotificacionesPendientes
                 </span>
+
             </div>
+
 
             @if (Model.Notificaciones != null && Model.Notificaciones.Any())
             {
                 <div class="space-y-4">
 
-                    @foreach (var notificacion in Model.Notificaciones)
+                    @foreach (var notificacion in Model.Notificaciones.Take(5))
                     {
                         <div class="bg-white border border-red-100 rounded-2xl shadow-sm p-5
                             hover:shadow-md transition">
 
                             <div class="flex items-start gap-4">
 
+                                <!-- ICONO -->
                                 <div class="w-12 h-12 rounded-full bg-red-100
                                     flex items-center justify-center
                                     text-xl flex-shrink-0">
                                     ⚠️
                                 </div>
 
+                                <!-- CONTENIDO -->
                                 <div class="flex-1">
 
                                     <div class="flex items-center justify-between gap-3">
@@ -345,8 +353,10 @@
                                         @notificacion.EstudianteId
                                     </p>
 
-                                    <div class="mt-4">
+                                    <!-- BOTONES -->
+                                    <div class="mt-4 flex flex-wrap gap-2">
 
+                                        <!-- VER RESULTADO -->
                                         <a href="@Url.Action(
                                     "DetalleDASS",
                                     "Psychologist",
@@ -359,8 +369,37 @@
                                           px-4 py-2
                                           rounded-xl
                                           transition">
+
                                             👁️ Ver resultado
+
                                         </a>
+
+                                        <!-- MARCAR COMO ATENDIDA -->
+                                        <form method="post"
+                                              action="@Url.Action(
+                                          "MarcarNotificacionAtendida",
+                                          "Psychologist")"
+                                              class="inline">
+
+                                            <input type="hidden"
+                                                   name="id"
+                                                   value="@notificacion.Id" />
+
+                                            <button type="submit"
+                                                    class="inline-flex items-center gap-2
+                                                   bg-gray-100
+                                                   hover:bg-gray-200
+                                                   text-gray-700
+                                                   font-semibold
+                                                   px-4 py-2
+                                                   rounded-xl
+                                                   transition">
+
+                                                ✓ Marcar como atendida
+
+                                            </button>
+
+                                        </form>
 
                                     </div>
 
@@ -372,9 +411,29 @@
                     }
 
                 </div>
+
+                <!-- VER TODAS -->
+                 if (Model.NotificacionesPendientes > 5)
+                 {
+                    <div class="text-center mt-5">
+
+                        <a href="#"
+                           class="inline-flex items-center
+                          text-emerald-600
+                          hover:text-emerald-700
+                          font-semibold">
+
+                            Ver todas las notificaciones →
+
+                        </a>
+
+                    </div>
+                 }
+
             }
             else
             {
+                <!-- SIN NOTIFICACIONES -->
                 <div class="bg-white rounded-2xl border border-gray-100
                     shadow-sm p-8 text-center">
 
@@ -392,8 +451,8 @@
 
                 </div>
             }
-        </div>
 
+        </div>
         <!-- ESTADÍSTICAS DASS-42 -->
         <section class="bg-card rounded-xl2 shadow-soft p-6">
 
