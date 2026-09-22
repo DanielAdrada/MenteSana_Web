@@ -288,133 +288,280 @@
 
         </section>
 
+        <!-- GESTIÓN DE ESTRATEGIAS -->
+        <section class="relative overflow-hidden bg-card rounded-2xl shadow-soft
+                border border-emerald-100 dark:border-slate-700 p-6">
 
-        <!-- NOTIFICACIONES DASS -->
-        <div class="mt-8">
+            <!-- Decoración -->
+            <div class="absolute -right-10 -top-10 w-32 h-32
+                bg-emerald-400/10 rounded-full">
+            </div>
 
-            <div class="flex items-center justify-between mb-4">
+            <div class="absolute -right-4 -bottom-12 w-24 h-24
+                bg-cyan-400/10 rounded-full">
+            </div>
 
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-800">
-                        🔔 Notificaciones
-                    </h2>
 
-                    <p class="text-sm text-gray-500">
-                        Evaluaciones que requieren revisión profesional
-                    </p>
+            <div class="relative z-10 flex flex-col sm:flex-row
+                items-center justify-between gap-4">
+
+
+                <!-- INFORMACIÓN -->
+                <div class="flex items-center gap-4">
+
+                    <!-- ICONO -->
+                    <div class="w-14 h-14 rounded-2xl
+                        bg-gradient-to-br from-emerald-400 to-cyan-500
+                        flex items-center justify-center
+                        text-2xl shadow-md flex-shrink-0">
+
+                        🧠
+
+                    </div>
+
+
+                    <!-- TEXTO -->
+                    <div>
+
+                        <h3 class="text-lg font-bold text-secondary dark:text-white">
+                            Gestión de estrategias
+                        </h3>
+
+                        <p class="text-sm text-muted dark:text-gray-400 mt-1">
+                            Administra las estrategias disponibles para los estudiantes.
+                        </p>
+
+                    </div>
+
                 </div>
 
-                <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-semibold">
+
+                <!-- BOTÓN -->
+                <a href="@Url.Action("Index", "Strategies")"
+                   class="group inline-flex items-center gap-2
+                  bg-gradient-to-r from-emerald-400 to-cyan-500
+                  hover:from-emerald-500 hover:to-cyan-600
+                  text-white
+                  px-5 py-2.5
+                  rounded-xl
+                  font-semibold
+                  shadow-md
+                  hover:shadow-lg
+                  transition-all duration-300
+                  whitespace-nowrap">
+
+                    <span>Gestionar estrategias</span>
+
+                    <span class="transition-transform duration-300
+                         group-hover:translate-x-1">
+                        →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- NOTIFICACIONES DASS -->
+        <section class="bg-card rounded-2xl shadow-soft border border-slate-100 dark:border-slate-700 p-6">
+
+            <!-- ENCABEZADO -->
+            <div class="flex items-center justify-between mb-5">
+
+                <div>
+
+                    <div class="flex items-center gap-2">
+
+                        <div class="w-10 h-10 rounded-xl
+                            bg-emerald-100
+                            flex items-center justify-center
+                            text-lg">
+                            🔔
+                        </div>
+
+                        <h2 class="text-xl font-bold text-secondary dark:text-white">
+                            Notificaciones
+                        </h2>
+
+                    </div>
+
+                    <p class="text-sm text-muted mt-2 ml-12">
+                        Evaluaciones que requieren revisión profesional
+                    </p>
+
+                </div>
+
+                <!-- CONTADOR -->
+                <span class="bg-red-100 text-red-700
+                     px-3 py-1.5
+                     rounded-full
+                     text-sm font-semibold">
                     @Model.NotificacionesPendientes
                 </span>
 
             </div>
 
-
             @if (Model.Notificaciones != null && Model.Notificaciones.Any())
             {
-                <div class="space-y-4">
+                <!-- CARRUSEL DE NOTIFICACIONES -->
+                <div class="relative">
 
-                    @foreach (var notificacion in Model.Notificaciones.Take(5))
-                    {
-                        <div class="bg-white border border-red-100 rounded-2xl shadow-sm p-5
-                            hover:shadow-md transition">
+                    <!-- FLECHA IZQUIERDA -->
+                    <button type="button"
+                            onclick="moverNotificaciones(-1)"
+                            class="absolute left-2 top-1/2 -translate-y-1/2 z-20
+                   w-10 h-10 rounded-full
+                   bg-white border border-emerald-100
+                   shadow-md
+                   flex items-center justify-center
+                   text-emerald-600 text-xl
+                   hover:bg-emerald-50
+                   transition">
+                        ‹
+                    </button>
 
-                            <div class="flex items-start gap-4">
 
-                                <!-- ICONO -->
-                                <div class="w-12 h-12 rounded-full bg-red-100
-                                    flex items-center justify-center
-                                    text-xl flex-shrink-0">
-                                    ⚠️
-                                </div>
+                    <!-- CONTENEDOR HORIZONTAL -->
+                    <div id="carruselNotificaciones"
+                         class="flex gap-4 overflow-x-auto scroll-smooth
+                px-14 py-2"
+                         style="scrollbar-width: none;">
 
-                                <!-- CONTENIDO -->
-                                <div class="flex-1">
+                        @foreach (var notificacion in Model.Notificaciones)
+                        {
+                            <!-- TARJETA -->
+                            <div class="flex-none
+                        w-[calc(50%-8px)]
+                        bg-white dark:bg-slate-800
+                        border border-emerald-100
+                        dark:border-slate-700
+                        rounded-2xl
+                        shadow-sm
+                        p-4
+                        hover:shadow-md
+                        transition">
 
-                                    <div class="flex items-center justify-between gap-3">
+                                <div class="flex items-start gap-3">
 
-                                        <h3 class="font-bold text-gray-800">
-                                            Nueva evaluación DASS-42
-                                        </h3>
-
-                                        <span class="text-xs text-gray-400 whitespace-nowrap">
-                                            @notificacion.Fecha.ToString("dd/MM/yyyy HH:mm")
-                                        </span>
-
+                                    <!-- ICONO -->
+                                    <div class="w-10 h-10 rounded-xl
+                                bg-emerald-50
+                                flex items-center justify-center
+                                text-lg flex-shrink-0">
+                                        ⚠️
                                     </div>
 
-                                    <p class="text-gray-600 mt-1">
-                                        @notificacion.Mensaje
-                                    </p>
 
-                                    <p class="text-sm text-gray-500 mt-2">
-                                        <strong>Estudiante:</strong>
-                                        @notificacion.EstudianteId
-                                    </p>
+                                    <div class="flex-1 min-w-0">
 
-                                    <!-- BOTONES -->
-                                    <div class="mt-4 flex flex-wrap gap-2">
+                                        <!-- TÍTULO Y FECHA -->
+                                        <div class="flex justify-between items-start gap-2">
 
-                                        <!-- VER RESULTADO -->
-                                        <a href="@Url.Action(
-                                    "DetalleDASS",
-                                    "Psychologist",
-                                    new { id = notificacion.TestId })"
-                                           class="inline-flex items-center gap-2
-                                          bg-emerald-500
-                                          hover:bg-emerald-600
-                                          text-white
-                                          font-semibold
-                                          px-4 py-2
-                                          rounded-xl
-                                          transition">
+                                            <h3 class="font-bold text-gray-800
+                                       dark:text-white text-sm">
+                                                Nueva evaluación DASS-42
+                                            </h3>
 
-                                            👁️ Ver resultado
+                                            <span class="text-[11px]
+                                         text-gray-400
+                                         whitespace-nowrap">
+                                                @notificacion.Fecha.ToString("dd/MM/yyyy HH:mm")
+                                            </span>
 
-                                        </a>
+                                        </div>
 
-                                        <!-- MARCAR COMO ATENDIDA -->
-                                        <form method="post"
-                                              action="@Url.Action(
-                                          "MarcarNotificacionAtendida",
-                                          "Psychologist")"
-                                              class="inline">
 
-                                            <input type="hidden"
-                                                   name="id"
-                                                   value="@notificacion.Id" />
+                                        <!-- MENSAJE -->
+                                        <p class="text-sm text-gray-600
+                                  dark:text-gray-300 mt-1">
+                                            @notificacion.Mensaje
+                                        </p>
 
-                                            <button type="submit"
-                                                    class="inline-flex items-center gap-2
-                                                   bg-gray-100
-                                                   hover:bg-gray-200
-                                                   text-gray-700
-                                                   font-semibold
-                                                   px-4 py-2
-                                                   rounded-xl
-                                                   transition">
 
-                                                ✓ Marcar como atendida
+                                        <!-- ESTUDIANTE -->
+                                        <p class="text-xs text-gray-500 mt-2">
+                                            <strong>Estudiante:</strong>
+                                            @notificacion.EstudianteId
+                                        </p>
 
-                                            </button>
 
-                                        </form>
+                                        <!-- BOTONES -->
+                                        <div class="mt-3 flex gap-2">
+
+                                            <a href="@Url.Action(
+                                "DetalleDASS",
+                                "Psychologist",
+                                new { id = notificacion.TestId })"
+                                               class="inline-flex items-center gap-1
+                                      bg-emerald-500
+                                      hover:bg-emerald-600
+                                      text-white
+                                      text-xs font-semibold
+                                      px-3 py-2
+                                      rounded-lg transition">
+
+                                                👁️ Ver resultado
+
+                                            </a>
+
+
+                                            <form method="post"
+                                                  action="@Url.Action(
+                                      "MarcarNotificacionAtendida",
+                                      "Psychologist")">
+
+                                                <input type="hidden"
+                                                       name="id"
+                                                       value="@notificacion.Id" />
+
+                                                <button type="submit"
+                                                        class="inline-flex items-center gap-1
+                                               bg-gray-100
+                                               hover:bg-gray-200
+                                               text-gray-700
+                                               text-xs font-semibold
+                                               px-3 py-2
+                                               rounded-lg transition">
+
+                                                    ✓ Atendida
+
+                                                </button>
+
+                                            </form>
+
+                                        </div>
 
                                     </div>
 
                                 </div>
 
                             </div>
+                        }
 
-                        </div>
-                    }
+                    </div>
+
+
+                    <!-- FLECHA DERECHA -->
+                    <button type="button"
+                            onclick="moverNotificaciones(1)"
+                            class="absolute right-2 top-1/2 -translate-y-1/2 z-20
+                   w-10 h-10 rounded-full
+                   bg-white border border-emerald-100
+                   shadow-md
+                   flex items-center justify-center
+                   text-emerald-600 text-xl
+                   hover:bg-emerald-50
+                   transition">
+                        ›
+                    </button>
 
                 </div>
 
                 <!-- VER TODAS -->
-                 if (Model.NotificacionesPendientes > 5)
-                 {
+                if (Model.NotificacionesPendientes > 5)
+                {
                     <div class="text-center mt-5">
 
                         <a href="#"
@@ -428,7 +575,7 @@
                         </a>
 
                     </div>
-                 }
+                }
 
             }
             else
@@ -452,264 +599,205 @@
                 </div>
             }
 
-        </div>
-        <!-- ESTADÍSTICAS DASS-42 -->
-        <section class="bg-card rounded-xl2 shadow-soft p-6">
-
-            <div class="mb-6">
-                <h3 class="text-secondary font-semibold text-lg">
-                    📊 Distribución de resultados DASS-42
-                </h3>
-
-                <p class="text-sm text-muted mt-1">
-                    Distribución de los niveles registrados en las evaluaciones realizadas.
-                </p>
-            </div>
-
-
-            <div class="grid lg:grid-cols-3 gap-8">
-
-                <!-- DEPRESIÓN -->
-                <div>
-
-                    <div class="flex items-center justify-between mb-4">
-                        <h4 class="font-semibold text-secondary">
-                            Depresión
-                        </h4>
-
-                        <span class="text-xs text-muted">
-                            @totalDepresion evaluaciones
-                        </span>
-                    </div>
-
-                    @if (depresion.Any())
-                    {
-                        <div class="space-y-4">
-
-                            @foreach (var item in depresion)
-                            {
-                                var porcentaje = totalDepresion > 0
-                                    ? (item.Cantidad * 100 / totalDepresion)
-                                    : 0;
-
-                                <div>
-                                    <div class="flex justify-between items-center mb-1">
-                                        <span class="text-sm text-gray-700 dark:text-gray-300">
-                                            @item.Nivel
-                                        </span>
-
-                                        <span class="text-sm font-semibold text-secondary">
-                                            @item.Cantidad
-                                        </span>
-                                    </div>
-
-                                    <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                                        <div class="h-3 bg-primary rounded-full transition-all duration-500"
-                                             style="width: @porcentaje%;">
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-
-                        </div>
-                    }
-                    else
-                    {
-                        <p class="text-sm text-muted">
-                            No hay datos de depresión.
-                        </p>
-                    }
-
-                </div>
-
-
-                <!-- ANSIEDAD -->
-                <div>
-
-                    <div class="flex items-center justify-between mb-4">
-                        <h4 class="font-semibold text-secondary">
-                            Ansiedad
-                        </h4>
-
-                        <span class="text-xs text-muted">
-                            @totalAnsiedad evaluaciones
-                        </span>
-                    </div>
-
-                    @if (ansiedad.Any())
-                    {
-                        <div class="space-y-4">
-
-                            @foreach (var item in ansiedad)
-                            {
-                                var porcentaje = totalAnsiedad > 0
-                                    ? (item.Cantidad * 100 / totalAnsiedad)
-                                    : 0;
-
-                                <div>
-                                    <div class="flex justify-between items-center mb-1">
-                                        <span class="text-sm text-gray-700 dark:text-gray-300">
-                                            @item.Nivel
-                                        </span>
-
-                                        <span class="text-sm font-semibold text-secondary">
-                                            @item.Cantidad
-                                        </span>
-                                    </div>
-
-                                    <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                                        <div class="h-3 bg-secondary rounded-full transition-all duration-500"
-                                             style="width: @porcentaje%;">
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-
-                        </div>
-                    }
-                    else
-                    {
-                        <p class="text-sm text-muted">
-                            No hay datos de ansiedad.
-                        </p>
-                    }
-
-                </div>
-
-
-                <!-- ESTRÉS -->
-                <div>
-
-                    <div class="flex items-center justify-between mb-4">
-                        <h4 class="font-semibold text-secondary">
-                            Estrés
-                        </h4>
-
-                        <span class="text-xs text-muted">
-                            @totalEstres evaluaciones
-                        </span>
-                    </div>
-
-                    @if (estres.Any())
-                    {
-                        <div class="space-y-4">
-
-                            @foreach (var item in estres)
-                            {
-                                var porcentaje = totalEstres > 0
-                                    ? (item.Cantidad * 100 / totalEstres)
-                                    : 0;
-
-                                <div>
-                                    <div class="flex justify-between items-center mb-1">
-                                        <span class="text-sm text-gray-700 dark:text-gray-300">
-                                            @item.Nivel
-                                        </span>
-
-                                        <span class="text-sm font-semibold text-secondary">
-                                            @item.Cantidad
-                                        </span>
-                                    </div>
-
-                                    <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                                        <div class="h-3 bg-amber-400 rounded-full transition-all duration-500"
-                                             style="width: @porcentaje%;">
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-
-                        </div>
-                    }
-                    else
-                    {
-                        <p class="text-sm text-muted">
-                            No hay datos de estrés.
-                        </p>
-                    }
-
-                </div>
-
-            </div>
-
         </section>
 
+            <!-- ESTADÍSTICAS DASS-42 -->
+            <section class="bg-card rounded-xl2 shadow-soft p-6">
 
-        <!-- RECURSOS -->
-        <section class="bg-card rounded-xl2 shadow-soft p-6">
-
-            <div class="flex justify-between items-center mb-4">
-
-                <h3 class="text-secondary font-semibold">
-                    📁 Recursos para estudiantes
-                </h3>
-
-                <button class="bg-primary text-black px-4 py-2 rounded-xl font-semibold hover:opacity-90 transition">
-                    + Nuevo recurso
-                </button>
-
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-4">
-
-                <div class="bg-gray-50 rounded-xl p-4">
-                    🧘 Guía de respiración para ansiedad
-                </div>
-
-                <div class="bg-gray-50 rounded-xl p-4">
-                    📄 Manejo del estrés académico
-                </div>
-
-                <div class="bg-gray-50 rounded-xl p-4">
-                    🎧 Audio de relajación guiada
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- GESTIÓN DE ESTRATEGIAS -->
-        <section class="bg-card rounded-xl2 shadow-soft p-6">
-
-            <div class="flex justify-between items-center mb-4">
-
-                <div>
-                    <h3 class="text-secondary font-semibold">
-                        🧠 Gestión de estrategias
+                <div class="mb-6">
+                    <h3 class="text-secondary font-semibold text-lg">
+                        📊 Distribución de resultados DASS-42
                     </h3>
 
                     <p class="text-sm text-muted mt-1">
-                        Crea, edita y administra las estrategias disponibles
-                        para los estudiantes.
+                        Distribución de los niveles registrados en las evaluaciones realizadas.
                     </p>
                 </div>
 
-                <a href="@Url.Action("Index", "Strategies")"
-                   class="bg-primary text-black px-4 py-2 rounded-xl font-semibold hover:opacity-90 transition">
-                    Gestionar estrategias
-                </a>
 
-            </div>
+                <div class="grid lg:grid-cols-3 gap-8">
 
-        </section>
+                    <!-- DEPRESIÓN -->
+                    <div>
+
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="font-semibold text-secondary">
+                                Depresión
+                            </h4>
+
+                            <span class="text-xs text-muted">
+                                @totalDepresion evaluaciones
+                            </span>
+                        </div>
+
+                        @if (depresion.Any())
+                        {
+                            <div class="space-y-4">
+
+                                @foreach (var item in depresion)
+                                {
+                                    var porcentaje = totalDepresion > 0
+                                        ? (item.Cantidad * 100 / totalDepresion)
+                                        : 0;
+
+                                    <div>
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">
+                                                @item.Nivel
+                                            </span>
+
+                                            <span class="text-sm font-semibold text-secondary">
+                                                @item.Cantidad
+                                            </span>
+                                        </div>
+
+                                        <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-3 bg-primary rounded-full transition-all duration-500"
+                                                 style="width: @porcentaje%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-sm text-muted">
+                                No hay datos de depresión.
+                            </p>
+                        }
+
+                    </div>
 
 
-        <!-- ML PLACEHOLDER -->
-        <section class="bg-gradient-to-br from-blue-50 to-transparent rounded-xl2 p-6 border border-blue-200">
+                    <!-- ANSIEDAD -->
+                    <div>
 
-            <h3 class="font-semibold text-secondary mb-2">
-                🤖 Análisis con Machine Learning (próximamente)
-            </h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="font-semibold text-secondary">
+                                Ansiedad
+                            </h4>
 
-            <p class="text-sm text-muted max-w-[600px]">
-                Aquí se mostrarán los resultados automáticos
-                del análisis emocional basado en respuestas abiertas
-                de los estudiantes.
-            </p>
+                            <span class="text-xs text-muted">
+                                @totalAnsiedad evaluaciones
+                            </span>
+                        </div>
 
-        </section>
+                        @if (ansiedad.Any())
+                        {
+                            <div class="space-y-4">
+
+                                @foreach (var item in ansiedad)
+                                {
+                                    var porcentaje = totalAnsiedad > 0
+                                        ? (item.Cantidad * 100 / totalAnsiedad)
+                                        : 0;
+
+                                    <div>
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">
+                                                @item.Nivel
+                                            </span>
+
+                                            <span class="text-sm font-semibold text-secondary">
+                                                @item.Cantidad
+                                            </span>
+                                        </div>
+
+                                        <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-3 bg-secondary rounded-full transition-all duration-500"
+                                                 style="width: @porcentaje%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-sm text-muted">
+                                No hay datos de ansiedad.
+                            </p>
+                        }
+
+                    </div>
+
+
+                    <!-- ESTRÉS -->
+                    <div>
+
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="font-semibold text-secondary">
+                                Estrés
+                            </h4>
+
+                            <span class="text-xs text-muted">
+                                @totalEstres evaluaciones
+                            </span>
+                        </div>
+
+                        @if (estres.Any())
+                        {
+                            <div class="space-y-4">
+
+                                @foreach (var item in estres)
+                                {
+                                    var porcentaje = totalEstres > 0
+                                        ? (item.Cantidad * 100 / totalEstres)
+                                        : 0;
+
+                                    <div>
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">
+                                                @item.Nivel
+                                            </span>
+
+                                            <span class="text-sm font-semibold text-secondary">
+                                                @item.Cantidad
+                                            </span>
+                                        </div>
+
+                                        <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-3 bg-amber-400 rounded-full transition-all duration-500"
+                                                 style="width: @porcentaje%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-sm text-muted">
+                                No hay datos de estrés.
+                            </p>
+                        }
+
+                    </div>
+
+                </div>
+
+            </section>
 
     </main>
+
+    <script>
+        function moverNotificaciones(direccion) {
+
+            const carrusel =
+                document.getElementById("carruselNotificaciones");
+
+            const desplazamiento =
+                carrusel.clientWidth * 0.85;
+
+            carrusel.scrollBy({
+                left: direccion * desplazamiento,
+                behavior: "smooth"
+            });
+        }
+    </script>
 
 </section>
